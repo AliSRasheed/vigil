@@ -9,15 +9,15 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from aegisscan import cvss, owasp, report
-from aegisscan.checks.base import discover_checks
-from aegisscan.cli import app as cli_app
-from aegisscan.cli import checks_markdown
-from aegisscan.engine import ScanOptions, run_scan
-from aegisscan.models import ScanResult
-from aegisscan.scope import authorize
 from tests.fixtures.app import FAKE_SECRET, FixtureApp
 from tests.fixtures.certs import TlsMaterial
+from vigil import cvss, owasp, report
+from vigil.checks.base import discover_checks
+from vigil.cli import app as cli_app
+from vigil.cli import checks_markdown
+from vigil.engine import ScanOptions, run_scan
+from vigil.models import ScanResult
+from vigil.scope import authorize
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -154,11 +154,11 @@ def test_cli_writes_both_reports_and_can_re_render(
     result = runner.invoke(cli_app, ["scan", vulnerable_app.url, "-o", str(out), "--rate", "50"])
     assert result.exit_code == 0, result.output
     assert "HIGH" in result.output and "Findings" in result.output
-    assert (out / "aegisscan-report.html").read_text(encoding="utf-8").startswith("<!doctype html>")
-    assert json.loads((out / "aegisscan-report.json").read_text(encoding="utf-8"))["findings"]
+    assert (out / "vigil-report.html").read_text(encoding="utf-8").startswith("<!doctype html>")
+    assert json.loads((out / "vigil-report.json").read_text(encoding="utf-8"))["findings"]
 
     copy = tmp_path / "again.html"
-    again = runner.invoke(cli_app, ["report", str(out / "aegisscan-report.json"), "-o", str(copy)])
+    again = runner.invoke(cli_app, ["report", str(out / "vigil-report.json"), "-o", str(copy)])
     assert again.exit_code == 0, again.output
     assert "Executive summary" in copy.read_text(encoding="utf-8")
 
@@ -174,10 +174,10 @@ def test_cli_can_limit_the_checks_that_run(tmp_path: Path, vulnerable_app: Fixtu
          "config.exposed_files", "--format", "json"],
     )  # fmt: skip
     assert result.exit_code == 0, result.output
-    data = json.loads((out / "aegisscan-report.json").read_text(encoding="utf-8"))
+    data = json.loads((out / "vigil-report.json").read_text(encoding="utf-8"))
     ran = {run["check"]["id"] for run in data["checks"]}
     assert len(ran) == 6 and all(name.startswith("config.") for name in ran)
-    assert not (out / "aegisscan-report.html").exists()
+    assert not (out / "vigil-report.html").exists()
 
 
 def test_readme_check_table_matches_the_registry() -> None:
@@ -185,5 +185,5 @@ def test_readme_check_table_matches_the_registry() -> None:
     match = re.search(r"<!-- checks:start -->\n(.*?)\n<!-- checks:end -->", readme, re.S)
     assert match, "README.md must contain the generated check table between the markers"
     assert match.group(1).strip() == checks_markdown().strip(), (
-        "README check table is stale: regenerate with `aegisscan list-checks --markdown`"
+        "README check table is stale: regenerate with `vigil list-checks --markdown`"
     )

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import pytest
 
-from aegisscan.checks import base
-from aegisscan.checks.base import Check, CheckSkipped, discover_checks
-from aegisscan.engine import ScanContext, ScanOptions, run_scan, select_checks
-from aegisscan.http import http_evidence
-from aegisscan.models import Finding, Severity, Target
-from aegisscan.scope import authorize
 from tests.conftest import FAST
 from tests.fixtures.app import FixtureApp
+from vigil.checks import base
+from vigil.checks.base import Check, CheckSkipped, discover_checks
+from vigil.engine import ScanContext, ScanOptions, run_scan, select_checks
+from vigil.http import http_evidence
+from vigil.models import Finding, Severity, Target
+from vigil.scope import authorize
 
 MEDIUM = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
 HIGH = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
@@ -137,7 +137,7 @@ def test_discovery_imports_every_check_module() -> None:
     ids = [check.id for check in checks]
     assert len(ids) == len(set(ids))
     for check in checks:
-        assert check.__module__.startswith("aegisscan.checks.")
+        assert check.__module__.startswith("vigil.checks.")
         assert check.id.split(".")[0] == check.category
         assert check.safe, "every v1 check is a safe check"
 

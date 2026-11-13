@@ -7,8 +7,9 @@ import time
 
 import pytest
 
-from aegisscan import __version__
-from aegisscan.http import (
+from tests.fixtures.app import FixtureApp
+from vigil import __version__
+from vigil.http import (
     HttpClient,
     RequestFailed,
     UnsafeMethodError,
@@ -17,8 +18,7 @@ from aegisscan.http import (
     redact_set_cookie,
     redact_values,
 )
-from aegisscan.scope import authorize
-from tests.fixtures.app import FixtureApp
+from vigil.scope import authorize
 
 
 def client_for(app: FixtureApp, **kwargs: object) -> HttpClient:
@@ -30,7 +30,7 @@ async def test_user_agent_identifies_the_scanner(clean_app: FixtureApp) -> None:
     async with client_for(clean_app) as http:
         response = await http.get(f"{clean_app.url}/echo-headers")
     sent = {name.lower(): value for name, value in json.loads(response.text).items()}
-    assert sent["user-agent"].startswith(f"AegisScan/{__version__}")
+    assert sent["user-agent"].startswith(f"Vigil/{__version__}")
 
 
 async def test_requests_to_a_host_are_rate_limited(clean_app: FixtureApp) -> None:
@@ -113,7 +113,7 @@ async def test_evidence_captures_request_response_and_reason(vulnerable_app: Fix
     evidence = http_evidence(response, "why this was flagged")
     assert evidence.request.startswith("GET / HTTP/1.1")
     assert "Origin: https://x.example" in evidence.request
-    assert "User-Agent: AegisScan/" in evidence.request
+    assert "User-Agent: Vigil/" in evidence.request
     assert evidence.response.startswith("HTTP/1.1 200 OK")
     assert "X-Powered-By: PHP/7.4.3" in evidence.response
     assert "Fixture Shop" in evidence.response

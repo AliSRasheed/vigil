@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import re
 
-from aegisscan.checks.base import Check, CheckSkipped
-from aegisscan.checks.recon.dns import require_dns_name
-from aegisscan.engine import ScanContext
-from aegisscan.models import Evidence, Finding, Severity, Target
-from aegisscan.resolver import zone_apex
+from vigil.checks.base import Check, CheckSkipped
+from vigil.checks.recon.dns import require_dns_name
+from vigil.engine import ScanContext
+from vigil.models import Evidence, Finding, Severity, Target
+from vigil.resolver import zone_apex
 
 SPOOFABLE = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"  # 4.3
 SPF_ALLOWS_ALL = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"  # 5.3

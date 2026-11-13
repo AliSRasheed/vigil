@@ -20,7 +20,7 @@ from pathlib import Path
 from cryptography import x509
 from cryptography.hazmat.primitives.asymmetric import ec, rsa
 
-from aegisscan.scope import Scope
+from vigil.scope import Scope
 
 
 class TlsProbeError(Exception):

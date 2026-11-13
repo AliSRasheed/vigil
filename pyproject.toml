@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aegisscan"
+name = "vigil"
 version = "0.1.1"
 description = "Web application security scanner for authorized testing: recon plus non-destructive vulnerability detection."
 readme = "README.md"
@@ -24,13 +24,13 @@ dependencies = [
 dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.5"]
 
 [project.scripts]
-aegisscan = "aegisscan.cli:app"
+vigil = "vigil.cli:app"
 
 [tool.setuptools.packages.find]
-include = ["aegisscan*"]
+include = ["vigil*"]
 
 [tool.setuptools.package-data]
-aegisscan = ["report/templates/*"]
+vigil = ["report/templates/*"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

@@ -7,7 +7,7 @@ from pathlib import Path
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from aegisscan.models import Finding, ScanResult, Severity
+from vigil.models import Finding, ScanResult, Severity
 
 FORMATS = ("html", "json")
 _SEVERITY_ORDER = [severity.value for severity in reversed(Severity)]  # critical first
@@ -43,7 +43,7 @@ def _narrative(result: ScanResult) -> list[str]:
     ran = sum(1 for run in result.checks if run.status == "ran")
     paragraphs = []
     opening = (
-        f"AegisScan ran {ran} non-destructive check{'s' if ran != 1 else ''} against "
+        f"Vigil ran {ran} non-destructive check{'s' if ran != 1 else ''} against "
         f"{result.target.url} on {result.started_at:%d %B %Y}."
     )
     actionable = [name for name in _SEVERITY_ORDER if counts[name] and name != "info"]
@@ -76,7 +76,7 @@ def _narrative(result: ScanResult) -> list[str]:
 def render_html(result: ScanResult) -> str:
     """Self-contained HTML report: no scripts, no external resources."""
     environment = Environment(
-        loader=PackageLoader("aegisscan", "report/templates"),
+        loader=PackageLoader("vigil", "report/templates"),
         autoescape=select_autoescape(default=True, default_for_string=True),
         trim_blocks=True,
         lstrip_blocks=True,
@@ -107,7 +107,7 @@ _RENDERERS = {"html": render_html, "json": render_json}
 
 
 def write_reports(
-    result: ScanResult, directory: Path, formats: list[str], stem: str = "aegisscan-report"
+    result: ScanResult, directory: Path, formats: list[str], stem: str = "vigil-report"
 ) -> list[Path]:
     """Write one file per requested format into ``directory`` and return the paths."""
     unknown = [name for name in formats if name not in _RENDERERS]

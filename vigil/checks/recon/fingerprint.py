@@ -5,11 +5,11 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.htmlutil import meta_generator
-from aegisscan.http import Response, http_evidence
-from aegisscan.models import Finding, Severity, Target
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.htmlutil import meta_generator
+from vigil.http import Response, http_evidence
+from vigil.models import Finding, Severity, Target
 
 _V = r"[/ ]?v?(\d+(?:\.\d+)*[\w.\-]*)?"
 

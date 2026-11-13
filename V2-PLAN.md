@@ -1,4 +1,4 @@
-# AegisScan v2 — Plan (not yet built)
+# Vigil v2 — Plan (not yet built)
 
 Status: planning only. No v2 code exists. This is the spec to build from when you return to it with a clear head.
 

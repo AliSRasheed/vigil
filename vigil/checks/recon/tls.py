@@ -11,12 +11,12 @@ import datetime as dt
 import ssl
 import warnings
 
-from aegisscan import tlsutil
-from aegisscan.checks.base import Check, CheckSkipped
-from aegisscan.engine import ScanContext
-from aegisscan.http import http_evidence
-from aegisscan.models import Evidence, Finding, Severity, Target
-from aegisscan.scope import is_loopback
+from vigil import tlsutil
+from vigil.checks.base import Check, CheckSkipped
+from vigil.engine import ScanContext
+from vigil.http import http_evidence
+from vigil.models import Evidence, Finding, Severity, Target
+from vigil.scope import is_loopback
 
 CERT_INVALID = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"  # 6.5
 WEAK_CRYPTO = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"  # 5.9

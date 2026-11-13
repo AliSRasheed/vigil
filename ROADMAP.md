@@ -1,4 +1,4 @@
-# AegisScan — Versioned Roadmap
+# Vigil — Versioned Roadmap
 
 Each version is independently shippable. You can stop at any tier and have something real; each one is a LinkedIn "build in public" post.
 

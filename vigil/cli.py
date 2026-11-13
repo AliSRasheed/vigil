@@ -10,16 +10,16 @@ from typing import Annotated
 
 import typer
 
-from aegisscan import __version__, report
-from aegisscan.checks.base import discover_checks
-from aegisscan.engine import ScanOptions, run_scan, select_checks
-from aegisscan.models import ScanResult, Severity
-from aegisscan.scope import ENV_VAR, FLAG, Permit, ScopeError, authorize
+from vigil import __version__, report
+from vigil.checks.base import discover_checks
+from vigil.engine import ScanOptions, run_scan, select_checks
+from vigil.models import ScanResult, Severity
+from vigil.scope import ENV_VAR, FLAG, Permit, ScopeError, authorize
 
 app = typer.Typer(
     add_completion=False,
     no_args_is_help=True,
-    help="AegisScan: web application security scanner for authorized testing.",
+    help="Vigil: web application security scanner for authorized testing.",
 )
 
 EXIT_BLOCKED = 2
@@ -40,10 +40,10 @@ class _EchoHandler(logging.Handler):
 def _configure_logging(verbose: bool) -> None:
     handler = _EchoHandler()
     handler.setFormatter(logging.Formatter("%(asctime)s %(name)s: %(message)s", "%H:%M:%S"))
-    root = logging.getLogger("aegisscan")
+    root = logging.getLogger("vigil")
     root.handlers = [handler]
     root.setLevel(logging.INFO)
-    logging.getLogger("aegisscan.engine").setLevel(logging.INFO if verbose else logging.WARNING)
+    logging.getLogger("vigil.engine").setLevel(logging.INFO if verbose else logging.WARNING)
 
 
 def _split(value: str | None) -> list[str] | None:
@@ -123,7 +123,7 @@ def scan(
     ] = False,
     output: Annotated[
         Path, typer.Option("--output", "-o", help="Directory for the reports and audit log.")
-    ] = Path("aegisscan-out"),
+    ] = Path("vigil-out"),
     formats: Annotated[
         str, typer.Option("--format", help=f"Report formats, comma separated: {report.FORMATS}.")
     ] = ",".join(report.FORMATS),
@@ -214,7 +214,7 @@ def list_checks(
 
 @app.command("report")
 def render_report(
-    source: Annotated[Path, typer.Argument(help="JSON report written by `aegisscan scan`.")],
+    source: Annotated[Path, typer.Argument(help="JSON report written by `vigil scan`.")],
     output: Annotated[
         Path | None,
         typer.Option("--output", "-o", help="File to write (default: beside the JSON file)."),
@@ -243,7 +243,7 @@ def main(
     ] = False,
 ) -> None:
     if version:
-        typer.echo(f"AegisScan {__version__}")
+        typer.echo(f"Vigil {__version__}")
         raise typer.Exit()
 
 

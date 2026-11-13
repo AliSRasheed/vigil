@@ -17,11 +17,11 @@ from urllib.parse import urljoin, urlsplit
 
 import httpx
 
-from aegisscan import __version__
-from aegisscan.models import Evidence, host_of
-from aegisscan.scope import OutOfScopeError, OutOfScopeLog, Permit
+from vigil import __version__
+from vigil.models import Evidence, host_of
+from vigil.scope import OutOfScopeError, OutOfScopeLog, Permit
 
-USER_AGENT = f"AegisScan/{__version__} (authorized security testing; non-destructive)"
+USER_AGENT = f"Vigil/{__version__} (authorized security testing; non-destructive)"
 SAFE_METHODS = frozenset({"GET", "HEAD", "OPTIONS"})
 REDIRECT_STATUSES = frozenset({301, 302, 303, 307, 308})
 RETRY_STATUSES = frozenset({429, 503})
@@ -128,7 +128,7 @@ class HttpClient:
         out_of_scope: OutOfScopeLog | None = None,
     ) -> None:
         if not isinstance(permit, Permit):
-            raise TypeError("HttpClient requires a Permit from aegisscan.scope.authorize()")
+            raise TypeError("HttpClient requires a Permit from vigil.scope.authorize()")
         self.permit = permit
         self.scope = permit.scope
         self.limiter = RateLimiter(rate)

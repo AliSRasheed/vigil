@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from aegisscan.checks.base import Check, CheckSkipped
-from aegisscan.engine import ScanContext
-from aegisscan.models import Finding, Severity, Target
-from aegisscan.resolver import is_ip_literal, zone_apex
-from aegisscan.scope import is_loopback
+from vigil.checks.base import Check, CheckSkipped
+from vigil.engine import ScanContext
+from vigil.models import Finding, Severity, Target
+from vigil.resolver import is_ip_literal, zone_apex
+from vigil.scope import is_loopback
 
 NO_CAA = "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N"  # 3.1
 HOST_TYPES = ("A", "AAAA", "CNAME")

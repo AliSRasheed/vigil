@@ -1,6 +1,6 @@
 # Build prompts for Claude Code
 
-Run from inside the `AegisScan` folder. Three runs. Do not start the next run until the previous one has passing tests and a tag.
+Run from the repository root. Three runs. Do not start the next run until the previous one has passing tests and a tag.
 
 ## Run A — all of v1 (engine, checks, report)
 
@@ -12,15 +12,15 @@ Stage 2: implement every v1 recon and config/exposure check from ROADMAP.md as p
 
 Do not begin stage 2 until stage 1's tests pass and are committed. At the end, give me a summary: checks implemented, test count, anything you skipped or decided (also logged in DECISIONS.md).
 
-## Run B — all of v2 (crawler, auth, detection, confirmation)
+## Run B — all of v2 (site mapper, authenticated scanning, passive risk flags, report)
 
-Read CLAUDE.md and ROADMAP.md again. Build all of v2 in two stages, without stopping to ask me between them.
+Read CLAUDE.md, ROADMAP.md and V2-PLAN.md again. v2 maps and reports; it does not exploit. Build all of v2 in two stages, without stopping to ask me between them.
 
-Stage 1: add the crawler (named host only, depth and page limits, form and parameter inventory) and session handling for authenticated scans. Extend the fixture app with a login area. Run pytest and ruff, fix failures, commit.
+Stage 1: add the site mapper (named host only, depth and page limits, inventory of pages, forms, input fields and URL parameters) and session handling for authenticated scans: log in with credentials the operator supplies, to the login URL the operator names, hold the session, and re-run the v1 config and exposure checks on pages that only appear when logged in. Enforce the request-method rule: POST only for that login request and for forms the scope file explicitly allows; never PUT, PATCH or DELETE; every other discovered form is inventoried, never submitted. Extend the fixture app with a login area and with forms that are not allowed, and add tests proving an un-allowed form is never submitted. Run pytest and ruff, fix failures, commit.
 
-Stage 2: implement the v2 injection-class detection checks from ROADMAP.md using benign probes, and the confirmation engine that re-tests each candidate before it is reported as confirmed. Add fixture routes that look vulnerable but are not, and assert zero confirmed findings on them. Update the report to show confirmed vs tentative. Run pytest and ruff, fix failures, commit, tag v0.2.0.
+Stage 2: add passive risk flags noted while crawling, for human review and never confirmed by sending inputs (for example a form with no CSRF token, an input echoed back without escaping, a page missing the security headers v1 checks), each with a fires/silent test pair. Extend the report to show the crawl map, the authenticated findings and the flagged spots, kept separate from confirmed findings. Run pytest and ruff, fix failures, commit, tag v0.2.0.
 
-Do not begin stage 2 until stage 1's tests pass and are committed. End with the same summary as Run A.
+Do not begin stage 2 until stage 1's tests pass and are committed. Do not build active injection detection: it is deferred in V2-PLAN.md. End with the same summary as Run A.
 
 ## Run C — ship
 

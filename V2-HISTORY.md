@@ -1,4 +1,4 @@
-# AegisScan v2 — Original and Revised
+# Vigil v2 — Original and Revised
 
 ## v2 (original)
 

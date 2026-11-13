@@ -1,12 +1,12 @@
-# AegisScan
+# Vigil
 
 A web application security scanner for **authorized** testing — the "breaker" counterpart to SpecTackle's "builder."
 
-> **Legal notice.** Only scan systems you own or have explicit written permission to test. Scanning anything else is illegal in most jurisdictions. AegisScan refuses to run against a non-local target until you assert that authorization, and it never contacts a host you did not name. See [SCOPE-AND-ETHICS.md](SCOPE-AND-ETHICS.md).
+> **Legal notice.** Only scan systems you own or have explicit written permission to test. Scanning anything else is illegal in most jurisdictions. Vigil refuses to run against a non-local target until you assert that authorization, and it never contacts a host you did not name. See [SCOPE-AND-ETHICS.md](SCOPE-AND-ETHICS.md).
 
 ## What it is
 
-AegisScan performs reconnaissance and non-destructive vulnerability **detection** against web applications you own or are explicitly authorized to test. It identifies security weaknesses and produces a professional, client-ready report with the evidence for every finding.
+Vigil performs reconnaissance and non-destructive vulnerability **detection** against web applications you own or are explicitly authorized to test. It identifies security weaknesses and produces a professional, client-ready report with the evidence for every finding.
 
 It follows the model of production tools (Nessus "safe checks", Burp's scan profiles, OWASP ZAP): detection by careful probing and response analysis — not destructive exploitation. That is the professional standard, and it is what keeps the tool legal to run and safe on a live target.
 
@@ -24,7 +24,7 @@ Python 3.11 or newer.
 
 ```
 git clone <this repository>
-cd AegisScan
+cd Vigil
 python -m venv .venv
 .venv\Scripts\activate          # Windows;  source .venv/bin/activate elsewhere
 pip install -e ".[dev]"
@@ -35,16 +35,16 @@ pip install -e ".[dev]"
 Scan something you own:
 
 ```
-aegisscan scan https://app.example.com --i-have-authorization
+vigil scan https://app.example.com --i-have-authorization
 ```
 
-The scan prints a summary and writes `aegisscan-report.html`, `aegisscan-report.json` and `audit.log` to `./aegisscan-out` (change with `--output`).
+The scan prints a summary and writes `vigil-report.html`, `vigil-report.json` and `audit.log` to `./vigil-out` (change with `--output`).
 
 | Command | What it does |
 |---|---|
-| `aegisscan scan URL` | Scan one target. |
-| `aegisscan list-checks` | List the registered checks (`--markdown` prints the table below). |
-| `aegisscan report FILE.json` | Re-render the HTML report from a JSON export, without scanning again. |
+| `vigil scan URL` | Scan one target. |
+| `vigil list-checks` | List the registered checks (`--markdown` prints the table below). |
+| `vigil report FILE.json` | Re-render the HTML report from a JSON export, without scanning again. |
 
 Useful `scan` options:
 
@@ -52,7 +52,7 @@ Useful `scan` options:
 |---|---|---|
 | `--i-have-authorization` | off | Assert that you own the target or hold written permission. |
 | `--scope FILE` | none | Scope file: extra hosts, exclusions, stored authorization. |
-| `--output DIR`, `-o` | `aegisscan-out` | Where reports and the audit log go. |
+| `--output DIR`, `-o` | `vigil-out` | Where reports and the audit log go. |
 | `--format` | `html,json` | Report formats. |
 | `--checks`, `--skip` | all | Check ids or categories (`recon`, `config`), comma separated. |
 | `--rate` | `5` | Maximum requests per second to a host. |
@@ -72,7 +72,7 @@ Two conditions must both hold before any request is sent.
 **2. You have asserted authorization**, in any one of three ways:
 
 - `--i-have-authorization` on the command line;
-- `AEGISSCAN_AUTHORIZED=1` in the environment, for CI or a dev shell;
+- `VIGIL_AUTHORIZED=1` in the environment, for CI or a dev shell;
 - an `authorization:` block in a scope file, for repeat engagements.
 
 Loopback targets (`localhost`, `127.0.0.1`, `::1`) need no assertion. Every scan logs which assertion was used, with a timestamp, and the report prints it.
@@ -94,7 +94,7 @@ authorization:
 ```
 
 ```
-aegisscan scan https://app.example.com --scope scope.yaml
+vigil scan https://app.example.com --scope scope.yaml
 ```
 
 ## Checks
@@ -116,7 +116,7 @@ aegisscan scan https://app.example.com --scope scope.yaml
 | `config.security_headers` | Security headers | config | medium | CWE-693 | A06:2025 Insecure Design |
 <!-- checks:end -->
 
-The table is generated: `aegisscan list-checks --markdown`. A test fails if it drifts from the registry.
+The table is generated: `vigil list-checks --markdown`. A test fails if it drifts from the registry.
 
 OWASP categories are not assigned by hand: each one is derived from the finding's CWE, using the mapped-CWE lists published with the official [OWASP Top 10:2025](https://owasp.org/Top10/2025/). The table shows each check's primary CWE; individual findings can carry a more specific CWE and therefore a different category (an expired certificate is CWE-298, A07 Authentication Failures; a stack trace is CWE-209, A10 Mishandling of Exceptional Conditions).
 
@@ -125,7 +125,7 @@ Every finding carries a CVSS v3.1 vector and score, a CWE and its OWASP Top 10:2
 ## How it is built
 
 ```
-aegisscan/
+vigil/
   cli.py        scan, list-checks, report
   scope.py      scope + authorization gate; the only source of a Permit
   http.py       async client: scope check, rate limit, retries, evidence capture
@@ -136,7 +136,7 @@ aegisscan/
 tests/fixtures/ local vulnerable + clean test app, DNS server, test certificates
 ```
 
-- **Checks are plugins.** A check is a class with metadata and an async `run(target, ctx)`. Adding a module under `aegisscan/checks/` is all it takes; the engine knows nothing about individual checks.
+- **Checks are plugins.** A check is a class with metadata and an async `run(target, ctx)`. Adding a module under `vigil/checks/` is all it takes; the engine knows nothing about individual checks.
 - **The gate is structural.** The HTTP client and the engine cannot be constructed without a `Permit`, and `scope.authorize()` is the only thing that issues one. Every HTTP request and TLS handshake is checked against scope at the point it is sent.
 - **Polite by default.** Per-host rate limit, bounded concurrency, backoff, `Retry-After` honoured, an identifiable `User-Agent`, read-only methods only.
 
@@ -155,7 +155,7 @@ Run the fixture app by hand, or regenerate the sample report:
 
 ```
 python -m tests.fixtures.app --mode vulnerable --port 8808
-aegisscan scan http://localhost:8808
+vigil scan http://localhost:8808
 
 python scripts/make_sample_report.py
 ```
@@ -166,13 +166,13 @@ A larger, deliberately vulnerable target that is legal to scan. Not required for
 
 ```
 docker run --rm -p 3000:3000 bkimminich/juice-shop
-aegisscan scan http://localhost:3000
+vigil scan http://localhost:3000
 ```
 
 ## Positioning
 
 - **SpecTackle** → ships websites.
-- **AegisScan** → tests them.
+- **Vigil** → tests them.
 
 One builder, one breaker. Together they tell a single portfolio story.
 

@@ -391,7 +391,7 @@ def main() -> None:
 
         from tests.fixtures.certs import make_tls_material
 
-        material = make_tls_material(Path(tempfile.mkdtemp(prefix="aegisscan-fixture-")))
+        material = make_tls_material(Path(tempfile.mkdtemp(prefix="vigil-fixture-")))
         tls = material.vulnerable if args.mode == "vulnerable" else material.clean
         if args.mode == "clean":
             print(f"CA bundle for --ca-bundle: {material.ca_file}")

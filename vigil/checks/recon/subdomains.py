@@ -13,15 +13,15 @@ from __future__ import annotations
 
 import re
 
-from aegisscan import tlsutil
-from aegisscan.checks.base import Check
-from aegisscan.checks.recon.dns import require_dns_name
-from aegisscan.engine import ScanContext
-from aegisscan.htmlutil import extract_links
-from aegisscan.http import RequestFailed, http_evidence
-from aegisscan.models import Evidence, Finding, Severity, Target, host_of, normalize_host
-from aegisscan.resolver import zone_apex
-from aegisscan.scope import OutOfScopeError
+from vigil import tlsutil
+from vigil.checks.base import Check
+from vigil.checks.recon.dns import require_dns_name
+from vigil.engine import ScanContext
+from vigil.htmlutil import extract_links
+from vigil.http import RequestFailed, http_evidence
+from vigil.models import Evidence, Finding, Severity, Target, host_of, normalize_host
+from vigil.resolver import zone_apex
+from vigil.scope import OutOfScopeError
 
 _HOSTNAME = re.compile(r"(?<![\w.-])((?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z]{2,})", re.I)
 

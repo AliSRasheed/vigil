@@ -15,7 +15,7 @@ import dns.exception
 import dns.rdatatype
 import dns.resolver
 
-from aegisscan.models import Evidence
+from vigil.models import Evidence
 
 
 @dataclass

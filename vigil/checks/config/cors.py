@@ -6,14 +6,14 @@ the Access-Control-Allow-* response headers. Nothing else changes.
 
 from __future__ import annotations
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import Response, http_evidence
-from aegisscan.models import Finding, Severity, Target
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import Response, http_evidence
+from vigil.models import Finding, Severity, Target
 
 WITH_CREDENTIALS = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N"  # 7.1
 WITHOUT_CREDENTIALS = "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N"  # 3.1
-PROBE_DOMAIN = "aegisscan-cors-probe.example"  # .example is reserved: it can never be a real site
+PROBE_DOMAIN = "vigil-cors-probe.example"  # .example is reserved: it can never be a real site
 
 
 def allows(response: Response, origin: str) -> bool:

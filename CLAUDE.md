@@ -1,27 +1,28 @@
-# CLAUDE.md — AegisScan
+# CLAUDE.md — Vigil
 
-Read `README.md`, `ROADMAP.md` and `SCOPE-AND-ETHICS.md` before writing code. They are the spec.
+Read `README.md`, `ROADMAP.md`, `SCOPE-AND-ETHICS.md` and, for v2, `V2-PLAN.md` before writing code. They are the spec.
 
 ## What this is
 
-A web application security scanner for authorized testing: reconnaissance plus non-destructive vulnerability detection, with confirmed findings and a professional report. Owner: Ali. Portfolio project, will be public on GitHub.
+A web application security scanner for authorized testing: reconnaissance plus non-destructive configuration and exposure checks, with evidence-backed findings and a professional report. Owner: Ali. Portfolio project, will be public on GitHub.
 
 ## Current scope
 
 Build **v1, then v2** from `ROADMAP.md`. v3 is out of scope.
 v1 must be complete, tested and committed before any v2 work starts.
+v2 is the revised plan in `V2-PLAN.md`: it maps and reports, it does not exploit. Active injection detection is deferred and must not be built until that separate scoping decision is made.
 
 ## Stack
 
 - Python 3.11+, developed on Windows (use `pathlib`, no shell-specific assumptions)
 - `httpx` (async) for HTTP, `dnspython` for DNS, `typer` for the CLI, `pydantic` for models, `jinja2` for reports, `pyyaml` for the scope file
 - `pytest` + `pytest-asyncio` for tests, `ruff` for lint/format
-- Packaged with `pyproject.toml`; entry point `aegisscan`
+- Packaged with `pyproject.toml`; entry point `vigil`
 
 ## Architecture
 
 ```
-aegisscan/
+vigil/
   cli.py            # typer commands: scan, list-checks, report
   engine.py         # orchestration, concurrency, rate limiting
   scope.py          # scope (CLI target + optional scope file) + authorization gate
@@ -29,10 +30,10 @@ aegisscan/
   models.py         # Target, Finding, Evidence, Severity
   checks/           # one module per check, auto-discovered
     base.py         # Check base class + registry
-    recon/  config/  injection/
-  crawler.py        # v2
-  auth.py           # v2 session handling
-  confirm.py        # v2 confirmation engine
+    recon/  config/
+  crawler.py        # v2 site mapper: pages, forms, inputs, parameters
+  auth.py           # v2 session handling (login, hold the session)
+  flags.py          # v2 passive risk flags, for human review
   report/           # html + json renderers, templates
 tests/
   fixtures/         # local deliberately-misconfigured test app
@@ -43,10 +44,10 @@ Every check is a plugin: a class with `id`, `title`, `severity`, `cwe`, `owasp`,
 ## Non-negotiable rules
 
 1. **Scope gate.** Two conditions must both hold before any request leaves the tool:
-   - **In scope:** scope is the set of hosts the operator explicitly named. By default that is exactly the host in the target URL given on the command line (`aegisscan scan https://app.example.com`) — no file needed. An optional `scope.yaml` (`--scope`) widens or narrows it: extra hosts, `include_subdomains`, excluded paths, an `authorization:` block. The tool never requests a host outside this set: links, redirects and subdomains that lead elsewhere are recorded in the report, never followed. This has no off switch, no flag, no env var.
+   - **In scope:** scope is the set of hosts the operator explicitly named. By default that is exactly the host in the target URL given on the command line (`vigil scan https://app.example.com`) — no file needed. An optional `scope.yaml` (`--scope`) widens or narrows it: extra hosts, `include_subdomains`, excluded paths, an `authorization:` block. The tool never requests a host outside this set: links, redirects and subdomains that lead elsewhere are recorded in the report, never followed. This has no off switch, no flag, no env var.
    - **Authorization asserted**, by any one of:
      - `--i-have-authorization` on the command line — the normal path;
-     - `AEGISSCAN_AUTHORIZED=1` in the environment, for CI or a dev shell;
+     - `VIGIL_AUTHORIZED=1` in the environment, for CI or a dev shell;
      - an `authorization:` block in a scope file (`asserted_by`, `date`, `basis: owned | written-permission`), for repeat engagements.
    - Loopback targets (`localhost`, `127.0.0.1`, `::1`) need no assertion.
    - Every scan logs which assertion was used, with a timestamp, and the report prints it.
@@ -59,8 +60,7 @@ Every check is a plugin: a class with `id`, `title`, `severity`, `cwe`, `owasp`,
 
    Every other discovered form is inventoried and probed only through GET parameters; it is never submitted. PUT, PATCH and DELETE are never sent. Tests must prove an un-allowed form is never submitted.
 3. **Evidence.** Every finding stores the request, the relevant response excerpt, and why it was flagged.
-4. **Confirm before reporting (v2).** Injection-class candidates go through `confirm.py`; unconfirmed ones are reported as "tentative", never as confirmed.
-5. **Polite.** Default rate limit, honour `Retry-After`, identifiable User-Agent.
+4. **Polite.** Default rate limit, honour `Retry-After`, identifiable User-Agent.
 
 ## Testing
 
@@ -74,9 +74,10 @@ Every check is a plugin: a class with `id`, `title`, `severity`, `cwe`, `owasp`,
 - Small commits, conventional messages (`feat(checks): add cors misconfiguration check`).
 - When a design choice is unclear, pick the simpler option and note it in `DECISIONS.md`.
 - Do not add checks beyond the roadmap without asking.
-- Keep the README's check table in sync with the registry (`aegisscan list-checks --markdown`).
+- Keep the README's check table in sync with the registry (`vigil list-checks --markdown`).
 
 ## Definition of done
 
 - v1: all v1 checks implemented and tested, HTML + JSON report generated from a fixture scan, README has install/usage/sample report screenshot, tagged `v0.1.0`.
-- v2: crawler, authenticated scanning, injection-class detection with confirmation, false-positive tests, tagged `v0.2.0`.
+- v2 (revised, per `V2-PLAN.md`): site mapper with depth and page limits inventorying pages, forms, inputs and parameters on the named host; authenticated scanning that logs in with operator-supplied credentials to the operator-named login URL and re-runs the v1 checks on logged-in pages; passive risk flags for human review, never confirmed by sending inputs; report extensions showing the crawl map, authenticated findings and flagged spots separately from confirmed findings; the request-method rule enforced and tested, including that an un-allowed form is never submitted; tagged `v0.2.0`.
+- Deferred, not part of v2: active injection detection and any confirmation engine.

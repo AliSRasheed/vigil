@@ -1,5 +1,5 @@
 {
-  "tool": "AegisScan",
+  "tool": "Vigil",
   "version": "0.1.1",
   "summary": {
     "total": 27,
@@ -27,13 +27,13 @@
   "authorization": {
     "method": "loopback",
     "detail": "loopback target, no assertion required",
-    "timestamp": "2026-11-13T19:25:28.301891Z",
+    "timestamp": "2026-11-13T20:57:05.854660Z",
     "asserted_by": null,
     "basis": null,
     "date": null
   },
-  "started_at": "2026-11-13T19:25:28.349583Z",
-  "finished_at": "2026-11-13T19:25:39.102323Z",
+  "started_at": "2026-11-13T20:57:06.736731Z",
+  "finished_at": "2026-11-13T20:57:17.943211Z",
   "checks": [
     {
       "check": {
@@ -81,7 +81,7 @@
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 124
+      "duration_ms": 149
     },
     {
       "check": {
@@ -113,7 +113,7 @@
       "status": "ran",
       "detail": "",
       "findings": 6,
-      "duration_ms": 3552
+      "duration_ms": 3524
     },
     {
       "check": {
@@ -129,7 +129,7 @@
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 51
+      "duration_ms": 50
     },
     {
       "check": {
@@ -145,7 +145,7 @@
       "status": "ran",
       "detail": "",
       "findings": 2,
-      "duration_ms": 52
+      "duration_ms": 50
     },
     {
       "check": {
@@ -161,7 +161,7 @@
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 311
+      "duration_ms": 259
     },
     {
       "check": {
@@ -177,7 +177,7 @@
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 8087
+      "duration_ms": 8064
     },
     {
       "check": {
@@ -193,7 +193,7 @@
       "status": "ran",
       "detail": "",
       "findings": 8,
-      "duration_ms": 10501
+      "duration_ms": 10461
     },
     {
       "check": {
@@ -209,7 +209,7 @@
       "status": "ran",
       "detail": "",
       "findings": 2,
-      "duration_ms": 787
+      "duration_ms": 799
     },
     {
       "check": {
@@ -225,7 +225,7 @@
       "status": "ran",
       "detail": "",
       "findings": 5,
-      "duration_ms": 1
+      "duration_ms": 0
     }
   ],
   "findings": [
@@ -241,8 +241,8 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nOrigin: https://aegisscan-cors-probe.example\nCookie: <redacted>",
-          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nAccess-Control-Allow-Origin: https://aegisscan-cors-probe.example\nAccess-Control-Allow-Credentials: true\nVary: Origin\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nOrigin: https://vigil-cors-probe.example\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nAccess-Control-Allow-Origin: https://vigil-cors-probe.example\nAccess-Control-Allow-Credentials: true\nVary: Origin\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The server copied an arbitrary, unrelated Origin into Access-Control-Allow-Origin, and also sent Access-Control-Allow-Credentials: true. A malicious site can therefore make requests as a logged-in visitor and read the responses."
         }
       ],
@@ -265,7 +265,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /backup.zip HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /backup.zip HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/zip\nContent-Length: 74\n\n<binary file, first bytes b'PK\\x03\\x04\\x14\\x00\\x00\\x00', Content-Length: 74; not downloaded>",
           "note": "/backup.zip is served and its content matches the expected format"
         }
@@ -289,8 +289,8 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /config.php.bak HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/octet-stream\nContent-Length: 74\n\n<?php\n[2 more line(s) withheld by AegisScan]",
+          "request": "GET /config.php.bak HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/octet-stream\nContent-Length: 74\n\n<?php\n[2 more line(s) withheld by Vigil]",
           "note": "/config.php.bak is served and its content matches the expected format"
         }
       ],
@@ -313,8 +313,8 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /database.sql HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/sql\nContent-Length: 126\n\n-- MySQL dump 10.13\n[2 more line(s) withheld by AegisScan]",
+          "request": "GET /database.sql HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/sql\nContent-Length: 126\n\n-- MySQL dump 10.13\n[2 more line(s) withheld by Vigil]",
           "note": "/database.sql is served and its content matches the expected format"
         }
       ],
@@ -337,8 +337,8 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /.env HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 94\n\nAPP_ENV=<redacted>\nDB_PASSWORD=<redacted>\nSECRET_KEY=<redacted>\n[values masked by AegisScan]",
+          "request": "GET /.env HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 94\n\nAPP_ENV=<redacted>\nDB_PASSWORD=<redacted>\nSECRET_KEY=<redacted>\n[values masked by Vigil]",
           "note": "/.env is served and its content matches the expected format"
         }
       ],
@@ -361,14 +361,14 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /.git/HEAD HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /.git/HEAD HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 21\n\nref: refs/heads/main",
           "note": "/.git/HEAD is served and its content matches the expected format"
         },
         {
           "kind": "http",
-          "request": "GET /.git/config HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 112\n\n[core]\n\trepositoryformatversion = <redacted>\n\tbare = <redacted>\n[remote \"origin\"]\n\turl = <redacted>\n[values masked by AegisScan]",
+          "request": "GET /.git/config HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 112\n\n[core]\n\trepositoryformatversion = <redacted>\n\tbare = <redacted>\n[remote \"origin\"]\n\turl = <redacted>\n[values masked by Vigil]",
           "note": "/.git/config is served and its content matches the expected format"
         }
       ],
@@ -391,7 +391,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The page sends neither X-Frame-Options nor a Content-Security-Policy frame-ancestors directive, so any website can display it inside a frame."
         }
@@ -415,7 +415,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The session cookie can be read by JavaScript, so any cross-site scripting flaw can steal it. The session cookie will also be sent over unencrypted HTTP, where it can be intercepted. No SameSite attribute is set; protection against cross-site request forgery then depends on each browser's default."
         }
@@ -439,19 +439,19 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /static/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /static/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 485\n\n<title>Index of /static/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
           "note": "Response is a generated directory index (marker: <html><head><title>Index of /static/</title></head><body>)"
         },
         {
           "kind": "http",
-          "request": "GET /uploads/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /uploads/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 487\n\n<title>Index of /uploads/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
           "note": "Response is a generated directory index (marker: <html><head><title>Index of /uploads/</title></head><body>)"
         },
         {
           "kind": "http",
-          "request": "GET /backup/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /backup/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 485\n\n<title>Index of /backup/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
           "note": "Response is a generated directory index (marker: <html><head><title>Index of /backup/</title></head><body>)"
         }
@@ -475,7 +475,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /server-status HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /server-status HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html\nContent-Length: 155\n\n<title>Apache Status</title>\n<h1>Apache Server Status for fixture</h1>",
           "note": "/server-status is served and its content matches the expected format"
         }
@@ -499,7 +499,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /.DS_Store HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /.DS_Store HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/octet-stream\nContent-Length: 40\n\n<binary file, first bytes b'\\x00\\x00\\x00\\x01Bud1', Content-Length: 40; not downloaded>",
           "note": "/.DS_Store is served and its content matches the expected format"
         }
@@ -523,7 +523,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /phpinfo.php HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /phpinfo.php HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html\nContent-Length: 156\n\n<title>phpinfo()</title>\n<h1>PHP Version 7.4.3</h1>",
           "note": "/phpinfo.php is served and its content matches the expected format"
         }
@@ -536,19 +536,19 @@
       "references": []
     },
     {
-      "id": "config.info_disclosure-9092966232",
+      "id": "config.info_disclosure-e538bb9a04",
       "check_id": "config.info_disclosure",
       "title": "Verbose error page exposes internal details",
       "severity": "medium",
       "category": "config",
-      "url": "https://localhost:8443/aegisscan-61cad4d95bd0",
+      "url": "https://localhost:8443/vigil-808e4c7a3083",
       "description": "Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.",
       "why": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.",
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /aegisscan-61cad4d95bd0 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<pre>Traceback (most recent call last):\n  File \"/var/www/shop/app/router.py\", line 42, in dispatch\n    handler = self.routes[path]\nKeyError: '/aegisscan-61cad4d95bd0'\n</pre>",
+          "request": "GET /vigil-808e4c7a3083 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 403\n\n<pre>Traceback (most recent call last):\n  File \"/var/www/shop/app/router.py\", line 42, in dispatch\n    handler = self.routes[path]\nKeyError: '/vigil-808e4c7a3083'\n</pre>",
           "note": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure."
         }
       ],
@@ -571,7 +571,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The HTTPS response has no Strict-Transport-Security header."
         }
@@ -620,7 +620,7 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443 (SNI localhost)",
-          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:25 UTC\nvalid to:   2026-10-14 19:25 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=Vigil test fixtures\nissuer:     CN=legacy.fixture.test,O=Vigil test fixtures\nvalid from: 2025-10-09 20:57 UTC\nvalid to:   2026-10-14 20:57 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     0dba34e7f0369e703f9668b9b18763a0c53b0f26f4793f7f04eaa7b857b70d05",
           "note": "The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from an impostor."
         }
       ],
@@ -644,7 +644,7 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443 (SNI localhost)",
-          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:25 UTC\nvalid to:   2026-10-14 19:25 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=Vigil test fixtures\nissuer:     CN=legacy.fixture.test,O=Vigil test fixtures\nvalid from: 2025-10-09 20:57 UTC\nvalid to:   2026-10-14 20:57 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     0dba34e7f0369e703f9668b9b18763a0c53b0f26f4793f7f04eaa7b857b70d05",
           "note": "The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients refuse to connect."
         }
       ],
@@ -668,7 +668,7 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443, verifying the certificate chain against the trusted CA store",
-          "response": "verification failed: self-signed certificate\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:25 UTC\nvalid to:   2026-10-14 19:25 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8",
+          "response": "verification failed: self-signed certificate\nsubject:    CN=legacy.fixture.test,O=Vigil test fixtures\nissuer:     CN=legacy.fixture.test,O=Vigil test fixtures\nvalid from: 2025-10-09 20:57 UTC\nvalid to:   2026-10-14 20:57 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     0dba34e7f0369e703f9668b9b18763a0c53b0f26f4793f7f04eaa7b857b70d05",
           "note": "Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted certificate authority (it is self-signed)."
         }
       ],
@@ -715,7 +715,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The cookie will also be sent over unencrypted HTTP, where it can be intercepted. SameSite=None is set without Secure; browsers reject this combination and the intent (cross-site use) is unprotected."
         }
@@ -739,14 +739,14 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "Response headers name the software and version in use"
         },
         {
           "kind": "http",
-          "request": "GET /aegisscan-61cad4d95bd0 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<address>Apache/2.4.49 (Unix) Server at localhost Port 80</address>",
+          "request": "GET /vigil-808e4c7a3083 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 403\n\n<address>Apache/2.4.49 (Unix) Server at localhost Port 80</address>",
           "note": "The error page for a non-existent path prints the server version"
         }
       ],
@@ -769,7 +769,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The response has no Content-Security-Policy header."
         }
@@ -793,7 +793,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The response has no X-Content-Type-Options header."
         }
@@ -841,7 +841,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The response has no Permissions-Policy header."
         }
@@ -865,7 +865,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
           "note": "The response has no Referrer-Policy header, so the browser default applies."
         }
@@ -889,7 +889,7 @@
       "evidence": [
         {
           "kind": "http",
-          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: Vigil/0.1.1 (authorized security testing; non-destructive)\nAccept: */*",
           "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581\n\nWordPress 5.8.1              meta generator: WordPress 5.8.1\njQuery 3.4.1                 page markup: jquery-3.4.1.min.js\nPHP 7.4.3                    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nOpenSSL 1.1.1k               Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nApache HTTP Server 2.4.49    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3",
           "note": "The response identifies the software behind the site: WordPress 5.8.1, jQuery 3.4.1, PHP 7.4.3, OpenSSL 1.1.1k, Apache HTTP Server 2.4.49."
         }
@@ -941,8 +941,8 @@
     },
     "tls": {
       "negotiated": "TLSv1.3, TLS_AES_256_GCM_SHA384 (256 bits)",
-      "certificate subject": "CN=legacy.fixture.test,O=AegisScan test fixtures",
-      "issuer": "CN=legacy.fixture.test,O=AegisScan test fixtures",
+      "certificate subject": "CN=legacy.fixture.test,O=Vigil test fixtures",
+      "issuer": "CN=legacy.fixture.test,O=Vigil test fixtures",
       "valid": "2025-10-09 to 2026-10-14",
       "names": [
         "legacy.fixture.test"

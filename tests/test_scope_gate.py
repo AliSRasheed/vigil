@@ -19,13 +19,16 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from aegisscan.checks.base import Check
-from aegisscan.cli import app as cli_app
-from aegisscan.engine import ScanContext, run_scan
-from aegisscan.htmlutil import extract_links
-from aegisscan.http import HttpClient
-from aegisscan.models import Finding, Severity, Target
-from aegisscan.scope import (
+from tests.conftest import FAST
+from tests.fixtures.app import FixtureApp
+from tests.fixtures.transport import RewriteTransport
+from vigil.checks.base import Check
+from vigil.cli import app as cli_app
+from vigil.engine import ScanContext, run_scan
+from vigil.htmlutil import extract_links
+from vigil.http import HttpClient
+from vigil.models import Finding, Severity, Target
+from vigil.scope import (
     ENV_VAR,
     AuthorizationError,
     OutOfScopeError,
@@ -33,9 +36,6 @@ from aegisscan.scope import (
     ScopeError,
     authorize,
 )
-from tests.conftest import FAST
-from tests.fixtures.app import FixtureApp
-from tests.fixtures.transport import RewriteTransport
 
 NAMED = "app.fixture.test"
 OTHER = "other.fixture.test"
@@ -213,7 +213,7 @@ def test_named_host_without_assertion_is_blocked() -> None:
     message = str(excinfo.value)
     assert "app.example.com" in message
     assert "--i-have-authorization" in message
-    assert "AEGISSCAN_AUTHORIZED=1" in message
+    assert "VIGIL_AUTHORIZED=1" in message
     assert "authorization:" in message
 
 
@@ -417,9 +417,9 @@ def test_the_assertion_used_is_logged_with_a_timestamp(
     method: str, tmp_path: Path, caplog: pytest.LogCaptureFixture
 ) -> None:
     url = "http://127.0.0.1:9/" if method == "loopback" else TARGET
-    with caplog.at_level(logging.INFO, logger="aegisscan.audit"):
+    with caplog.at_level(logging.INFO, logger="vigil.audit"):
         permit = permit_for(method, tmp_path, url)
-    records = [record for record in caplog.records if record.name == "aegisscan.audit"]
+    records = [record for record in caplog.records if record.name == "vigil.audit"]
     assert len(records) == 1
     message = records[0].getMessage()
     assert f"method={method}" in message
@@ -442,7 +442,7 @@ def test_cli_writes_the_assertion_to_the_audit_log_and_report(
     assert entry["target"] == clean_app.url + "/"
     assert entry["timestamp"]
 
-    report = json.loads((out / "aegisscan-report.json").read_text(encoding="utf-8"))
+    report = json.loads((out / "vigil-report.json").read_text(encoding="utf-8"))
     assert report["authorization"]["method"] == "flag"
     assert report["authorization"]["timestamp"]
     assert report["scope_hosts"] == ["127.0.0.1"]

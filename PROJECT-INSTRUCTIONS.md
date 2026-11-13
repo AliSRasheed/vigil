@@ -1,6 +1,6 @@
 # Claude Project instructions — paste into the project's custom instructions
 
-This project manages AegisScan, Ali's web application security scanner for authorized testing. The code is written in Claude Code; this project is for planning, review and decisions.
+This project manages Vigil, Ali's web application security scanner for authorized testing. The code is written in Claude Code; this project is for planning, review and decisions.
 
 - Source of truth: `README.md`, `ROADMAP.md`, `SCOPE-AND-ETHICS.md`, `CLAUDE.md` in the connected folder. Read them before answering.
 - Current scope: v1 then v2 of the roadmap. Flag anything that drifts into v3.

@@ -5,11 +5,11 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-from aegisscan import cvss
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import http_evidence
-from aegisscan.models import Finding, Severity, Target
+from vigil import cvss
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import http_evidence
+from vigil.models import Finding, Severity, Target
 
 SESSION_NO_HTTPONLY = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N"  # 4.3
 SESSION_NO_SECURE = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"  # 5.9

@@ -10,12 +10,12 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 - **Scope is by host name, not by port or scheme.** `http://app.example.com:8080` is in scope when `app.example.com` is named. Only `http` and `https` URLs are ever requested.
 - **Scope is by the literal name the operator typed.** `127.0.0.1` and `localhost` are different hosts: scanning one never contacts the other. No DNS resolution is involved in the decision.
 - **Loopback means exactly `localhost`, `127.0.0.1`, `::1`**, as listed in CLAUDE.md. Other `127.0.0.0/8` addresses need an assertion. The loopback exemption applies only when *every* in-scope host is loopback and `include_subdomains` is off; a loopback target with an external host added by a scope file needs an assertion.
-- **`AEGISSCAN_AUTHORIZED` must be exactly `1`.** `true`, `yes`, `0` do not count.
+- **`VIGIL_AUTHORIZED` must be exactly `1`.** `true`, `yes`, `0` do not count.
 - **Precedence when several assertions are present:** flag, then environment, then scope file. The first one found is the one logged.
 - **Scope file is strict.** Unknown keys are an error (so a typo such as `authorisation:` cannot silently drop the authorization block). `hosts` entries must be bare host names: no URLs, no wildcards (`include_subdomains` covers that).
 - **`exclude_paths` matching:** an entry without a wildcard excludes that path and everything beneath it (`/admin` excludes `/admin/users`, not `/administrator`); an entry with `*` or `?` is a glob over the whole path.
 - **Where the gate lives.** `scope.authorize()` is the only producer of a `Permit`; `HttpClient` and `Engine` refuse to be constructed without one. Every HTTP request passes `Scope.check_url` in `HttpClient._send`, and every TLS probe passes `Scope.check_host` in `tlsutil.probe`. There is no parameter anywhere that disables either.
-- **Audit trail in three places:** the `aegisscan.audit` logger (printed to stderr by the CLI), an `audit.log` JSON-lines file appended in the output directory, and the `authorization` block of every report.
+- **Audit trail in three places:** the `vigil.audit` logger (printed to stderr by the CLI), an `audit.log` JSON-lines file appended in the output directory, and the `authorization` block of every report.
 - **Exit code 2** for a blocked scan or a usage error (unknown check, unknown format). Exit 0 for a completed scan regardless of findings; failing a build on severity is v3 (CI integration).
 
 ### HTTP client
@@ -84,7 +84,7 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 
 - **The HTML report is one self-contained file**: no scripts, no external assets, light and dark themes, printable. Everything from the target is HTML-escaped.
 - **The executive summary text is generated from the results**, and states how many checks did not run.
-- **JSON is the full result model plus a `summary` block.** `aegisscan report` re-renders HTML from it.
+- **JSON is the full result model plus a `summary` block.** `vigil report` re-renders HTML from it.
 - **The sample report scans the vulnerable fixture over HTTPS on `localhost`**, so the three DNS-based checks appear as "not applicable". They are covered by tests against the fixture DNS server.
 
 ### Not done in v1
@@ -95,8 +95,8 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 
 ## OWASP Top 10:2025 mapping (after v0.1.0)
 
-- **The mapping moved from the 2021 edition to the 2025 edition**, and is now driven by CWE. `aegisscan/owasp.py` holds one table, CWE to category, and a finding's category is looked up from its CWE. Under 2021 nearly everything was labelled A05 Security Misconfiguration by judgement; under 2025 each label is the category whose official "List of Mapped CWEs" contains the CWE.
-- **Source:** the category pages at https://owasp.org/Top10/2025/ (which redirects to top10.owasp.org/2025), read on 2026-11-14. Each CWE AegisScan reports was looked up in those lists, not recalled from memory. The pages themselves do not state a release status or date.
+- **The mapping moved from the 2021 edition to the 2025 edition**, and is now driven by CWE. `vigil/owasp.py` holds one table, CWE to category, and a finding's category is looked up from its CWE. Under 2021 nearly everything was labelled A05 Security Misconfiguration by judgement; under 2025 each label is the category whose official "List of Mapped CWEs" contains the CWE.
+- **Source:** the category pages at https://owasp.org/Top10/2025/ (which redirects to top10.owasp.org/2025), read on 2026-11-14. Each CWE Vigil reports was looked up in those lists, not recalled from memory. The pages themselves do not state a release status or date.
 - **Result, by CWE:**
   - A01 Broken Access Control: CWE-200, 538, 548, 552, 1275
   - A02 Security Misconfiguration: CWE-614, 942, 1004
@@ -117,3 +117,7 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 - **PUT, PATCH and DELETE are never sent.**
 - v2 must include tests proving an un-allowed form is never submitted.
 - Status: recorded here and in CLAUDE.md (rule 2). Not yet implemented: as of `v0.1.1` the HTTP client sends only GET, HEAD and OPTIONS, which is stricter than this rule.
+
+## Rename
+
+- Renamed from AegisScan to Vigil on 2026-11-14 (package `vigil`, CLI `vigil`, env var `VIGIL_AUTHORIZED`); releases v0.1.0 and v0.1.1 shipped under the old name.

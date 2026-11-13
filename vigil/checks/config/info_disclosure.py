@@ -10,11 +10,11 @@ import contextlib
 import re
 import secrets
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import RequestFailed, Response, http_evidence
-from aegisscan.models import Evidence, Finding, Severity, Target
-from aegisscan.scope import OutOfScopeError
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import RequestFailed, Response, http_evidence
+from vigil.models import Evidence, Finding, Severity, Target
+from vigil.scope import OutOfScopeError
 
 VERSIONS = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"  # 3.7
 STACK_TRACE = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"  # 5.3
@@ -86,7 +86,7 @@ class InfoDisclosure(Check):
 
         error_page: Response | None = None
         with contextlib.suppress(RequestFailed, OutOfScopeError):
-            error_page = await ctx.http.get(target.join(f"aegisscan-{secrets.token_hex(6)}"))
+            error_page = await ctx.http.get(target.join(f"vigil-{secrets.token_hex(6)}"))
 
         # 1. product names and versions
         evidence: list[Evidence] = []

@@ -2,7 +2,7 @@
 
 A check is a plugin: a class with metadata and an async ``run``. Subclassing
 `Check` registers it; `discover_checks()` imports every module under
-``aegisscan.checks`` so that dropping a new module into the package is all it
+``vigil.checks`` so that dropping a new module into the package is all it
 takes to add a check. The engine never refers to an individual check.
 """
 
@@ -13,13 +13,13 @@ import pkgutil
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, ClassVar
 
-from aegisscan import cvss
-from aegisscan import owasp as owasp_map
-from aegisscan.models import CheckInfo, Evidence, Finding, Severity, Target
-from aegisscan.owasp import category_for as owasp_category_for
+from vigil import cvss
+from vigil import owasp as owasp_map
+from vigil.models import CheckInfo, Evidence, Finding, Severity, Target
+from vigil.owasp import category_for as owasp_category_for
 
 if TYPE_CHECKING:
-    from aegisscan.engine import ScanContext
+    from vigil.engine import ScanContext
 
 _REGISTRY: dict[str, type[Check]] = {}
 _REQUIRED = ("id", "title", "severity", "cwe", "owasp", "category")
@@ -53,7 +53,7 @@ class Check(ABC):
         if cls.owasp != expected:
             raise TypeError(
                 f"check {cls.id}: owasp is {cls.owasp!r} but {cls.cwe} maps to {expected!r} "
-                "in the OWASP Top 10:2025 (see aegisscan/owasp.py)"
+                "in the OWASP Top 10:2025 (see vigil/owasp.py)"
             )
         existing = _REGISTRY.get(cls.id)
         if existing is not None and existing.__qualname__ != cls.__qualname__:
@@ -123,8 +123,8 @@ class Check(ABC):
 
 
 def discover_checks() -> list[type[Check]]:
-    """Import every module under ``aegisscan.checks`` and return the registered checks."""
-    import aegisscan.checks as package
+    """Import every module under ``vigil.checks`` and return the registered checks."""
+    import vigil.checks as package
 
     for module in pkgutil.walk_packages(package.__path__, prefix=f"{package.__name__}."):
         importlib.import_module(module.name)

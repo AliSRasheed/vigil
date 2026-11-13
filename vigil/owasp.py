@@ -23,7 +23,7 @@ CATEGORIES = {
     "A10": "Mishandling of Exceptional Conditions",
 }
 
-# Only the CWEs AegisScan reports. Each entry was read from the mapped-CWE list of the
+# Only the CWEs Vigil reports. Each entry was read from the mapped-CWE list of the
 # category page named on the right.
 _CWE_TO_CATEGORY = {
     # A01:2025 Broken Access Control

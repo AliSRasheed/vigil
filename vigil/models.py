@@ -11,7 +11,7 @@ from urllib.parse import urljoin, urlsplit
 
 from pydantic import BaseModel, Field
 
-from aegisscan import __version__
+from vigil import __version__
 
 _DEFAULT_PORTS = {"http": 80, "https": 443}
 
@@ -175,7 +175,7 @@ class CheckRun(BaseModel):
 
 
 class ScanResult(BaseModel):
-    tool: str = "AegisScan"
+    tool: str = "Vigil"
     version: str = __version__
     target: Target
     scope_hosts: list[str]

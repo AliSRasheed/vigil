@@ -9,12 +9,12 @@ from __future__ import annotations
 import re
 from urllib.parse import urlsplit
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.htmlutil import extract_links
-from aegisscan.http import RequestFailed, Response, http_evidence
-from aegisscan.models import Finding, Severity, Target, host_of
-from aegisscan.scope import OutOfScopeError
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.htmlutil import extract_links
+from vigil.http import RequestFailed, Response, http_evidence
+from vigil.models import Finding, Severity, Target, host_of
+from vigil.scope import OutOfScopeError
 
 VECTOR = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"  # 5.3
 COMMON_DIRECTORIES = (

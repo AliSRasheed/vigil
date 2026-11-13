@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from aegisscan import cvss
-from aegisscan.models import Severity, Target
+from vigil import cvss
+from vigil.models import Severity, Target
 
 
 @pytest.mark.parametrize(

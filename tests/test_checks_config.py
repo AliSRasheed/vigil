@@ -5,22 +5,22 @@ from __future__ import annotations
 import httpx
 import pytest
 
-from aegisscan.checks.config.clickjacking import Clickjacking, framing_weakness
-from aegisscan.checks.config.cookies import CookieFlags, cookie_issues, parse_set_cookie
-from aegisscan.checks.config.cors import CorsMisconfiguration
-from aegisscan.checks.config.directory_listing import DirectoryListing
-from aegisscan.checks.config.exposed_files import PROBES, ExposedFiles
-from aegisscan.checks.config.info_disclosure import InfoDisclosure, error_detail
-from aegisscan.checks.config.security_headers import (
+from tests.fixtures.app import FAKE_SECRET, FixtureApp
+from vigil.checks.config.clickjacking import Clickjacking, framing_weakness
+from vigil.checks.config.cookies import CookieFlags, cookie_issues, parse_set_cookie
+from vigil.checks.config.cors import CorsMisconfiguration
+from vigil.checks.config.directory_listing import DirectoryListing
+from vigil.checks.config.exposed_files import PROBES, ExposedFiles
+from vigil.checks.config.info_disclosure import InfoDisclosure, error_detail
+from vigil.checks.config.security_headers import (
     SecurityHeaders,
     analyse,
     csp_weaknesses,
     grade,
 )
-from aegisscan.http import Response, parse_csp
-from aegisscan.models import Finding, Severity
-from aegisscan.scope import authorize
-from tests.fixtures.app import FAKE_SECRET, FixtureApp
+from vigil.http import Response, parse_csp
+from vigil.models import Finding, Severity
+from vigil.scope import authorize
 
 
 async def run(check, make_ctx, url: str, **kwargs) -> list[Finding]:
@@ -176,7 +176,7 @@ async def test_cors_fires_on_vulnerable(make_ctx, vulnerable_app: FixtureApp) ->
     assert_well_formed(findings)
     assert titles(findings) == ["CORS policy reflects any Origin with credentials"]
     assert findings[0].severity is Severity.HIGH
-    assert "Origin: https://aegisscan-cors-probe.example" in findings[0].evidence[0].request
+    assert "Origin: https://vigil-cors-probe.example" in findings[0].evidence[0].request
     assert "Access-Control-Allow-Credentials: true" in findings[0].evidence[0].response
 
 

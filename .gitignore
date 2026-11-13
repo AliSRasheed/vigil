@@ -10,7 +10,7 @@ dist/
 htmlcov/
 
 # scan output: never commit results from real targets
-aegisscan-out/
+vigil-out/
 *.audit.log
 
 # editor / OS

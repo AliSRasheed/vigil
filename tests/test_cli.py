@@ -6,9 +6,9 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from aegisscan import __version__
-from aegisscan.cli import app
 from tests.fixtures.app import FixtureApp
+from vigil import __version__
+from vigil.cli import app
 
 runner = CliRunner()
 
@@ -16,7 +16,7 @@ runner = CliRunner()
 def test_version() -> None:
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
-    assert result.output.strip() == f"AegisScan {__version__}"
+    assert result.output.strip() == f"Vigil {__version__}"
 
 
 def test_list_checks_runs() -> None:

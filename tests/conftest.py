@@ -8,15 +8,15 @@ from collections.abc import Iterator
 
 import pytest
 
-from aegisscan import engine as engine_module
-from aegisscan.engine import ScanContext, ScanOptions
-from aegisscan.http import HttpClient
-from aegisscan.resolver import DnsClient
-from aegisscan.scope import ENV_VAR, Permit, authorize
 from tests.fixtures.app import FixtureApp
 from tests.fixtures.certs import TlsMaterial, make_tls_material
 from tests.fixtures.dns_server import FixtureDns
 from tests.fixtures.transport import RewriteTransport
+from vigil import engine as engine_module
+from vigil.engine import ScanContext, ScanOptions
+from vigil.http import HttpClient
+from vigil.resolver import DnsClient
+from vigil.scope import ENV_VAR, Permit, authorize
 
 FAST = ScanOptions(rate=None, timeout=5.0, retries=1)
 

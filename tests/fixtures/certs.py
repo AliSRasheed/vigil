@@ -18,7 +18,7 @@ from cryptography.x509.oid import ExtendedKeyUsageOID, NameOID
 def _name(common_name: str) -> x509.Name:
     return x509.Name(
         [
-            x509.NameAttribute(NameOID.ORGANIZATION_NAME, "AegisScan test fixtures"),
+            x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Vigil test fixtures"),
             x509.NameAttribute(NameOID.COMMON_NAME, common_name),
         ]
     )
@@ -37,7 +37,7 @@ def _alt_names(names: list[str]) -> x509.SubjectAlternativeName:
 def make_ca() -> tuple[rsa.RSAPrivateKey, x509.Certificate]:
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     now = dt.datetime.now(dt.UTC)
-    name = _name("AegisScan Fixture Root CA")
+    name = _name("Vigil Fixture Root CA")
     cert = (
         x509.CertificateBuilder()
         .subject_name(name)

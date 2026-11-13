@@ -10,17 +10,17 @@ import datetime as dt
 
 import pytest
 
-from aegisscan import tlsutil
-from aegisscan.checks.base import CheckSkipped
-from aegisscan.checks.recon.dns import DnsRecords
-from aegisscan.checks.recon.email_auth import EmailAuthentication, dmarc_policy, spf_all_qualifier
-from aegisscan.checks.recon.fingerprint import TechnologyFingerprint
-from aegisscan.checks.recon.subdomains import SubdomainEnumeration, hostnames_in
-from aegisscan.checks.recon.tls import TlsAnalysis, certificate_problems
-from aegisscan.models import Finding, Severity
 from tests.fixtures.app import FixtureApp
 from tests.fixtures.dns_server import FixtureDns
 from tests.test_checks_config import assert_well_formed, run, titles
+from vigil import tlsutil
+from vigil.checks.base import CheckSkipped
+from vigil.checks.recon.dns import DnsRecords
+from vigil.checks.recon.email_auth import EmailAuthentication, dmarc_policy, spf_all_qualifier
+from vigil.checks.recon.fingerprint import TechnologyFingerprint
+from vigil.checks.recon.subdomains import SubdomainEnumeration, hostnames_in
+from vigil.checks.recon.tls import TlsAnalysis, certificate_problems
+from vigil.models import Finding, Severity
 
 VULNERABLE = "vulnerable-fixture.test"
 CLEAN = "clean-fixture.test"

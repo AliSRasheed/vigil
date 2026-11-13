@@ -17,15 +17,15 @@ from typing import Any
 
 import httpx
 
-from aegisscan import tlsutil
-from aegisscan.checks.base import Check, CheckSkipped, discover_checks
-from aegisscan.htmlutil import extract_links
-from aegisscan.http import HttpClient, RequestFailed, Response
-from aegisscan.models import CheckRun, Finding, ScanResult, Target, host_of
-from aegisscan.resolver import DnsClient
-from aegisscan.scope import OutOfScopeError, OutOfScopeLog, Permit
+from vigil import tlsutil
+from vigil.checks.base import Check, CheckSkipped, discover_checks
+from vigil.htmlutil import extract_links
+from vigil.http import HttpClient, RequestFailed, Response
+from vigil.models import CheckRun, Finding, ScanResult, Target, host_of
+from vigil.resolver import DnsClient
+from vigil.scope import OutOfScopeError, OutOfScopeLog, Permit
 
-log = logging.getLogger("aegisscan.engine")
+log = logging.getLogger("vigil.engine")
 
 
 @dataclass
@@ -105,7 +105,7 @@ def select_checks(
     unknown = [name for name in (only or []) + (skip or []) if name not in known]
     if unknown:
         raise ValueError(
-            f"unknown check or category: {', '.join(unknown)} (see `aegisscan list-checks`)"
+            f"unknown check or category: {', '.join(unknown)} (see `vigil list-checks`)"
         )
 
     def matches(check: type[Check], names: list[str]) -> bool:
@@ -126,7 +126,7 @@ class Engine:
         dns: DnsClient | None = None,
     ) -> None:
         if not isinstance(permit, Permit):
-            raise TypeError("Engine requires a Permit from aegisscan.scope.authorize()")
+            raise TypeError("Engine requires a Permit from vigil.scope.authorize()")
         self.permit = permit
         self.options = options or ScanOptions()
         self.checks = select_checks() if checks is None else checks

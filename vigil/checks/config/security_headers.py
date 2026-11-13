@@ -11,10 +11,10 @@ from dataclasses import dataclass
 
 import httpx
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import http_evidence, parse_csp
-from aegisscan.models import Finding, Severity, Target
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import http_evidence, parse_csp
+from vigil.models import Finding, Severity, Target
 
 LOW = "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N"  # 3.1
 HSTS_MISSING = "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N"  # 4.2

@@ -1,6 +1,6 @@
 # Scope, Authorization & Ethics
 
-This is not boilerplate. The authorization model is a core feature of AegisScan and a deliberate portfolio signal: it demonstrates that the author understands the legal and professional frame of offensive security work.
+This is not boilerplate. The authorization model is a core feature of Vigil and a deliberate portfolio signal: it demonstrates that the author understands the legal and professional frame of offensive security work.
 
 ## The rule
 
@@ -14,7 +14,7 @@ Unauthorized scanning/access violates computer-misuse law in most jurisdictions 
 - **Optional scope file:** `scope.yaml` is only needed to go beyond one host — extra hosts, subdomains, excluded paths, or a stored authorization record for a repeat engagement.
 - **Authorization assertion:** the operator states that they own the target or hold written permission. Any one of these counts:
   - `--i-have-authorization` on the command line;
-  - `AEGISSCAN_AUTHORIZED=1` for CI pipelines or a dev shell;
+  - `VIGIL_AUTHORIZED=1` for CI pipelines or a dev shell;
   - an `authorization:` block in a scope file (who, when, on what basis).
 - **Local development:** loopback targets need no assertion.
 - **Audit trail:** each scan logs the assertion used and a timestamp, and the report shows it.

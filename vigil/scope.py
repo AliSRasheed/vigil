@@ -27,7 +27,7 @@ from urllib.parse import urlsplit
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from aegisscan.models import (
+from vigil.models import (
     AuthorizationRecord,
     OutOfScopeRecord,
     Target,
@@ -35,9 +35,9 @@ from aegisscan.models import (
     normalize_host,
 )
 
-audit_log = logging.getLogger("aegisscan.audit")
+audit_log = logging.getLogger("vigil.audit")
 
-ENV_VAR = "AEGISSCAN_AUTHORIZED"
+ENV_VAR = "VIGIL_AUTHORIZED"
 FLAG = "--i-have-authorization"
 LOOPBACK_HOSTS = frozenset({"localhost", "127.0.0.1", "::1"})
 
@@ -276,7 +276,7 @@ def authorize(
     else:
         raise AuthorizationError(
             f"authorization has not been asserted for {scope.describe()}.\n"
-            "AegisScan only scans systems you own or have written permission to test. "
+            "Vigil only scans systems you own or have written permission to test. "
             "Assert that by any one of:\n"
             f"  * {FLAG} on the command line\n"
             f"  * {ENV_VAR}=1 in the environment\n"

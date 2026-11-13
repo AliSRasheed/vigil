@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import Response, http_evidence, parse_csp
-from aegisscan.models import Finding, Severity, Target
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import Response, http_evidence, parse_csp
+from vigil.models import Finding, Severity, Target
 
 VECTOR = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"  # 4.3
 _PERMISSIVE_ANCESTORS = {"*", "http:", "https:"}

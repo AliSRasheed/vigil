@@ -24,13 +24,13 @@ PORT = 8443
 
 
 def main() -> int:
-    work = Path(tempfile.mkdtemp(prefix="aegisscan-sample-"))
+    work = Path(tempfile.mkdtemp(prefix="vigil-sample-"))
     material = make_tls_material(work / "tls")
     app = FixtureApp("vulnerable", tls=material.vulnerable, port=PORT, public_host="localhost")
     app.start()
     try:
         command = [
-            sys.executable, "-m", "aegisscan.cli", "scan", app.url,
+            sys.executable, "-m", "vigil.cli", "scan", app.url,
             "--output", str(work / "out"), "--ca-bundle", str(material.ca_file),
         ]  # fmt: skip
         completed = subprocess.run(command, cwd=ROOT, check=False)
@@ -41,9 +41,7 @@ def main() -> int:
     docs = ROOT / "docs"
     docs.mkdir(exist_ok=True)
     for suffix in ("html", "json"):
-        shutil.copyfile(
-            work / "out" / f"aegisscan-report.{suffix}", docs / f"sample-report.{suffix}"
-        )
+        shutil.copyfile(work / "out" / f"vigil-report.{suffix}", docs / f"sample-report.{suffix}")
         print(f"wrote docs/sample-report.{suffix}")
     shutil.rmtree(work, ignore_errors=True)
     return 0

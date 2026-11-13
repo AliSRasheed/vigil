@@ -15,11 +15,11 @@ import re
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from aegisscan.checks.base import Check
-from aegisscan.engine import ScanContext
-from aegisscan.http import RequestFailed, Response, http_evidence, redact_values
-from aegisscan.models import Evidence, Finding, Severity, Target
-from aegisscan.scope import OutOfScopeError
+from vigil.checks.base import Check
+from vigil.engine import ScanContext
+from vigil.http import RequestFailed, Response, http_evidence, redact_values
+from vigil.models import Evidence, Finding, Severity, Target
+from vigil.scope import OutOfScopeError
 
 SECRETS = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"  # 7.5
 INTERNALS = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"  # 5.3
@@ -54,7 +54,7 @@ def _magic(*prefixes: bytes) -> Callable[[Response], bool]:
 
 def _masked(response: Response) -> str:
     lines = response.text.strip().splitlines()[:6]
-    return redact_values("\n".join(lines)) + "\n[values masked by AegisScan]"
+    return redact_values("\n".join(lines)) + "\n[values masked by Vigil]"
 
 
 def _git(response: Response) -> str:
@@ -66,7 +66,7 @@ def _git(response: Response) -> str:
 
 def _first_line(response: Response) -> str:
     lines = response.text.strip().splitlines()
-    return f"{lines[0][:120]}\n[{max(len(lines) - 1, 0)} more line(s) withheld by AegisScan]"
+    return f"{lines[0][:120]}\n[{max(len(lines) - 1, 0)} more line(s) withheld by Vigil]"
 
 
 def _binary(response: Response) -> str:
