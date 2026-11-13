@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# scan output: never commit results from real targets
+aegisscan-out/
+*.audit.log
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
