@@ -16,7 +16,7 @@ The full sample is in [docs/sample-report.html](docs/sample-report.html) (and [J
 
 ## Status
 
-**v0.1.1** — core engine, 12 recon and configuration checks, HTML and JSON reports. Crawling, authenticated scanning and injection-class detection with confirmation are v2; see [ROADMAP.md](ROADMAP.md).
+**v0.1.1** — core engine, 12 recon and configuration checks, HTML and JSON reports. Site mapping, authenticated scanning and passive risk flags are planned for v2; see [ROADMAP.md](ROADMAP.md) and [V2-PLAN.md](V2-PLAN.md).
 
 ## Install
 

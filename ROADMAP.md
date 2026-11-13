@@ -39,16 +39,20 @@ Each version is independently shippable. You can stop at any tier and have somet
 
 ---
 
-## v2 — Active Detection + Confirmation (the depth layer)
+## v2 — Surface Mapping + Authenticated Coverage (planned, not yet built)
 
-**Goal:** this is where it stops being a config-checker and becomes a real scanner. The hard engineering is here.
+**Goal:** see more of the application and report on it. v2 maps and reports; it does not exploit. The full plan is in [V2-PLAN.md](V2-PLAN.md).
 
 **Upgrades**
-- **Crawler/spider** to map the app's attack surface (forms, params, endpoints)
-- **Authenticated scanning** — session handling, login flows, cookie/token management
-- **Injection-class detection (non-destructive):** reflected XSS, SQL injection (error / boolean / time-based *detection* via safe probes), SSRF, open redirect, path traversal, host-header injection, LFI
-- **Confirmation engine** — the single most valuable component: re-tests each candidate finding to prove it's real and suppress false positives. This is what separates senior-grade tooling from noise.
-- IDOR / access-control heuristics; missing rate-limiting detection
+- **Site mapper / crawler** — walk the named host only, within depth and page limits, and inventory pages, forms, input fields and URL parameters
+- **Authenticated scanning** — log in with credentials the operator supplies, to the login URL the operator names, hold the session, and re-run v1's config and exposure checks on pages that only appear when logged in
+- **Passive risk flags** — risky-looking patterns noted for human review (a form with no CSRF token, an input echoed back without escaping, a page missing the security headers v1 checks); flagged, not confirmed by sending inputs
+- **Report extensions** — the crawl map, the authenticated findings and the flagged spots, kept separate from v1's confirmed findings
+- **Request-method rule** — POST only for the login request and operator-allowed forms; never PUT, PATCH or DELETE; every other discovered form is inventoried, never submitted
+
+**Deferred** — active injection detection (sending crafted inputs to detect SQL injection, XSS, SSRF and similar, with a confirmation engine) is not part of v2. Whether it returns, and in what form, is a separate later decision.
+
+How this section changed from the original v2 is recorded in [V2-HISTORY.md](V2-HISTORY.md).
 
 ---
 
@@ -71,9 +75,9 @@ Each version is independently shippable. You can stop at any tier and have somet
 
 | Dimension | Where it's addressed |
 |---|---|
-| Low false positives | v2 confirmation engine |
-| Detection depth | v2 probe + response analysis |
-| Coverage (30+ checks, OWASP-mapped) | v1 + v2 |
+| Low false positives | v1 content-confirmed checks and clean-fixture tests; v2 keeps flagged-for-review items separate from confirmed findings |
+| Detection depth | v1 probe + response analysis; v2 crawl and authenticated coverage |
+| Coverage (OWASP-mapped checks) | v1, extended to more pages by v2 |
 | Architecture | v1 plugin engine, async |
 | Reporting | v1 HTML/JSON, v3 SARIF |
 | Evidence per finding | v1 findings model |
