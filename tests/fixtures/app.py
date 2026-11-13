@@ -14,7 +14,9 @@ Run it by hand:  python -m tests.fixtures.app --mode vulnerable --port 8808 [--t
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import socket
 import ssl
 import threading
 from dataclasses import dataclass, field
@@ -313,6 +315,10 @@ class _Server(ThreadingHTTPServer):
         pass  # failed TLS handshakes from protocol probes are expected
 
 
+class _ServerV6(_Server):
+    address_family = socket.AF_INET6
+
+
 class FixtureApp:
     def __init__(
         self,
@@ -332,14 +338,19 @@ class FixtureApp:
         self.counters: dict[str, int] = {}
         self.foreign = "https://partner.thirdparty.example"
         handler = type("Handler", (_Handler,), {"app": self})
-        self._server = _Server((host, port), handler)
-        if tls is not None:
-            self._server.socket = tls.wrap_socket(
-                self._server.socket, server_side=True, do_handshake_on_connect=False
-            )
-        self.port = self._server.server_address[1]
+        self._servers = [_Server((host, port), handler)]
+        self.port = self._servers[0].server_address[1]
         self.host = public_host or host
-        self._thread: threading.Thread | None = None
+        if self.host == "localhost":
+            # "localhost" resolves to ::1 as well as 127.0.0.1; listen on both so clients
+            # do not stall trying the address nobody answers on.
+            with contextlib.suppress(OSError):
+                self._servers.append(_ServerV6(("::1", self.port), handler))
+        if tls is not None:
+            for server in self._servers:
+                server.socket = tls.wrap_socket(
+                    server.socket, server_side=True, do_handshake_on_connect=False
+                )
 
     @property
     def url(self) -> str:
@@ -347,13 +358,14 @@ class FixtureApp:
         return f"{scheme}://{self.host}:{self.port}"
 
     def start(self) -> FixtureApp:
-        self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
-        self._thread.start()
+        for server in self._servers:
+            threading.Thread(target=server.serve_forever, daemon=True).start()
         return self
 
     def stop(self) -> None:
-        self._server.shutdown()
-        self._server.server_close()
+        for server in self._servers:
+            server.shutdown()
+            server.server_close()
 
     def reset(self) -> None:
         with self.lock:

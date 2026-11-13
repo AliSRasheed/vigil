@@ -196,7 +196,7 @@ class Engine:
             status, detail = "skipped", str(exc)
         except OutOfScopeError as exc:
             status, detail = "skipped", f"blocked by the scope gate: {exc}"
-        except RequestFailed as exc:
+        except (RequestFailed, tlsutil.TlsProbeError) as exc:
             status, detail = "error", str(exc)
         except Exception as exc:  # noqa: BLE001 - one broken check must not end the scan
             log.exception("check %s crashed", check.id)

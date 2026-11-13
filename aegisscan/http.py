@@ -272,6 +272,16 @@ class HttpClient:
         )
 
 
+def parse_csp(value: str) -> dict[str, list[str]]:
+    """Parse a Content-Security-Policy value into {directive: [sources]}, lower-cased."""
+    policy: dict[str, list[str]] = {}
+    for part in value.split(";"):
+        tokens = part.split()
+        if tokens and tokens[0].lower() not in policy:
+            policy[tokens[0].lower()] = [token.lower() for token in tokens[1:]]
+    return policy
+
+
 # --- evidence --------------------------------------------------------------
 
 

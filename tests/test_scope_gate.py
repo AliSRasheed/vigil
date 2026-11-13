@@ -265,13 +265,16 @@ async def test_each_assertion_method_allows_the_scan(
 def test_cli_environment_variable_allows_the_scan(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    # No checks registered against this name can reach the network (see conftest), so this
-    # exercises the gate through the real CLI: with the variable set the scan proceeds.
+    # The name does not resolve in tests (see conftest), so the one check that runs fails to
+    # connect. What matters here is the gate, through the real CLI: with the variable set the
+    # scan is allowed to start.
     monkeypatch.setenv(ENV_VAR, "1")
     out = tmp_path / "out"
     result = CliRunner().invoke(
-        cli_app, ["scan", "http://app.fixture.test", "-o", str(out), "--timeout", "1"]
-    )
+        cli_app,
+        ["scan", "http://app.fixture.test", "-o", str(out), "--timeout", "1", "--rate", "50",
+         "--checks", "config.security_headers"],
+    )  # fmt: skip
     assert result.exit_code == 0, result.output
     assert f"{ENV_VAR}=1" in result.output
 
@@ -310,7 +313,7 @@ def test_cli_scans_a_loopback_target_with_no_assertion(
     tmp_path: Path, clean_app: FixtureApp
 ) -> None:
     out = tmp_path / "out"
-    result = CliRunner().invoke(cli_app, ["scan", clean_app.url, "-o", str(out)])
+    result = CliRunner().invoke(cli_app, ["scan", clean_app.url, "-o", str(out), "--rate", "50"])
     assert result.exit_code == 0, result.output
     assert "loopback target, no assertion required" in result.output
 
@@ -429,7 +432,7 @@ def test_cli_writes_the_assertion_to_the_audit_log_and_report(
 ) -> None:
     out = tmp_path / "out"
     result = CliRunner().invoke(
-        cli_app, ["scan", clean_app.url, "--i-have-authorization", "-o", str(out)]
+        cli_app, ["scan", clean_app.url, "--i-have-authorization", "--rate", "50", "-o", str(out)]
     )
     assert result.exit_code == 0, result.output
     assert "scan authorized" in result.output and "method=flag" in result.output

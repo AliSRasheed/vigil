@@ -26,9 +26,12 @@ from aegisscan.scope import Scope
 class TlsProbeError(Exception):
     """The handshake did not complete."""
 
-    def __init__(self, message: str, *, verify_message: str | None = None) -> None:
+    def __init__(
+        self, message: str, *, verify_message: str | None = None, local: bool = False
+    ) -> None:
         super().__init__(message)
-        self.verify_message = verify_message
+        self.verify_message = verify_message  # set when certificate verification failed
+        self.local = local  # True when our own TLS library could not build the probe
 
 
 @dataclass
@@ -197,7 +200,9 @@ async def probe(
             ciphers=ciphers,
         )
     except (ssl.SSLError, ValueError, OSError) as exc:
-        raise TlsProbeError(f"local TLS library cannot build this probe: {exc}") from exc
+        raise TlsProbeError(
+            f"local TLS library cannot build this probe: {exc}", local=True
+        ) from exc
     try:
         return await asyncio.to_thread(_handshake, host, port, context, timeout)
     except ssl.SSLCertVerificationError as exc:

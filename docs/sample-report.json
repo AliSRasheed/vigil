@@ -1,0 +1,982 @@
+{
+  "tool": "AegisScan",
+  "version": "0.1.0",
+  "summary": {
+    "total": 27,
+    "by_severity": {
+      "critical": 0,
+      "high": 6,
+      "medium": 13,
+      "low": 5,
+      "info": 3
+    },
+    "highest_severity": "high"
+  },
+  "target": {
+    "url": "https://localhost:8443/",
+    "scheme": "https",
+    "host": "localhost",
+    "port": 8443,
+    "path": "/"
+  },
+  "scope_hosts": [
+    "localhost"
+  ],
+  "include_subdomains": false,
+  "exclude_paths": [],
+  "authorization": {
+    "method": "loopback",
+    "detail": "loopback target, no assertion required",
+    "timestamp": "2026-11-13T18:26:47.773683Z",
+    "asserted_by": null,
+    "basis": null,
+    "date": null
+  },
+  "started_at": "2026-11-13T18:26:47.827300Z",
+  "finished_at": "2026-11-13T18:26:58.598242Z",
+  "checks": [
+    {
+      "check": {
+        "id": "recon.dns",
+        "title": "DNS records and zone posture",
+        "category": "recon",
+        "severity": "low",
+        "cwe": "CWE-693",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "A, AAAA, CNAME, NS, MX, TXT, SOA records via the operator's resolver; flags missing CAA and unsigned (no DNSSEC) zones."
+      },
+      "status": "skipped",
+      "detail": "target is an IP address or local name; there is no DNS zone to inspect",
+      "findings": 0,
+      "duration_ms": 0
+    },
+    {
+      "check": {
+        "id": "recon.email_auth",
+        "title": "Email authentication (SPF, DMARC, DKIM)",
+        "category": "recon",
+        "severity": "medium",
+        "cwe": "CWE-290",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "SPF and DMARC presence and strictness for the target's zone, and DKIM keys at common selectors."
+      },
+      "status": "skipped",
+      "detail": "target is an IP address or local name; there is no DNS zone to inspect",
+      "findings": 0,
+      "duration_ms": 0
+    },
+    {
+      "check": {
+        "id": "recon.fingerprint",
+        "title": "Technology fingerprinting",
+        "category": "recon",
+        "severity": "info",
+        "cwe": "CWE-200",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Web server, language, framework, CMS and JavaScript libraries, with versions, identified from headers, cookie names and page markup."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 1,
+      "duration_ms": 145
+    },
+    {
+      "check": {
+        "id": "recon.subdomains",
+        "title": "Passive subdomain enumeration",
+        "category": "recon",
+        "severity": "info",
+        "cwe": "CWE-200",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Subdomains revealed by DNS records, page links, security headers and certificate names. Recorded, never contacted."
+      },
+      "status": "skipped",
+      "detail": "target is an IP address or local name; there is no DNS zone to inspect",
+      "findings": 0,
+      "duration_ms": 0
+    },
+    {
+      "check": {
+        "id": "recon.tls",
+        "title": "TLS and certificate analysis",
+        "category": "recon",
+        "severity": "medium",
+        "cwe": "CWE-326",
+        "owasp": "A02:2021 Cryptographic Failures",
+        "safe": true,
+        "description": "Certificate validity, trust chain, host name, expiry, key and signature strength; deprecated protocol versions; weak and non-forward-secret cipher suites."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 6,
+      "duration_ms": 3518
+    },
+    {
+      "check": {
+        "id": "config.clickjacking",
+        "title": "Clickjacking exposure",
+        "category": "config",
+        "severity": "medium",
+        "cwe": "CWE-1021",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Missing or ineffective X-Frame-Options / CSP frame-ancestors on HTML pages."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 1,
+      "duration_ms": 48
+    },
+    {
+      "check": {
+        "id": "config.cookies",
+        "title": "Cookie flags",
+        "category": "config",
+        "severity": "medium",
+        "cwe": "CWE-1004",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "HttpOnly, Secure and SameSite on the cookies the target sets."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 2,
+      "duration_ms": 48
+    },
+    {
+      "check": {
+        "id": "config.cors",
+        "title": "CORS misconfiguration",
+        "category": "config",
+        "severity": "high",
+        "cwe": "CWE-942",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Arbitrary-origin reflection, the null origin and weak origin validation, with or without credentials."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 1,
+      "duration_ms": 275
+    },
+    {
+      "check": {
+        "id": "config.directory_listing",
+        "title": "Directory listing enabled",
+        "category": "config",
+        "severity": "medium",
+        "cwe": "CWE-548",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Auto-generated directory indexes on common and page-referenced directories."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 1,
+      "duration_ms": 8075
+    },
+    {
+      "check": {
+        "id": "config.exposed_files",
+        "title": "Exposed sensitive files",
+        "category": "config",
+        "severity": "high",
+        "cwe": "CWE-538",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Version control data, .env, credential files, backups, database dumps and config files, each confirmed by content."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 8,
+      "duration_ms": 10473
+    },
+    {
+      "check": {
+        "id": "config.info_disclosure",
+        "title": "Server and version disclosure",
+        "category": "config",
+        "severity": "medium",
+        "cwe": "CWE-200",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Software versions in response headers and error pages; stack traces and debug output on errors."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 2,
+      "duration_ms": 795
+    },
+    {
+      "check": {
+        "id": "config.security_headers",
+        "title": "Security headers",
+        "category": "config",
+        "severity": "medium",
+        "cwe": "CWE-693",
+        "owasp": "A05:2021 Security Misconfiguration",
+        "safe": true,
+        "description": "Presence and quality of CSP, HSTS, X-Content-Type-Options, Referrer-Policy and Permissions-Policy, with an overall grade."
+      },
+      "status": "ran",
+      "detail": "",
+      "findings": 5,
+      "duration_ms": 0
+    }
+  ],
+  "findings": [
+    {
+      "id": "config.cors-d04fe451cc",
+      "check_id": "config.cors",
+      "title": "CORS policy reflects any Origin with credentials",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Cross-Origin Resource Sharing headers decide which other websites may read this site's responses from a visitor's browser.",
+      "why": "The server copied an arbitrary, unrelated Origin into Access-Control-Allow-Origin, and also sent Access-Control-Allow-Credentials: true. A malicious site can therefore make requests as a logged-in visitor and read the responses.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nOrigin: https://aegisscan-cors-probe.example\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nAccess-Control-Allow-Origin: https://aegisscan-cors-probe.example\nAccess-Control-Allow-Credentials: true\nVary: Origin\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The server copied an arbitrary, unrelated Origin into Access-Control-Allow-Origin, and also sent Access-Control-Allow-Credentials: true. A malicious site can therefore make requests as a logged-in visitor and read the responses."
+        }
+      ],
+      "remediation": "Compare the Origin header against an exact allow-list of trusted origins and return Access-Control-Allow-Origin only for those. Never reflect the request Origin, never allow 'null', and send Access-Control-Allow-Credentials only where it is needed. Add Vary: Origin.",
+      "cwe": "CWE-942",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+      "cvss_score": 7.1,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-e5cf1cc75b",
+      "check_id": "config.exposed_files",
+      "title": "Backup archive exposed: /backup.zip",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/backup.zip",
+      "description": "A backup archive is downloadable. Site backups normally contain source code, configuration and data.",
+      "why": "/backup.zip returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /backup.zip HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/zip\nContent-Length: 74\n\n<binary file, first bytes b'PK\\x03\\x04\\x14\\x00\\x00\\x00', Content-Length: 74; not downloaded>",
+          "note": "/backup.zip is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Remove backups from the web root and store them outside any served directory.",
+      "cwe": "CWE-530",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 7.5,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-ded4854fb7",
+      "check_id": "config.exposed_files",
+      "title": "Backup copy of a source file exposed: /config.php.bak",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/config.php.bak",
+      "description": "A backup or editor copy of a server-side script is served as plain text instead of being executed, revealing its source and any embedded credentials.",
+      "why": "/config.php.bak returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /config.php.bak HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/octet-stream\nContent-Length: 74\n\n<?php\n[2 more line(s) withheld by AegisScan]",
+          "note": "/config.php.bak is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Delete backup and editor files (.bak, ~, .swp, .old) from the web root and deny those extensions in the web server.",
+      "cwe": "CWE-530",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 7.5,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-1959293f00",
+      "check_id": "config.exposed_files",
+      "title": "Database dump exposed: /database.sql",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/database.sql",
+      "description": "A SQL dump is downloadable, exposing the database contents.",
+      "why": "/database.sql returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /database.sql HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/sql\nContent-Length: 126\n\n-- MySQL dump 10.13\n[2 more line(s) withheld by AegisScan]",
+          "note": "/database.sql is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Remove the dump from the web root. Treat the data and any stored credentials as exposed.",
+      "cwe": "CWE-530",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 7.5,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-c1d1fc0df9",
+      "check_id": "config.exposed_files",
+      "title": "Environment file exposed: /.env",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/.env",
+      "description": "An environment file is served. These hold database passwords, API keys and signing secrets.",
+      "why": "/.env returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /.env HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 94\n\nAPP_ENV=<redacted>\nDB_PASSWORD=<redacted>\nSECRET_KEY=<redacted>\n[values masked by AegisScan]",
+          "note": "/.env is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Block access to it in the web server configuration and remove it from the web root. Rotate every secret in the file: it must be assumed compromised.",
+      "cwe": "CWE-538",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 7.5,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-1fc958b8c3",
+      "check_id": "config.exposed_files",
+      "title": "Git repository exposed: /.git/HEAD, /.git/config",
+      "severity": "high",
+      "category": "config",
+      "url": "https://localhost:8443/.git/HEAD",
+      "description": "The .git directory is served. The full source code and its history, often including credentials, can be reconstructed from it.",
+      "why": "/.git/HEAD, /.git/config returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /.git/HEAD HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 21\n\nref: refs/heads/main",
+          "note": "/.git/HEAD is served and its content matches the expected format"
+        },
+        {
+          "kind": "http",
+          "request": "GET /.git/config HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/plain\nContent-Length: 112\n\n[core]\n\trepositoryformatversion = <redacted>\n\tbare = <redacted>\n[remote \"origin\"]\n\turl = <redacted>\n[values masked by AegisScan]",
+          "note": "/.git/config is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Remove .git from the web root or deny access to it (for example, a rule returning 404 for /.git). Rotate any secret that was ever committed.",
+      "cwe": "CWE-527",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 7.5,
+      "references": []
+    },
+    {
+      "id": "config.clickjacking-8fe4c863f2",
+      "check_id": "config.clickjacking",
+      "title": "Page can be framed by other sites (clickjacking)",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "A page that can be framed can be overlaid invisibly on an attacker's site, tricking a logged-in visitor into clicking buttons they cannot see.",
+      "why": "The page sends neither X-Frame-Options nor a Content-Security-Policy frame-ancestors directive, so any website can display it inside a frame.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The page sends neither X-Frame-Options nor a Content-Security-Policy frame-ancestors directive, so any website can display it inside a frame."
+        }
+      ],
+      "remediation": "Send Content-Security-Policy: frame-ancestors 'none' (or 'self'), and X-Frame-Options: DENY (or SAMEORIGIN) for older browsers.",
+      "cwe": "CWE-1021",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+      "cvss_score": 4.3,
+      "references": []
+    },
+    {
+      "id": "config.cookies-8bce1c470c",
+      "check_id": "config.cookies",
+      "title": "Session cookie 'PHPSESSID' has weak flags: HttpOnly, Secure, SameSite",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Cookie attributes tell the browser when a cookie may be sent and whether page scripts may read it. The cookie value is redacted in the evidence below.",
+      "why": "The session cookie can be read by JavaScript, so any cross-site scripting flaw can steal it. The session cookie will also be sent over unencrypted HTTP, where it can be intercepted. No SameSite attribute is set; protection against cross-site request forgery then depends on each browser's default.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The session cookie can be read by JavaScript, so any cross-site scripting flaw can steal it. The session cookie will also be sent over unencrypted HTTP, where it can be intercepted. No SameSite attribute is set; protection against cross-site request forgery then depends on each browser's default."
+        }
+      ],
+      "remediation": "Set the cookie as: PHPSESSID=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).",
+      "cwe": "CWE-614",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 5.9,
+      "references": []
+    },
+    {
+      "id": "config.directory_listing-59da1c273e",
+      "check_id": "config.directory_listing",
+      "title": "Directory listing enabled (3 directories)",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/static/",
+      "description": "With directory listing on, anyone can browse the files in a directory, including ones that are not linked from the site: old versions, backups, uploads and configuration.",
+      "why": "The server returned an auto-generated index of the directory contents for: /static/, /uploads/, /backup/.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /static/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 485\n\n<title>Index of /static/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
+          "note": "Response is a generated directory index (marker: <html><head><title>Index of /static/</title></head><body>)"
+        },
+        {
+          "kind": "http",
+          "request": "GET /uploads/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 487\n\n<title>Index of /uploads/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
+          "note": "Response is a generated directory index (marker: <html><head><title>Index of /uploads/</title></head><body>)"
+        },
+        {
+          "kind": "http",
+          "request": "GET /backup/ HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 485\n\n<title>Index of /backup/</title>\n  entry: ../\n  entry: report-2024.pdf\n  entry: old/",
+          "note": "Response is a generated directory index (marker: <html><head><title>Index of /backup/</title></head><body>)"
+        }
+      ],
+      "remediation": "Turn off automatic indexes (Apache: Options -Indexes; nginx: autoindex off; IIS: disable Directory Browsing) and remove files that should not be public.",
+      "cwe": "CWE-548",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 5.3,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-a3bfc90d90",
+      "check_id": "config.exposed_files",
+      "title": "Apache server-status exposed: /server-status",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/server-status",
+      "description": "The Apache mod_status page is public. It shows current requests, client addresses and internal URLs.",
+      "why": "/server-status returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /server-status HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html\nContent-Length: 155\n\n<title>Apache Status</title>\n<h1>Apache Server Status for fixture</h1>",
+          "note": "/server-status is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Restrict /server-status to localhost (Require local) or disable mod_status.",
+      "cwe": "CWE-200",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 5.3,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-438d17851d",
+      "check_id": "config.exposed_files",
+      "title": "macOS .DS_Store file exposed: /.DS_Store",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/.DS_Store",
+      "description": "A .DS_Store file is served. It lists the names of the files and folders in the directory, including ones that are not linked.",
+      "why": "/.DS_Store returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /.DS_Store HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: application/octet-stream\nContent-Length: 40\n\n<binary file, first bytes b'\\x00\\x00\\x00\\x01Bud1', Content-Length: 40; not downloaded>",
+          "note": "/.DS_Store is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Block access to it in the web server configuration and remove it from the web root.",
+      "cwe": "CWE-538",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 5.3,
+      "references": []
+    },
+    {
+      "id": "config.exposed_files-79f55decba",
+      "check_id": "config.exposed_files",
+      "title": "phpinfo() page exposed: /phpinfo.php",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/phpinfo.php",
+      "description": "A phpinfo() page is public. It lists the PHP version, loaded modules, file paths and environment variables.",
+      "why": "/phpinfo.php returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /phpinfo.php HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html\nContent-Length: 156\n\n<title>phpinfo()</title>\n<h1>PHP Version 7.4.3</h1>",
+          "note": "/phpinfo.php is served and its content matches the expected format"
+        }
+      ],
+      "remediation": "Delete the page.",
+      "cwe": "CWE-200",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 5.3,
+      "references": []
+    },
+    {
+      "id": "config.info_disclosure-81f9631516",
+      "check_id": "config.info_disclosure",
+      "title": "Verbose error page exposes internal details",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/aegisscan-b92b3bcc01a1",
+      "description": "Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.",
+      "why": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET /aegisscan-b92b3bcc01a1 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<pre>Traceback (most recent call last):\n  File \"/var/www/shop/app/router.py\", line 42, in dispatch\n    handler = self.routes[path]\nKeyError: '/aegisscan-b92b3bcc01a1'\n</pre>",
+          "note": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure."
+        }
+      ],
+      "remediation": "Disable debug mode in production and return a generic error page; log the details server-side instead.",
+      "cwe": "CWE-209",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 5.3,
+      "references": []
+    },
+    {
+      "id": "config.security_headers-86ae73d23f",
+      "check_id": "config.security_headers",
+      "title": "Strict-Transport-Security header is missing",
+      "severity": "medium",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Strict-Transport-Security tells browsers to use HTTPS only, which defeats SSL-stripping attacks on later visits. Header grade for this response: F (20/100).",
+      "why": "The HTTPS response has no Strict-Transport-Security header.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The HTTPS response has no Strict-Transport-Security header."
+        }
+      ],
+      "remediation": "Send Strict-Transport-Security: max-age=31536000; includeSubDomains",
+      "cwe": "CWE-319",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "cvss_score": 4.2,
+      "references": []
+    },
+    {
+      "id": "recon.tls-1ddbfe0ff0",
+      "check_id": "recon.tls",
+      "title": "Deprecated TLS versions accepted: TLS 1.0, TLS 1.1",
+      "severity": "medium",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "The server completed a handshake using TLS 1.0 and TLS 1.1. These versions were formally deprecated in 2021 (RFC 8996) and have known weaknesses.",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshakes with localhost:8443, each offering a single legacy protocol version",
+          "response": "TLS 1.0: handshake completed (ECDHE-RSA-AES256-SHA)\nTLS 1.1: handshake completed (ECDHE-RSA-AES256-SHA)",
+          "note": "The server completed a handshake using TLS 1.0 and TLS 1.1. These versions were formally deprecated in 2021 (RFC 8996) and have known weaknesses."
+        }
+      ],
+      "remediation": "Disable TLS 1.0 and 1.1; allow TLS 1.2 and 1.3 only.",
+      "cwe": "CWE-326",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 5.9,
+      "references": []
+    },
+    {
+      "id": "recon.tls-daf0f760d7",
+      "check_id": "recon.tls",
+      "title": "TLS certificate does not match the host name",
+      "severity": "medium",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from an impostor.",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshake with localhost:8443 (SNI localhost)",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "note": "The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from an impostor."
+        }
+      ],
+      "remediation": "Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.",
+      "cwe": "CWE-297",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "cvss_score": 6.5,
+      "references": []
+    },
+    {
+      "id": "recon.tls-3438b0b0a3",
+      "check_id": "recon.tls",
+      "title": "TLS certificate has expired",
+      "severity": "medium",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients refuse to connect.",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshake with localhost:8443 (SNI localhost)",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "note": "The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients refuse to connect."
+        }
+      ],
+      "remediation": "Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.",
+      "cwe": "CWE-298",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "cvss_score": 6.5,
+      "references": []
+    },
+    {
+      "id": "recon.tls-9455b9e428",
+      "check_id": "recon.tls",
+      "title": "TLS certificate is not trusted",
+      "severity": "medium",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted certificate authority (it is self-signed).",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshake with localhost:8443, verifying the certificate chain against the trusted CA store",
+          "response": "verification failed: self-signed certificate\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "note": "Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted certificate authority (it is self-signed)."
+        }
+      ],
+      "remediation": "Use a certificate issued by a publicly trusted CA and serve the full intermediate chain.",
+      "cwe": "CWE-295",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "cvss_score": 6.5,
+      "references": []
+    },
+    {
+      "id": "recon.tls-4e489302ce",
+      "check_id": "recon.tls",
+      "title": "Weak cipher suites accepted",
+      "severity": "medium",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "The server completed a handshake when offered only weak cipher suites (3DES, RC4, DES, NULL, EXPORT, anonymous or MD5-based). Negotiated: AECDH-AES256-SHA over TLSv1.2.",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshake with localhost:8443, offering only: 3DES:RC4:DES:eNULL:EXPORT:aNULL:MD5:@SECLEVEL=0",
+          "response": "handshake completed: TLSv1.2, AECDH-AES256-SHA",
+          "note": "The server completed a handshake when offered only weak cipher suites (3DES, RC4, DES, NULL, EXPORT, anonymous or MD5-based). Negotiated: AECDH-AES256-SHA over TLSv1.2."
+        }
+      ],
+      "remediation": "Remove 3DES, RC4, DES, NULL, EXPORT, anonymous and MD5 suites from the server configuration.",
+      "cwe": "CWE-327",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": 5.9,
+      "references": []
+    },
+    {
+      "id": "config.cookies-2fc3842546",
+      "check_id": "config.cookies",
+      "title": "Cookie 'prefs' has weak flags: Secure, SameSite",
+      "severity": "low",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Cookie attributes tell the browser when a cookie may be sent and whether page scripts may read it. The cookie value is redacted in the evidence below.",
+      "why": "The cookie will also be sent over unencrypted HTTP, where it can be intercepted. SameSite=None is set without Secure; browsers reject this combination and the intent (cross-site use) is unprotected.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The cookie will also be sent over unencrypted HTTP, where it can be intercepted. SameSite=None is set without Secure; browsers reject this combination and the intent (cross-site use) is unprotected."
+        }
+      ],
+      "remediation": "Set the cookie as: prefs=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).",
+      "cwe": "CWE-614",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+      "cvss_score": 3.1,
+      "references": []
+    },
+    {
+      "id": "config.info_disclosure-b81bf56fc8",
+      "check_id": "config.info_disclosure",
+      "title": "Software versions disclosed by the server",
+      "severity": "low",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Exact product and version numbers let an attacker look up known vulnerabilities for this stack without any further probing.",
+      "why": "The server discloses: Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3; X-Powered-By: PHP/7.4.3; error page footer: Apache/2.4.49 (Unix) Server at localhost Port 80.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "Response headers name the software and version in use"
+        },
+        {
+          "kind": "http",
+          "request": "GET /aegisscan-b92b3bcc01a1 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<address>Apache/2.4.49 (Unix) Server at localhost Port 80</address>",
+          "note": "The error page for a non-existent path prints the server version"
+        }
+      ],
+      "remediation": "Remove or genericise these banners (Apache: ServerTokens Prod and ServerSignature Off; nginx: server_tokens off; PHP: expose_php = Off; ASP.NET: enableVersionHeader=\"false\"; Express: app.disable('x-powered-by')).",
+      "cwe": "CWE-200",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 3.7,
+      "references": []
+    },
+    {
+      "id": "config.security_headers-c1cd1b96f6",
+      "check_id": "config.security_headers",
+      "title": "Content-Security-Policy header is missing",
+      "severity": "low",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Content-Security-Policy restricts where scripts, styles and other resources may load from. It is the main browser-side mitigation for cross-site scripting. Header grade for this response: F (20/100).",
+      "why": "The response has no Content-Security-Policy header.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The response has no Content-Security-Policy header."
+        }
+      ],
+      "remediation": "Send a policy that restricts script sources, for example: Content-Security-Policy: default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "cwe": "CWE-693",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+      "cvss_score": 3.1,
+      "references": []
+    },
+    {
+      "id": "config.security_headers-6b9748e6b9",
+      "check_id": "config.security_headers",
+      "title": "X-Content-Type-Options: nosniff is missing",
+      "severity": "low",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Without nosniff, browsers may guess a response's type and run uploaded or user-controlled content as script. Header grade for this response: F (20/100).",
+      "why": "The response has no X-Content-Type-Options header.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The response has no X-Content-Type-Options header."
+        }
+      ],
+      "remediation": "Send X-Content-Type-Options: nosniff on every response.",
+      "cwe": "CWE-693",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+      "cvss_score": 3.1,
+      "references": []
+    },
+    {
+      "id": "recon.tls-8a126859b2",
+      "check_id": "recon.tls",
+      "title": "Cipher suites without forward secrecy accepted",
+      "severity": "low",
+      "category": "recon",
+      "url": "https://localhost:8443",
+      "description": "TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server's identity.",
+      "why": "The server completed a handshake using static RSA key exchange, which has no forward secrecy: anyone who records traffic now and obtains the server key later can decrypt it. Negotiated: AES256-GCM-SHA384 over TLSv1.2.",
+      "evidence": [
+        {
+          "kind": "tls",
+          "request": "TLS handshake with localhost:8443, offering only: kRSA:@SECLEVEL=0",
+          "response": "handshake completed: TLSv1.2, AES256-GCM-SHA384",
+          "note": "The server completed a handshake using static RSA key exchange, which has no forward secrecy: anyone who records traffic now and obtains the server key later can decrypt it. Negotiated: AES256-GCM-SHA384 over TLSv1.2."
+        }
+      ],
+      "remediation": "Allow only ECDHE (or DHE) key exchange, for example the Mozilla 'intermediate' configuration.",
+      "cwe": "CWE-326",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "cvss_score": 3.7,
+      "references": []
+    },
+    {
+      "id": "config.security_headers-dfdd8398eb",
+      "check_id": "config.security_headers",
+      "title": "Permissions-Policy header is missing",
+      "severity": "info",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Permissions-Policy switches off browser features (camera, microphone, geolocation) the site does not use, limiting what injected or embedded content can do. Header grade for this response: F (20/100).",
+      "why": "The response has no Permissions-Policy header.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The response has no Permissions-Policy header."
+        }
+      ],
+      "remediation": "Send Permissions-Policy: geolocation=(), camera=(), microphone=()",
+      "cwe": "CWE-693",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": null,
+      "cvss_score": null,
+      "references": []
+    },
+    {
+      "id": "config.security_headers-94e3bad43a",
+      "check_id": "config.security_headers",
+      "title": "Referrer-Policy header is missing",
+      "severity": "info",
+      "category": "config",
+      "url": "https://localhost:8443/",
+      "description": "Referrer-Policy controls how much of the page URL is sent to other sites in the Referer header. Header grade for this response: F (20/100).",
+      "why": "The response has no Referrer-Policy header, so the browser default applies.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581",
+          "note": "The response has no Referrer-Policy header, so the browser default applies."
+        }
+      ],
+      "remediation": "Send Referrer-Policy: strict-origin-when-cross-origin (or stricter).",
+      "cwe": "CWE-693",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": null,
+      "cvss_score": null,
+      "references": []
+    },
+    {
+      "id": "recon.fingerprint-a96a511034",
+      "check_id": "recon.fingerprint",
+      "title": "Technology stack identified (5 components)",
+      "severity": "info",
+      "category": "recon",
+      "url": "https://localhost:8443/",
+      "description": "Recon result, not a vulnerability in itself. It is the starting point for checking each component against known vulnerabilities, and shows how much the site reveals about itself. Version currency is not assessed here.",
+      "why": "The response identifies the software behind the site: WordPress 5.8.1, jQuery 3.4.1, PHP 7.4.3, OpenSSL 1.1.1k, Apache HTTP Server 2.4.49.",
+      "evidence": [
+        {
+          "kind": "http",
+          "request": "GET / HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*",
+          "response": "HTTP/1.1 200 OK\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nSet-Cookie: PHPSESSID=<redacted>; path=/\nSet-Cookie: prefs=<redacted>; Path=/; SameSite=None\nContent-Type: text/html; charset=utf-8\nContent-Length: 581\n\nWordPress 5.8.1              meta generator: WordPress 5.8.1\njQuery 3.4.1                 page markup: jquery-3.4.1.min.js\nPHP 7.4.3                    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nOpenSSL 1.1.1k               Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nApache HTTP Server 2.4.49    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3",
+          "note": "The response identifies the software behind the site: WordPress 5.8.1, jQuery 3.4.1, PHP 7.4.3, OpenSSL 1.1.1k, Apache HTTP Server 2.4.49."
+        }
+      ],
+      "remediation": "Keep every listed component on a supported, patched version, and remove version banners where the platform allows it.",
+      "cwe": "CWE-200",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "cvss_vector": null,
+      "cvss_score": null,
+      "references": []
+    }
+  ],
+  "observations": {
+    "technologies": [
+      {
+        "technology": "WordPress",
+        "version": "5.8.1",
+        "type": "CMS",
+        "identified from": "meta generator: WordPress 5.8.1"
+      },
+      {
+        "technology": "jQuery",
+        "version": "3.4.1",
+        "type": "JavaScript library",
+        "identified from": "page markup: jquery-3.4.1.min.js"
+      },
+      {
+        "technology": "PHP",
+        "version": "7.4.3",
+        "type": "language",
+        "identified from": "Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3"
+      },
+      {
+        "technology": "OpenSSL",
+        "version": "1.1.1k",
+        "type": "library",
+        "identified from": "Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3"
+      },
+      {
+        "technology": "Apache HTTP Server",
+        "version": "2.4.49",
+        "type": "web server",
+        "identified from": "Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3"
+      }
+    ],
+    "security_headers": {
+      "grade": "F",
+      "score": "20/100"
+    },
+    "tls": {
+      "negotiated": "TLSv1.3, TLS_AES_256_GCM_SHA384 (256 bits)",
+      "certificate subject": "CN=legacy.fixture.test,O=AegisScan test fixtures",
+      "issuer": "CN=legacy.fixture.test,O=AegisScan test fixtures",
+      "valid": "2025-10-09 to 2026-10-14",
+      "names": [
+        "legacy.fixture.test"
+      ],
+      "key": "RSA 2048 bits, signed with sha256",
+      "chain": "not trusted: self-signed certificate",
+      "deprecated protocols": [
+        "TLS 1.0",
+        "TLS 1.1"
+      ],
+      "weak ciphers": "accepted (AECDH-AES256-SHA)",
+      "forward secrecy": "accepted (AES256-GCM-SHA384)"
+    }
+  },
+  "out_of_scope": [
+    {
+      "host": "partner.thirdparty.example",
+      "url": "https://partner.thirdparty.example/landing",
+      "reason": "link",
+      "source": "https://localhost:8443/"
+    },
+    {
+      "host": "cdn.thirdparty.example",
+      "url": "https://cdn.thirdparty.example/lib.js",
+      "reason": "link",
+      "source": "https://localhost:8443/"
+    },
+    {
+      "host": "staging.localhost",
+      "url": "http://staging.localhost/",
+      "reason": "link",
+      "source": "https://localhost:8443/"
+    }
+  ],
+  "requests_sent": 48,
+  "dns_queries": 0
+}

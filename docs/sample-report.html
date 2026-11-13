@@ -1,0 +1,1528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="AegisScan 0.1.0">
+<title>Security assessment: localhost</title>
+<style>
+:root {
+  --bg: #f4f5f7; --surface: #ffffff; --ink: #1b2330; --muted: #5d6878; --line: #dfe3ea;
+  --accent: #1f3a5f; --code-bg: #f1f3f6; --code-ink: #1b2330;
+  --critical: #7a1fa2; --high: #c62828; --medium: #c56a00; --low: #1767b3; --info: #5f6f82;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11151b; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b5; --line: #2c3542;
+    --accent: #8fb4e3; --code-bg: #121820; --code-ink: #d7dde6;
+    --critical: #c77ddf; --high: #ef6f6c; --medium: #e8a23d; --low: #6aaeea; --info: #93a1b3;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.55 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.page { max-width: 1040px; margin: 0 auto; padding: 0 20px 64px; }
+a { color: var(--accent); }
+h1, h2, h3 { line-height: 1.25; margin: 0; }
+h2 { font-size: 20px; margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--line); }
+p { margin: 0 0 10px; }
+code, pre { font-family: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace; font-size: 12.5px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+
+header.cover { padding: 40px 0 26px; border-bottom: 1px solid var(--line); }
+.brand { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+header.cover h1 { font-size: 30px; margin: 8px 0 6px; }
+.target { font-size: 17px; overflow-wrap: anywhere; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 28px; margin-top: 16px; color: var(--muted); font-size: 13px; }
+.facts b { color: var(--ink); font-weight: 600; }
+nav.toc { margin-top: 18px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--sev); border-radius: 8px; padding: 12px 14px; }
+.tile .n { font-size: 28px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tile .l { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.tile.zero .n { color: var(--muted); font-weight: 500; }
+.bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--line); margin-bottom: 16px; }
+.bar span { background: var(--sev); }
+.critical { --sev: var(--critical); } .high { --sev: var(--high); } .medium { --sev: var(--medium); }
+.low { --sev: var(--low); } .info { --sev: var(--info); }
+
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+tr:last-child > td { border-bottom: 0; }
+.scroll { overflow-x: auto; }
+table.kv th { width: 210px; text-transform: none; letter-spacing: 0; font-size: 13.5px; }
+td { overflow-wrap: anywhere; }
+
+.badge {
+  display: inline-block; min-width: 68px; text-align: center; padding: 2px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: #fff; background: var(--sev);
+}
+@media (prefers-color-scheme: dark) { .badge { color: #10141a; } }
+.status-ran { color: var(--muted); } .status-skipped { color: var(--muted); font-style: italic; }
+.status-error { color: var(--high); font-weight: 600; }
+
+.authz { border-left: 4px solid var(--accent); }
+.finding { margin-bottom: 16px; border-left: 5px solid var(--sev); }
+.finding h3 { font-size: 17px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.finding h3 .t { flex: 1 1 300px; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 8px 0 12px; font-size: 12.5px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.finding h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 14px 0 4px; }
+details.evidence { margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; }
+details.evidence > summary { cursor: pointer; padding: 8px 12px; font-size: 13px; font-weight: 600; }
+details.evidence .body { padding: 0 12px 12px; }
+.evidence .label { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 8px 0 3px; }
+pre {
+  margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; padding: 10px 12px;
+  overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 340px; overflow-y: auto;
+}
+.note { color: var(--muted); font-size: 13px; }
+ul.plain { margin: 0; padding-left: 18px; }
+footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; }
+
+@media (max-width: 720px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  table.kv th { width: 120px; }
+}
+@media print {
+  body { background: #fff; font-size: 12px; }
+  .page { max-width: none; padding: 0; }
+  nav.toc { display: none; }
+  .card, .tile { break-inside: avoid; }
+  pre { max-height: none; }
+  h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+
+<header class="cover">
+  <div class="brand">AegisScan · Security assessment report</div>
+  <h1>localhost</h1>
+  <div class="target"><code>https://localhost:8443/</code></div>
+  <div class="facts">
+    <span><b>Scanned</b> 13 November 2026, 18:26 UTC</span>
+    <span><b>Duration</b> 10.77 s</span>
+    <span><b>Requests sent</b> 48 HTTP</span>
+    <span><b>Tool</b> AegisScan 0.1.0</span>
+  </div>
+  <nav class="toc">
+    <a href="#summary">Executive summary</a>
+    <a href="#scope">Scope and authorization</a>
+    <a href="#findings">Findings</a>
+<a href="#recon">Reconnaissance</a>    <a href="#checks">Checks performed</a>
+    <a href="#method">Method and limits</a>
+  </nav>
+</header>
+
+<h2 id="summary">Executive summary</h2>
+<div class="tiles">
+  <div class="tile critical zero">
+    <div class="n">0</div><div class="l">critical</div>
+  </div>
+  <div class="tile high">
+    <div class="n">6</div><div class="l">high</div>
+  </div>
+  <div class="tile medium">
+    <div class="n">13</div><div class="l">medium</div>
+  </div>
+  <div class="tile low">
+    <div class="n">5</div><div class="l">low</div>
+  </div>
+  <div class="tile info">
+    <div class="n">3</div><div class="l">info</div>
+  </div>
+</div>
+<div class="bar" role="img" aria-label="Findings by severity">
+<span class="high" style="flex: 6" title="6 high"></span><span class="medium" style="flex: 13" title="13 medium"></span><span class="low" style="flex: 5" title="5 low"></span><span class="info" style="flex: 3" title="3 info"></span></div>
+<div class="card">
+<p>AegisScan ran 9 non-destructive checks against https://localhost:8443/ on 13 November 2026. It identified 24 weakness(es): 6 high, 13 medium, 5 low, plus 3 informational. The highest severity found is high.</p><p>Most significant: CORS policy reflects any Origin with credentials; Backup archive exposed: /backup.zip; Backup copy of a source file exposed: /config.php.bak.</p><p>3 check(s) did not run (not applicable to this target, or failed); see Checks performed. A clean result covers only the checks listed as run.</p>  <div class="scroll"><table style="margin-top: 8px">
+    <tr><th>Severity</th><th>Finding</th><th>CVSS</th><th>Check</th></tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.cors-d04fe451cc">CORS policy reflects any Origin with credentials</a></td>
+      <td>7.1</td>
+      <td><code>config.cors</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.exposed_files-e5cf1cc75b">Backup archive exposed: /backup.zip</a></td>
+      <td>7.5</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.exposed_files-ded4854fb7">Backup copy of a source file exposed: /config.php.bak</a></td>
+      <td>7.5</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.exposed_files-1959293f00">Database dump exposed: /database.sql</a></td>
+      <td>7.5</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.exposed_files-c1d1fc0df9">Environment file exposed: /.env</a></td>
+      <td>7.5</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge high">high</span></td>
+      <td><a href="#config.exposed_files-1fc958b8c3">Git repository exposed: /.git/HEAD, /.git/config</a></td>
+      <td>7.5</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.clickjacking-8fe4c863f2">Page can be framed by other sites (clickjacking)</a></td>
+      <td>4.3</td>
+      <td><code>config.clickjacking</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.cookies-8bce1c470c">Session cookie &#39;PHPSESSID&#39; has weak flags: HttpOnly, Secure, SameSite</a></td>
+      <td>5.9</td>
+      <td><code>config.cookies</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.directory_listing-59da1c273e">Directory listing enabled (3 directories)</a></td>
+      <td>5.3</td>
+      <td><code>config.directory_listing</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.exposed_files-a3bfc90d90">Apache server-status exposed: /server-status</a></td>
+      <td>5.3</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.exposed_files-438d17851d">macOS .DS_Store file exposed: /.DS_Store</a></td>
+      <td>5.3</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.exposed_files-79f55decba">phpinfo() page exposed: /phpinfo.php</a></td>
+      <td>5.3</td>
+      <td><code>config.exposed_files</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.info_disclosure-81f9631516">Verbose error page exposes internal details</a></td>
+      <td>5.3</td>
+      <td><code>config.info_disclosure</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#config.security_headers-86ae73d23f">Strict-Transport-Security header is missing</a></td>
+      <td>4.2</td>
+      <td><code>config.security_headers</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#recon.tls-1ddbfe0ff0">Deprecated TLS versions accepted: TLS 1.0, TLS 1.1</a></td>
+      <td>5.9</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#recon.tls-daf0f760d7">TLS certificate does not match the host name</a></td>
+      <td>6.5</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#recon.tls-3438b0b0a3">TLS certificate has expired</a></td>
+      <td>6.5</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#recon.tls-9455b9e428">TLS certificate is not trusted</a></td>
+      <td>6.5</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge medium">medium</span></td>
+      <td><a href="#recon.tls-4e489302ce">Weak cipher suites accepted</a></td>
+      <td>5.9</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge low">low</span></td>
+      <td><a href="#config.cookies-2fc3842546">Cookie &#39;prefs&#39; has weak flags: Secure, SameSite</a></td>
+      <td>3.1</td>
+      <td><code>config.cookies</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge low">low</span></td>
+      <td><a href="#config.info_disclosure-b81bf56fc8">Software versions disclosed by the server</a></td>
+      <td>3.7</td>
+      <td><code>config.info_disclosure</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge low">low</span></td>
+      <td><a href="#config.security_headers-c1cd1b96f6">Content-Security-Policy header is missing</a></td>
+      <td>3.1</td>
+      <td><code>config.security_headers</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge low">low</span></td>
+      <td><a href="#config.security_headers-6b9748e6b9">X-Content-Type-Options: nosniff is missing</a></td>
+      <td>3.1</td>
+      <td><code>config.security_headers</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge low">low</span></td>
+      <td><a href="#recon.tls-8a126859b2">Cipher suites without forward secrecy accepted</a></td>
+      <td>3.7</td>
+      <td><code>recon.tls</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge info">info</span></td>
+      <td><a href="#config.security_headers-dfdd8398eb">Permissions-Policy header is missing</a></td>
+      <td>–</td>
+      <td><code>config.security_headers</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge info">info</span></td>
+      <td><a href="#config.security_headers-94e3bad43a">Referrer-Policy header is missing</a></td>
+      <td>–</td>
+      <td><code>config.security_headers</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge info">info</span></td>
+      <td><a href="#recon.fingerprint-a96a511034">Technology stack identified (5 components)</a></td>
+      <td>–</td>
+      <td><code>recon.fingerprint</code></td>
+    </tr>
+  </table></div>
+</div>
+
+<h2 id="scope">Scope and authorization</h2>
+<div class="card authz">
+  <table class="kv">
+    <tr><th>Authorization asserted by</th><td>loopback target, no assertion required</td></tr>
+    <tr><th>Recorded at</th><td>2026-11-13 18:26:47 UTC</td></tr>
+    <tr><th>Hosts in scope</th><td><code>localhost</code> </td></tr>
+    <tr><th>Out of scope, not contacted</th><td>
+<code>cdn.thirdparty.example</code> <code>partner.thirdparty.example</code> <code>staging.localhost</code>     </td></tr>
+  </table>
+  <p class="note" style="margin: 10px 0 0">Only the hosts in scope were contacted. Links, redirects and subdomains leading elsewhere were recorded and not followed.</p>
+</div>
+<details class="evidence" style="margin-top: 10px">
+  <summary>Out-of-scope references seen during the scan (3)</summary>
+  <div class="body scroll"><table>
+    <tr><th>Host</th><th>Seen as</th><th>Reference</th><th>Where</th></tr>
+    <tr><td><code>partner.thirdparty.example</code></td><td>link</td><td>https://partner.thirdparty.example/landing</td><td>https://localhost:8443/</td></tr>
+    <tr><td><code>cdn.thirdparty.example</code></td><td>link</td><td>https://cdn.thirdparty.example/lib.js</td><td>https://localhost:8443/</td></tr>
+    <tr><td><code>staging.localhost</code></td><td>link</td><td>http://staging.localhost/</td><td>https://localhost:8443/</td></tr>
+  </table></div>
+</details>
+
+<h2 id="findings">Findings</h2>
+<article class="card finding high" id="config.cors-d04fe451cc">
+  <h3><span class="badge high">high</span><span class="t">CORS policy reflects any Origin with credentials</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.cors</code></span>
+<span><b>CVSS 3.1</b> 7.1 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/942.html">CWE-942</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Cross-Origin Resource Sharing headers decide which other websites may read this site&#39;s responses from a visitor&#39;s browser.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server copied an arbitrary, unrelated Origin into Access-Control-Allow-Origin, and also sent Access-Control-Allow-Credentials: true. A malicious site can therefore make requests as a logged-in visitor and read the responses.</p>
+  <h4>Remediation</h4>
+  <p>Compare the Origin header against an exact allow-list of trusted origins and return Access-Control-Allow-Origin only for those. Never reflect the request Origin, never allow &#39;null&#39;, and send Access-Control-Allow-Credentials only where it is needed. Add Vary: Origin.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The server copied an arbitrary, unrelated Origin into Access-Control-Allow-Origin, and also sent...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Origin: https://aegisscan-cors-probe.example
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Access-Control-Allow-Origin: https://aegisscan-cors-probe.example
+Access-Control-Allow-Credentials: true
+Vary: Origin
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding high" id="config.exposed_files-e5cf1cc75b">
+  <h3><span class="badge high">high</span><span class="t">Backup archive exposed: /backup.zip</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/backup.zip</code></p>
+  <h4>What this means</h4>
+  <p>A backup archive is downloadable. Site backups normally contain source code, configuration and data.</p>
+  <h4>Why it was flagged</h4>
+  <p>/backup.zip returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Remove backups from the web root and store them outside any served directory.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /backup.zip is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /backup.zip HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: application/zip
+Content-Length: 74
+
+&lt;binary file, first bytes b&#39;PK\x03\x04\x14\x00\x00\x00&#39;, Content-Length: 74; not downloaded&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding high" id="config.exposed_files-ded4854fb7">
+  <h3><span class="badge high">high</span><span class="t">Backup copy of a source file exposed: /config.php.bak</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/config.php.bak</code></p>
+  <h4>What this means</h4>
+  <p>A backup or editor copy of a server-side script is served as plain text instead of being executed, revealing its source and any embedded credentials.</p>
+  <h4>Why it was flagged</h4>
+  <p>/config.php.bak returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Delete backup and editor files (.bak, ~, .swp, .old) from the web root and deny those extensions in the web server.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /config.php.bak is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /config.php.bak HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: application/octet-stream
+Content-Length: 74
+
+&lt;?php
+[2 more line(s) withheld by AegisScan]</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding high" id="config.exposed_files-1959293f00">
+  <h3><span class="badge high">high</span><span class="t">Database dump exposed: /database.sql</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/database.sql</code></p>
+  <h4>What this means</h4>
+  <p>A SQL dump is downloadable, exposing the database contents.</p>
+  <h4>Why it was flagged</h4>
+  <p>/database.sql returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Remove the dump from the web root. Treat the data and any stored credentials as exposed.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /database.sql is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /database.sql HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: application/sql
+Content-Length: 126
+
+-- MySQL dump 10.13
+[2 more line(s) withheld by AegisScan]</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding high" id="config.exposed_files-c1d1fc0df9">
+  <h3><span class="badge high">high</span><span class="t">Environment file exposed: /.env</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/.env</code></p>
+  <h4>What this means</h4>
+  <p>An environment file is served. These hold database passwords, API keys and signing secrets.</p>
+  <h4>Why it was flagged</h4>
+  <p>/.env returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Block access to it in the web server configuration and remove it from the web root. Rotate every secret in the file: it must be assumed compromised.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /.env is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /.env HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/plain
+Content-Length: 94
+
+APP_ENV=&lt;redacted&gt;
+DB_PASSWORD=&lt;redacted&gt;
+SECRET_KEY=&lt;redacted&gt;
+[values masked by AegisScan]</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding high" id="config.exposed_files-1fc958b8c3">
+  <h3><span class="badge high">high</span><span class="t">Git repository exposed: /.git/HEAD, /.git/config</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/527.html">CWE-527</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/.git/HEAD</code></p>
+  <h4>What this means</h4>
+  <p>The .git directory is served. The full source code and its history, often including credentials, can be reconstructed from it.</p>
+  <h4>Why it was flagged</h4>
+  <p>/.git/HEAD, /.git/config returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Remove .git from the web root or deny access to it (for example, a rule returning 404 for /.git). Rotate any secret that was ever committed.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 2: /.git/HEAD is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /.git/HEAD HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/plain
+Content-Length: 21
+
+ref: refs/heads/main</pre>
+    </div>
+  </details>
+  <details class="evidence" open>
+    <summary>HTTP evidence 2 of 2: /.git/config is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /.git/config HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/plain
+Content-Length: 112
+
+[core]
+	repositoryformatversion = &lt;redacted&gt;
+	bare = &lt;redacted&gt;
+[remote &#34;origin&#34;]
+	url = &lt;redacted&gt;
+[values masked by AegisScan]</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.clickjacking-8fe4c863f2">
+  <h3><span class="badge medium">medium</span><span class="t">Page can be framed by other sites (clickjacking)</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.clickjacking</code></span>
+<span><b>CVSS 3.1</b> 4.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>A page that can be framed can be overlaid invisibly on an attacker&#39;s site, tricking a logged-in visitor into clicking buttons they cannot see.</p>
+  <h4>Why it was flagged</h4>
+  <p>The page sends neither X-Frame-Options nor a Content-Security-Policy frame-ancestors directive, so any website can display it inside a frame.</p>
+  <h4>Remediation</h4>
+  <p>Send Content-Security-Policy: frame-ancestors &#39;none&#39; (or &#39;self&#39;), and X-Frame-Options: DENY (or SAMEORIGIN) for older browsers.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The page sends neither X-Frame-Options nor a Content-Security-Policy frame-ancestors directive, so any...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.cookies-8bce1c470c">
+  <h3><span class="badge medium">medium</span><span class="t">Session cookie &#39;PHPSESSID&#39; has weak flags: HttpOnly, Secure, SameSite</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.cookies</code></span>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Cookie attributes tell the browser when a cookie may be sent and whether page scripts may read it. The cookie value is redacted in the evidence below.</p>
+  <h4>Why it was flagged</h4>
+  <p>The session cookie can be read by JavaScript, so any cross-site scripting flaw can steal it. The session cookie will also be sent over unencrypted HTTP, where it can be intercepted. No SameSite attribute is set; protection against cross-site request forgery then depends on each browser&#39;s default.</p>
+  <h4>Remediation</h4>
+  <p>Set the cookie as: PHPSESSID=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The session cookie can be read by JavaScript, so any cross-site scripting flaw can steal it. The session...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.directory_listing-59da1c273e">
+  <h3><span class="badge medium">medium</span><span class="t">Directory listing enabled (3 directories)</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.directory_listing</code></span>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/548.html">CWE-548</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/static/</code></p>
+  <h4>What this means</h4>
+  <p>With directory listing on, anyone can browse the files in a directory, including ones that are not linked from the site: old versions, backups, uploads and configuration.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server returned an auto-generated index of the directory contents for: /static/, /uploads/, /backup/.</p>
+  <h4>Remediation</h4>
+  <p>Turn off automatic indexes (Apache: Options -Indexes; nginx: autoindex off; IIS: disable Directory Browsing) and remove files that should not be public.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 3: Response is a generated directory index (marker: &lt;html&gt;&lt;head&gt;&lt;title&gt;Index of /static/&lt;/title&gt;&lt;/head&gt;&lt;body&gt;)</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /static/ HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html; charset=utf-8
+Content-Length: 485
+
+&lt;title&gt;Index of /static/&lt;/title&gt;
+  entry: ../
+  entry: report-2024.pdf
+  entry: old/</pre>
+    </div>
+  </details>
+  <details class="evidence" open>
+    <summary>HTTP evidence 2 of 3: Response is a generated directory index (marker: &lt;html&gt;&lt;head&gt;&lt;title&gt;Index of /uploads/&lt;/title&gt;&lt;/head&gt;&lt;body&gt;)</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /uploads/ HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html; charset=utf-8
+Content-Length: 487
+
+&lt;title&gt;Index of /uploads/&lt;/title&gt;
+  entry: ../
+  entry: report-2024.pdf
+  entry: old/</pre>
+    </div>
+  </details>
+  <details class="evidence" open>
+    <summary>HTTP evidence 3 of 3: Response is a generated directory index (marker: &lt;html&gt;&lt;head&gt;&lt;title&gt;Index of /backup/&lt;/title&gt;&lt;/head&gt;&lt;body&gt;)</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /backup/ HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html; charset=utf-8
+Content-Length: 485
+
+&lt;title&gt;Index of /backup/&lt;/title&gt;
+  entry: ../
+  entry: report-2024.pdf
+  entry: old/</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.exposed_files-a3bfc90d90">
+  <h3><span class="badge medium">medium</span><span class="t">Apache server-status exposed: /server-status</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/server-status</code></p>
+  <h4>What this means</h4>
+  <p>The Apache mod_status page is public. It shows current requests, client addresses and internal URLs.</p>
+  <h4>Why it was flagged</h4>
+  <p>/server-status returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Restrict /server-status to localhost (Require local) or disable mod_status.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /server-status is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /server-status HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html
+Content-Length: 155
+
+&lt;title&gt;Apache Status&lt;/title&gt;
+&lt;h1&gt;Apache Server Status for fixture&lt;/h1&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.exposed_files-438d17851d">
+  <h3><span class="badge medium">medium</span><span class="t">macOS .DS_Store file exposed: /.DS_Store</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/.DS_Store</code></p>
+  <h4>What this means</h4>
+  <p>A .DS_Store file is served. It lists the names of the files and folders in the directory, including ones that are not linked.</p>
+  <h4>Why it was flagged</h4>
+  <p>/.DS_Store returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Block access to it in the web server configuration and remove it from the web root.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /.DS_Store is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /.DS_Store HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: application/octet-stream
+Content-Length: 40
+
+&lt;binary file, first bytes b&#39;\x00\x00\x00\x01Bud1&#39;, Content-Length: 40; not downloaded&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.exposed_files-79f55decba">
+  <h3><span class="badge medium">medium</span><span class="t">phpinfo() page exposed: /phpinfo.php</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.exposed_files</code></span>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/phpinfo.php</code></p>
+  <h4>What this means</h4>
+  <p>A phpinfo() page is public. It lists the PHP version, loaded modules, file paths and environment variables.</p>
+  <h4>Why it was flagged</h4>
+  <p>/phpinfo.php returned HTTP 200 and the content has the signature of this file type, so it is the real file and not an error page.</p>
+  <h4>Remediation</h4>
+  <p>Delete the page.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: /phpinfo.php is served and its content matches the expected format</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /phpinfo.php HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html
+Content-Length: 156
+
+&lt;title&gt;phpinfo()&lt;/title&gt;
+&lt;h1&gt;PHP Version 7.4.3&lt;/h1&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.info_disclosure-81f9631516">
+  <h3><span class="badge medium">medium</span><span class="t">Verbose error page exposes internal details</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.info_disclosure</code></span>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/209.html">CWE-209</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/aegisscan-b92b3bcc01a1</code></p>
+  <h4>What this means</h4>
+  <p>Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.</p>
+  <h4>Why it was flagged</h4>
+  <p>Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.</p>
+  <h4>Remediation</h4>
+  <p>Disable debug mode in production and return a generic error page; log the details server-side instead.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /aegisscan-b92b3bcc01a1 HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 404 Not Found
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html; charset=utf-8
+Content-Length: 407
+
+&lt;pre&gt;Traceback (most recent call last):
+  File &#34;/var/www/shop/app/router.py&#34;, line 42, in dispatch
+    handler = self.routes[path]
+KeyError: &#39;/aegisscan-b92b3bcc01a1&#39;
+&lt;/pre&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="config.security_headers-86ae73d23f">
+  <h3><span class="badge medium">medium</span><span class="t">Strict-Transport-Security header is missing</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.security_headers</code></span>
+<span><b>CVSS 3.1</b> 4.2 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/319.html">CWE-319</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Strict-Transport-Security tells browsers to use HTTPS only, which defeats SSL-stripping attacks on later visits. Header grade for this response: F (20/100).</p>
+  <h4>Why it was flagged</h4>
+  <p>The HTTPS response has no Strict-Transport-Security header.</p>
+  <h4>Remediation</h4>
+  <p>Send Strict-Transport-Security: max-age=31536000; includeSubDomains</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The HTTPS response has no Strict-Transport-Security header.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="recon.tls-1ddbfe0ff0">
+  <h3><span class="badge medium">medium</span><span class="t">Deprecated TLS versions accepted: TLS 1.0, TLS 1.1</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server completed a handshake using TLS 1.0 and TLS 1.1. These versions were formally deprecated in 2021 (RFC 8996) and have known weaknesses.</p>
+  <h4>Remediation</h4>
+  <p>Disable TLS 1.0 and 1.1; allow TLS 1.2 and 1.3 only.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: The server completed a handshake using TLS 1.0 and TLS 1.1. These versions were formally deprecated in...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshakes with localhost:8443, each offering a single legacy protocol version</pre>
+      <div class="label">Received</div>
+      <pre>TLS 1.0: handshake completed (ECDHE-RSA-AES256-SHA)
+TLS 1.1: handshake completed (ECDHE-RSA-AES256-SHA)</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="recon.tls-daf0f760d7">
+  <h3><span class="badge medium">medium</span><span class="t">TLS certificate does not match the host name</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/297.html">CWE-297</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from an impostor.</p>
+  <h4>Remediation</h4>
+  <p>Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshake with localhost:8443 (SNI localhost)</pre>
+      <div class="label">Received</div>
+      <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
+subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
+issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
+valid from: 2025-10-09 18:26 UTC
+valid to:   2026-10-14 18:26 UTC
+names:      legacy.fixture.test
+key:        RSA 2048 bits
+signature:  sha256
+sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="recon.tls-3438b0b0a3">
+  <h3><span class="badge medium">medium</span><span class="t">TLS certificate has expired</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/298.html">CWE-298</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients refuse to connect.</p>
+  <h4>Remediation</h4>
+  <p>Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshake with localhost:8443 (SNI localhost)</pre>
+      <div class="label">Received</div>
+      <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
+subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
+issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
+valid from: 2025-10-09 18:26 UTC
+valid to:   2026-10-14 18:26 UTC
+names:      legacy.fixture.test
+key:        RSA 2048 bits
+signature:  sha256
+sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="recon.tls-9455b9e428">
+  <h3><span class="badge medium">medium</span><span class="t">TLS certificate is not trusted</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/295.html">CWE-295</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted certificate authority (it is self-signed).</p>
+  <h4>Remediation</h4>
+  <p>Use a certificate issued by a publicly trusted CA and serve the full intermediate chain.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshake with localhost:8443, verifying the certificate chain against the trusted CA store</pre>
+      <div class="label">Received</div>
+      <pre>verification failed: self-signed certificate
+subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
+issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
+valid from: 2025-10-09 18:26 UTC
+valid to:   2026-10-14 18:26 UTC
+names:      legacy.fixture.test
+key:        RSA 2048 bits
+signature:  sha256
+sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding medium" id="recon.tls-4e489302ce">
+  <h3><span class="badge medium">medium</span><span class="t">Weak cipher suites accepted</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/327.html">CWE-327</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server completed a handshake when offered only weak cipher suites (3DES, RC4, DES, NULL, EXPORT, anonymous or MD5-based). Negotiated: AECDH-AES256-SHA over TLSv1.2.</p>
+  <h4>Remediation</h4>
+  <p>Remove 3DES, RC4, DES, NULL, EXPORT, anonymous and MD5 suites from the server configuration.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: The server completed a handshake when offered only weak cipher suites (3DES, RC4, DES, NULL, EXPORT,...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshake with localhost:8443, offering only: 3DES:RC4:DES:eNULL:EXPORT:aNULL:MD5:@SECLEVEL=0</pre>
+      <div class="label">Received</div>
+      <pre>handshake completed: TLSv1.2, AECDH-AES256-SHA</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding low" id="config.cookies-2fc3842546">
+  <h3><span class="badge low">low</span><span class="t">Cookie &#39;prefs&#39; has weak flags: Secure, SameSite</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.cookies</code></span>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Cookie attributes tell the browser when a cookie may be sent and whether page scripts may read it. The cookie value is redacted in the evidence below.</p>
+  <h4>Why it was flagged</h4>
+  <p>The cookie will also be sent over unencrypted HTTP, where it can be intercepted. SameSite=None is set without Secure; browsers reject this combination and the intent (cross-site use) is unprotected.</p>
+  <h4>Remediation</h4>
+  <p>Set the cookie as: prefs=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The cookie will also be sent over unencrypted HTTP, where it can be intercepted. SameSite=None is set...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding low" id="config.info_disclosure-b81bf56fc8">
+  <h3><span class="badge low">low</span><span class="t">Software versions disclosed by the server</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.info_disclosure</code></span>
+<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Exact product and version numbers let an attacker look up known vulnerabilities for this stack without any further probing.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server discloses: Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3; X-Powered-By: PHP/7.4.3; error page footer: Apache/2.4.49 (Unix) Server at localhost Port 80.</p>
+  <h4>Remediation</h4>
+  <p>Remove or genericise these banners (Apache: ServerTokens Prod and ServerSignature Off; nginx: server_tokens off; PHP: expose_php = Off; ASP.NET: enableVersionHeader=&#34;false&#34;; Express: app.disable(&#39;x-powered-by&#39;)).</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 2: Response headers name the software and version in use</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+  <details class="evidence" open>
+    <summary>HTTP evidence 2 of 2: The error page for a non-existent path prints the server version</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET /aegisscan-b92b3bcc01a1 HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*
+Cookie: &lt;redacted&gt;</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 404 Not Found
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Content-Type: text/html; charset=utf-8
+Content-Length: 407
+
+&lt;address&gt;Apache/2.4.49 (Unix) Server at localhost Port 80&lt;/address&gt;</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding low" id="config.security_headers-c1cd1b96f6">
+  <h3><span class="badge low">low</span><span class="t">Content-Security-Policy header is missing</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.security_headers</code></span>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Content-Security-Policy restricts where scripts, styles and other resources may load from. It is the main browser-side mitigation for cross-site scripting. Header grade for this response: F (20/100).</p>
+  <h4>Why it was flagged</h4>
+  <p>The response has no Content-Security-Policy header.</p>
+  <h4>Remediation</h4>
+  <p>Send a policy that restricts script sources, for example: Content-Security-Policy: default-src &#39;self&#39;; object-src &#39;none&#39;; base-uri &#39;self&#39;; frame-ancestors &#39;none&#39;</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The response has no Content-Security-Policy header.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding low" id="config.security_headers-6b9748e6b9">
+  <h3><span class="badge low">low</span><span class="t">X-Content-Type-Options: nosniff is missing</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.security_headers</code></span>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Without nosniff, browsers may guess a response&#39;s type and run uploaded or user-controlled content as script. Header grade for this response: F (20/100).</p>
+  <h4>Why it was flagged</h4>
+  <p>The response has no X-Content-Type-Options header.</p>
+  <h4>Remediation</h4>
+  <p>Send X-Content-Type-Options: nosniff on every response.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The response has no X-Content-Type-Options header.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding low" id="recon.tls-8a126859b2">
+  <h3><span class="badge low">low</span><span class="t">Cipher suites without forward secrecy accepted</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.tls</code></span>
+<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443</code></p>
+  <h4>What this means</h4>
+  <p>TLS protects the confidentiality and integrity of everything sent to and from the site, and the certificate is what proves the server&#39;s identity.</p>
+  <h4>Why it was flagged</h4>
+  <p>The server completed a handshake using static RSA key exchange, which has no forward secrecy: anyone who records traffic now and obtains the server key later can decrypt it. Negotiated: AES256-GCM-SHA384 over TLSv1.2.</p>
+  <h4>Remediation</h4>
+  <p>Allow only ECDHE (or DHE) key exchange, for example the Mozilla &#39;intermediate&#39; configuration.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>TLS evidence 1 of 1: The server completed a handshake using static RSA key exchange, which has no forward secrecy: anyone who...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>TLS handshake with localhost:8443, offering only: kRSA:@SECLEVEL=0</pre>
+      <div class="label">Received</div>
+      <pre>handshake completed: TLSv1.2, AES256-GCM-SHA384</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding info" id="config.security_headers-dfdd8398eb">
+  <h3><span class="badge info">info</span><span class="t">Permissions-Policy header is missing</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.security_headers</code></span>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Permissions-Policy switches off browser features (camera, microphone, geolocation) the site does not use, limiting what injected or embedded content can do. Header grade for this response: F (20/100).</p>
+  <h4>Why it was flagged</h4>
+  <p>The response has no Permissions-Policy header.</p>
+  <h4>Remediation</h4>
+  <p>Send Permissions-Policy: geolocation=(), camera=(), microphone=()</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The response has no Permissions-Policy header.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding info" id="config.security_headers-94e3bad43a">
+  <h3><span class="badge info">info</span><span class="t">Referrer-Policy header is missing</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>config.security_headers</code></span>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Referrer-Policy controls how much of the page URL is sent to other sites in the Referer header. Header grade for this response: F (20/100).</p>
+  <h4>Why it was flagged</h4>
+  <p>The response has no Referrer-Policy header, so the browser default applies.</p>
+  <h4>Remediation</h4>
+  <p>Send Referrer-Policy: strict-origin-when-cross-origin (or stricter).</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The response has no Referrer-Policy header, so the browser default applies.</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581</pre>
+    </div>
+  </details>
+</article>
+<article class="card finding info" id="recon.fingerprint-a96a511034">
+  <h3><span class="badge info">info</span><span class="t">Technology stack identified (5 components)</span></h3>
+  <div class="meta">
+    <span><b>Check</b> <code>recon.fingerprint</code></span>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+  <h4>Location</h4>
+  <p><code>https://localhost:8443/</code></p>
+  <h4>What this means</h4>
+  <p>Recon result, not a vulnerability in itself. It is the starting point for checking each component against known vulnerabilities, and shows how much the site reveals about itself. Version currency is not assessed here.</p>
+  <h4>Why it was flagged</h4>
+  <p>The response identifies the software behind the site: WordPress 5.8.1, jQuery 3.4.1, PHP 7.4.3, OpenSSL 1.1.1k, Apache HTTP Server 2.4.49.</p>
+  <h4>Remediation</h4>
+  <p>Keep every listed component on a supported, patched version, and remove version banners where the platform allows it.</p>
+  <h4>Evidence</h4>
+  <details class="evidence" open>
+    <summary>HTTP evidence 1 of 1: The response identifies the software behind the site: WordPress 5.8.1, jQuery 3.4.1, PHP 7.4.3, OpenSSL...</summary>
+    <div class="body">
+      <div class="label">Sent</div>
+      <pre>GET / HTTP/1.1
+Host: localhost:8443
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+Accept: */*</pre>
+      <div class="label">Received</div>
+      <pre>HTTP/1.1 200 OK
+Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+X-Powered-By: PHP/7.4.3
+Set-Cookie: PHPSESSID=&lt;redacted&gt;; path=/
+Set-Cookie: prefs=&lt;redacted&gt;; Path=/; SameSite=None
+Content-Type: text/html; charset=utf-8
+Content-Length: 581
+
+WordPress 5.8.1              meta generator: WordPress 5.8.1
+jQuery 3.4.1                 page markup: jquery-3.4.1.min.js
+PHP 7.4.3                    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+OpenSSL 1.1.1k               Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3
+Apache HTTP Server 2.4.49    Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3</pre>
+    </div>
+  </details>
+</article>
+
+<h2 id="recon">Reconnaissance</h2>
+<p class="note">What the scan learned about the target that is not in itself a weakness.</p>
+<div class="card" style="margin-bottom: 12px">
+  <h3 style="font-size: 15px; margin-bottom: 8px">Security headers</h3>
+  <table class="kv">
+      <tr><th>grade</th><td>F</td></tr>
+      <tr><th>score</th><td>20/100</td></tr>
+    </table>
+</div>
+<div class="card" style="margin-bottom: 12px">
+  <h3 style="font-size: 15px; margin-bottom: 8px">Technologies</h3>
+  <div class="scroll"><table>
+      <tr><th>technology</th><th>version</th><th>type</th><th>identified from</th></tr>
+        <tr><td>WordPress</td><td>5.8.1</td><td>CMS</td><td>meta generator: WordPress 5.8.1</td></tr>
+        <tr><td>jQuery</td><td>3.4.1</td><td>JavaScript library</td><td>page markup: jquery-3.4.1.min.js</td></tr>
+        <tr><td>PHP</td><td>7.4.3</td><td>language</td><td>Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3</td></tr>
+        <tr><td>OpenSSL</td><td>1.1.1k</td><td>library</td><td>Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3</td></tr>
+        <tr><td>Apache HTTP Server</td><td>2.4.49</td><td>web server</td><td>Server: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3</td></tr>
+      </table></div>
+</div>
+<div class="card" style="margin-bottom: 12px">
+  <h3 style="font-size: 15px; margin-bottom: 8px">Tls</h3>
+  <table class="kv">
+      <tr><th>negotiated</th><td>TLSv1.3, TLS_AES_256_GCM_SHA384 (256 bits)</td></tr>
+      <tr><th>certificate subject</th><td>CN=legacy.fixture.test,O=AegisScan test fixtures</td></tr>
+      <tr><th>issuer</th><td>CN=legacy.fixture.test,O=AegisScan test fixtures</td></tr>
+      <tr><th>valid</th><td>2025-10-09 to 2026-10-14</td></tr>
+      <tr><th>names</th><td><code>legacy.fixture.test</code></td></tr>
+      <tr><th>key</th><td>RSA 2048 bits, signed with sha256</td></tr>
+      <tr><th>chain</th><td>not trusted: self-signed certificate</td></tr>
+      <tr><th>deprecated protocols</th><td><code>TLS 1.0</code> <code>TLS 1.1</code></td></tr>
+      <tr><th>weak ciphers</th><td>accepted (AECDH-AES256-SHA)</td></tr>
+      <tr><th>forward secrecy</th><td>accepted (AES256-GCM-SHA384)</td></tr>
+    </table>
+</div>
+
+<h2 id="checks">Checks performed</h2>
+<div class="card scroll">
+  <table>
+    <tr><th>Check</th><th>Category</th><th>Result</th><th>Findings</th><th>Time</th></tr>
+    <tr>
+      <td><code>recon.dns</code><br>DNS records and zone posture</td>
+      <td>recon</td>
+      <td class="status-skipped">
+not applicable<br><span class="note">target is an IP address or local name; there is no DNS zone to inspect</span>      </td>
+      <td>0</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td><code>recon.email_auth</code><br>Email authentication (SPF, DMARC, DKIM)</td>
+      <td>recon</td>
+      <td class="status-skipped">
+not applicable<br><span class="note">target is an IP address or local name; there is no DNS zone to inspect</span>      </td>
+      <td>0</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td><code>recon.fingerprint</code><br>Technology fingerprinting</td>
+      <td>recon</td>
+      <td class="status-ran">
+completed      </td>
+      <td>1</td>
+      <td>145 ms</td>
+    </tr>
+    <tr>
+      <td><code>recon.subdomains</code><br>Passive subdomain enumeration</td>
+      <td>recon</td>
+      <td class="status-skipped">
+not applicable<br><span class="note">target is an IP address or local name; there is no DNS zone to inspect</span>      </td>
+      <td>0</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td><code>recon.tls</code><br>TLS and certificate analysis</td>
+      <td>recon</td>
+      <td class="status-ran">
+completed      </td>
+      <td>6</td>
+      <td>3518 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.clickjacking</code><br>Clickjacking exposure</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>1</td>
+      <td>48 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.cookies</code><br>Cookie flags</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>2</td>
+      <td>48 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.cors</code><br>CORS misconfiguration</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>1</td>
+      <td>275 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.directory_listing</code><br>Directory listing enabled</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>1</td>
+      <td>8075 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.exposed_files</code><br>Exposed sensitive files</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>8</td>
+      <td>10473 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.info_disclosure</code><br>Server and version disclosure</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>2</td>
+      <td>795 ms</td>
+    </tr>
+    <tr>
+      <td><code>config.security_headers</code><br>Security headers</td>
+      <td>config</td>
+      <td class="status-ran">
+completed      </td>
+      <td>5</td>
+      <td>0 ms</td>
+    </tr>
+  </table>
+</div>
+
+<h2 id="method">Method and limits</h2>
+<div class="card">
+  <ul class="plain">
+    <li><b>Non-destructive.</b> Every check sends benign, read-only requests (GET, HEAD, OPTIONS, TLS handshakes, DNS lookups) and analyses the response. Nothing was modified, and file contents and secrets were not extracted: evidence excerpts are short and secret values are masked.</li>
+    <li><b>Scope.</b> Requests were rate limited and sent only to the hosts listed under Scope and authorization.</li>
+    <li><b>Coverage.</b> This is an automated assessment of configuration and exposure for a single URL. It does not crawl the application, log in, or test for injection flaws, and it is not a substitute for a manual penetration test. The absence of a finding is not proof of the absence of a weakness.</li>
+    <li><b>Severity.</b> Ratings are CVSS v3.1 base scores for the weakness in general. Adjust them for what this system holds and who can reach it.</li>
+  </ul>
+</div>
+
+<footer>
+  Generated by AegisScan 0.1.0 on 2026-11-13 18:26 UTC.
+  For authorized security testing only. This report describes weaknesses in the named system: handle it as confidential.
+</footer>
+
+</div>
+</body>
+</html>

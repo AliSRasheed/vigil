@@ -48,3 +48,47 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 - **DNS in tests** is a small authoritative server on loopback UDP, not a mock, so the dnspython code path is real.
 - **Certificates for HTTPS fixtures are generated at test time.** No private keys are committed.
 - **A session-wide guard** makes name resolution and `connect` to anything but loopback fail, as a backstop for "no test may touch the internet".
+
+## Stage 2: checks and reports
+
+### Across all checks
+
+- **One URL per scan.** v1 has no crawler, so checks look at the target URL and at well-known paths relative to its directory (normally the site root). Crawling is v2.
+- **Twelve checks, one per roadmap bullet.** "DNS records + passive subdomain enumeration" became two checks (`recon.dns`, `recon.subdomains`) because they fail and skip independently.
+- **Checks that do not apply say so.** DNS-based checks skip for IP addresses, `localhost` and names with no DNS zone; the report lists them as "not applicable" with the reason, so a clean result is never mistaken for full coverage.
+- **Findings are grouped where repetition adds nothing:** one finding per cookie (listing all its weak flags), one for all listed directories, one per kind of exposed file (`.git/HEAD` and `.git/config` are one finding with two pieces of evidence).
+
+### Recon
+
+- **Subdomain enumeration is strictly passive and uses no third-party service.** Certificate-transparency sites such as crt.sh are the usual source, but querying them would mean contacting a host the operator did not name. Sources are DNS records of the zone, host names in the target page and its headers, and names on the target's own certificate. No wordlist guessing. Coverage is therefore narrower than dedicated tools; that is the price of the scope rule.
+- **DNS lookups go to the operator's configured resolver.** They are questions about the named domain, not requests to another host. Zone transfers (AXFR) are not attempted: that is data extraction from the name servers.
+- **"The domain" for email and CAA checks is the zone apex**, found by walking up from the host until a name answers an SOA query. This avoids shipping a public-suffix list.
+- **DKIM absence can only be reported as informational.** Selectors cannot be enumerated from outside; the check tries 15 common ones and says so.
+- **`~all` in SPF is not flagged** (it is the normal setting alongside DMARC). `+all` is medium, `?all` or no `all` is low.
+- **TLS analysis is done with handshakes, using Python's `ssl`.** It tests TLS 1.0/1.1 acceptance, weak suites (3DES, RC4, DES, NULL, EXPORT, anonymous, MD5) and static-RSA key exchange. SSLv2/SSLv3 cannot be tested because modern OpenSSL builds no longer contain them; if the local library cannot build a probe, the report says "not tested" instead of "not accepted". It proves a server accepts *some* suite in a group, not a full per-suite inventory.
+- **Certificates are judged the way browsers do**, not by Python 3.13's stricter RFC 5280 defaults, to avoid calling a working certificate untrusted.
+- **A plain-HTTP target is reported as "no transport encryption"** unless it is loopback or redirects to HTTPS.
+- **Fingerprinting reports what is identified, not whether it is outdated.** A built-in table of end-of-life versions would go stale and start making false claims.
+
+### Config and exposure
+
+- **`config.security_headers` does not cover X-Frame-Options / frame-ancestors**; `config.clickjacking` does, so the same gap is not reported twice.
+- **HSTS and the cookie `Secure` flag are judged only over HTTPS.** Browsers ignore both over plain HTTP.
+- **Header grade:** starts at 100, minus 30 missing CSP (15 weak), 25 missing HSTS (10 short max-age), 15 missing nosniff, 5 or 10 Referrer-Policy, 5 Permissions-Policy. A 90+, B 75+, C 60+, D 40+, F below. Only the first CSP header is analysed when several are sent.
+- **Cookies:** `HttpOnly` and `SameSite` are required only of session-like cookies (name contains sess, auth, token, ...). CSRF tokens are exempt from `HttpOnly` because page script reads them by design. This keeps preference cookies from generating noise.
+- **CORS:** `Access-Control-Allow-Origin: *` without credentials is not reported; it is correct for public resources. The check reports reflected arbitrary origins, the `null` origin, and prefix/suffix validation bypasses, rated high with credentials and low without. Probe origins use the reserved `.example` domain.
+- **Exposed files are confirmed by content, not status code.** Each of the 28 probes has a signature (magic bytes, format markers), so a site that returns 200 for everything produces nothing. Excerpts are masked or cut to one line: the report proves the file is there without reproducing it.
+- **Version disclosure is low severity; stack traces on error pages are medium.**
+
+### Reports
+
+- **The HTML report is one self-contained file**: no scripts, no external assets, light and dark themes, printable. Everything from the target is HTML-escaped.
+- **The executive summary text is generated from the results**, and states how many checks did not run.
+- **JSON is the full result model plus a `summary` block.** `aegisscan report` re-renders HTML from it.
+- **The sample report scans the vulnerable fixture over HTTPS on `localhost`**, so the three DNS-based checks appear as "not applicable". They are covered by tests against the fixture DNS server.
+
+### Not done in v1
+
+- Juice Shop / DVWA were not run as part of this build (no Docker run was performed); the README documents the command. The roadmap's "each check fires on vulnerable, silent on clean" is met by the fixture app instead, as CLAUDE.md specifies.
+- No `--fail-on` severity threshold, proxy support or SARIF: those are v3 or later.
+- `PROGRESS.md` (mentioned in PROJECT-INSTRUCTIONS.md for the planning project) was not created.

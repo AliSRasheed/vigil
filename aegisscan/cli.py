@@ -1,4 +1,4 @@
-"""Command line interface: scan, list-checks."""
+"""Command line interface: scan, list-checks, report."""
 
 from __future__ import annotations
 
@@ -210,6 +210,30 @@ def list_checks(
         typer.echo(
             f"{check.id:<{width}}  {check.severity.value:<8}  {check.category:<9}  {check.title}"
         )
+
+
+@app.command("report")
+def render_report(
+    source: Annotated[Path, typer.Argument(help="JSON report written by `aegisscan scan`.")],
+    output: Annotated[
+        Path | None,
+        typer.Option("--output", "-o", help="File to write (default: beside the JSON file)."),
+    ] = None,
+    fmt: Annotated[str, typer.Option("--format", help="html or json.")] = "html",
+) -> None:
+    """Re-render a report from a JSON export, without scanning again."""
+    if fmt not in report.FORMATS:
+        typer.secho(f"Error: unknown report format: {fmt}", fg=typer.colors.RED, err=True)
+        raise typer.Exit(EXIT_BLOCKED)
+    try:
+        result = report.load_result(source)
+    except (OSError, ValueError) as exc:
+        typer.secho(f"Error: cannot read {source}: {exc}", fg=typer.colors.RED, err=True)
+        raise typer.Exit(EXIT_BLOCKED) from exc
+    renderer = report.render_html if fmt == "html" else report.render_json
+    destination = output or source.with_suffix(f".{fmt}")
+    destination.write_text(renderer(result), encoding="utf-8")
+    typer.echo(f"Report written: {destination}")
 
 
 @app.callback(invoke_without_command=True)
