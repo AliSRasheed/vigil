@@ -16,7 +16,7 @@ The full sample is in [docs/sample-report.html](docs/sample-report.html) (and [J
 
 ## Status
 
-**v0.1.0** — core engine, 12 recon and configuration checks, HTML and JSON reports. Crawling, authenticated scanning and injection-class detection with confirmation are v2; see [ROADMAP.md](ROADMAP.md).
+**v0.1.1** — core engine, 12 recon and configuration checks, HTML and JSON reports. Crawling, authenticated scanning and injection-class detection with confirmation are v2; see [ROADMAP.md](ROADMAP.md).
 
 ## Install
 
@@ -118,7 +118,7 @@ aegisscan scan https://app.example.com --scope scope.yaml
 
 The table is generated: `aegisscan list-checks --markdown`. A test fails if it drifts from the registry.
 
-OWASP categories follow each CWE's placement in the official [OWASP Top 10:2025](https://owasp.org/Top10/2025/) mapped-CWE lists. The table shows each check's primary CWE; individual findings can carry a more specific CWE and therefore a different category (an expired certificate is CWE-298, A07 Authentication Failures; a stack trace is CWE-209, A10 Mishandling of Exceptional Conditions).
+OWASP categories are not assigned by hand: each one is derived from the finding's CWE, using the mapped-CWE lists published with the official [OWASP Top 10:2025](https://owasp.org/Top10/2025/). The table shows each check's primary CWE; individual findings can carry a more specific CWE and therefore a different category (an expired certificate is CWE-298, A07 Authentication Failures; a stack trace is CWE-209, A10 Mishandling of Exceptional Conditions).
 
 Every finding carries a CVSS v3.1 vector and score, a CWE and its OWASP Top 10:2025 category, the request that was sent, the relevant part of the response, why it was flagged, and how to fix it. Secret values and cookie values are masked in evidence, and exposed backups are identified from their first bytes rather than downloaded.
 

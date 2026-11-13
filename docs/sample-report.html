@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="AegisScan 0.1.0">
+<meta name="generator" content="AegisScan 0.1.1">
 <title>Security assessment: localhost</title>
 <style>
 :root {
@@ -110,10 +110,10 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
   <h1>localhost</h1>
   <div class="target"><code>https://localhost:8443/</code></div>
   <div class="facts">
-    <span><b>Scanned</b> 13 November 2026, 19:11 UTC</span>
-    <span><b>Duration</b> 10.79 s</span>
+    <span><b>Scanned</b> 13 November 2026, 19:25 UTC</span>
+    <span><b>Duration</b> 10.75 s</span>
     <span><b>Requests sent</b> 48 HTTP</span>
-    <span><b>Tool</b> AegisScan 0.1.0</span>
+    <span><b>Tool</b> AegisScan 0.1.1</span>
   </div>
   <nav class="toc">
     <a href="#summary">Executive summary</a>
@@ -221,7 +221,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
     </tr>
     <tr>
       <td><span class="badge medium">medium</span></td>
-      <td><a href="#config.info_disclosure-2dce36b06e">Verbose error page exposes internal details</a></td>
+      <td><a href="#config.info_disclosure-9092966232">Verbose error page exposes internal details</a></td>
       <td>5.3</td>
       <td><code>config.info_disclosure</code></td>
     </tr>
@@ -316,7 +316,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
 <div class="card authz">
   <table class="kv">
     <tr><th>Authorization asserted by</th><td>loopback target, no assertion required</td></tr>
-    <tr><th>Recorded at</th><td>2026-11-13 19:11:00 UTC</td></tr>
+    <tr><th>Recorded at</th><td>2026-11-13 19:25:28 UTC</td></tr>
     <tr><th>Hosts in scope</th><td><code>localhost</code> </td></tr>
     <tr><th>Out of scope, not contacted</th><td>
 <code>cdn.thirdparty.example</code> <code>partner.thirdparty.example</code> <code>staging.localhost</code>     </td></tr>
@@ -356,7 +356,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Origin: https://aegisscan-cors-probe.example
 Cookie: &lt;redacted&gt;</pre>
@@ -396,7 +396,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -432,7 +432,7 @@ Content-Length: 74
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -469,7 +469,7 @@ Content-Length: 74
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -506,7 +506,7 @@ Content-Length: 126
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -545,7 +545,7 @@ SECRET_KEY=&lt;redacted&gt;
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -566,7 +566,7 @@ ref: refs/heads/main</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -607,7 +607,7 @@ Content-Length: 112
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -642,7 +642,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -677,7 +677,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -701,7 +701,7 @@ Content-Length: 485
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -725,7 +725,7 @@ Content-Length: 487
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -764,7 +764,7 @@ Content-Length: 485
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -801,7 +801,7 @@ Content-Length: 155
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -837,7 +837,7 @@ Content-Length: 40
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -852,13 +852,13 @@ Content-Length: 156
     </div>
   </details>
 </article>
-<article class="card finding medium" id="config.info_disclosure-2dce36b06e">
+<article class="card finding medium" id="config.info_disclosure-9092966232">
   <h3><span class="badge medium">medium</span><span class="t">Verbose error page exposes internal details</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.info_disclosure</code></span>
 <span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/209.html">CWE-209</a></span><span><b>OWASP Top 10</b> A10:2025 Mishandling of Exceptional Conditions</span>  </div>
   <h4>Location</h4>
-  <p><code>https://localhost:8443/aegisscan-0e0a2eeb7e4c</code></p>
+  <p><code>https://localhost:8443/aegisscan-61cad4d95bd0</code></p>
   <h4>What this means</h4>
   <p>Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.</p>
   <h4>Why it was flagged</h4>
@@ -870,11 +870,11 @@ Content-Length: 156
     <summary>HTTP evidence 1 of 1: Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.</summary>
     <div class="body">
       <div class="label">Sent</div>
-      <pre>GET /aegisscan-0e0a2eeb7e4c HTTP/1.1
+      <pre>GET /aegisscan-61cad4d95bd0 HTTP/1.1
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -887,7 +887,7 @@ Content-Length: 407
 &lt;pre&gt;Traceback (most recent call last):
   File &#34;/var/www/shop/app/router.py&#34;, line 42, in dispatch
     handler = self.routes[path]
-KeyError: &#39;/aegisscan-0e0a2eeb7e4c&#39;
+KeyError: &#39;/aegisscan-61cad4d95bd0&#39;
 &lt;/pre&gt;</pre>
     </div>
   </details>
@@ -914,7 +914,7 @@ KeyError: &#39;/aegisscan-0e0a2eeb7e4c&#39;
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -975,12 +975,12 @@ TLS 1.1: handshake completed (ECDHE-RSA-AES256-SHA)</pre>
       <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 19:10 UTC
-valid to:   2026-10-14 19:10 UTC
+valid from: 2025-10-09 19:25 UTC
+valid to:   2026-10-14 19:25 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
+sha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8</pre>
     </div>
   </details>
 </article>
@@ -1007,12 +1007,12 @@ sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pr
       <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 19:10 UTC
-valid to:   2026-10-14 19:10 UTC
+valid from: 2025-10-09 19:25 UTC
+valid to:   2026-10-14 19:25 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
+sha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8</pre>
     </div>
   </details>
 </article>
@@ -1039,12 +1039,12 @@ sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pr
       <pre>verification failed: self-signed certificate
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 19:10 UTC
-valid to:   2026-10-14 19:10 UTC
+valid from: 2025-10-09 19:25 UTC
+valid to:   2026-10-14 19:25 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
+sha256:     de1ce96f7f2b7cf803f68ff9d8405c45aa16d10b29ec5982caa9762139e47ec8</pre>
     </div>
   </details>
 </article>
@@ -1094,7 +1094,7 @@ sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pr
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1129,7 +1129,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1145,11 +1145,11 @@ Content-Length: 581</pre>
     <summary>HTTP evidence 2 of 2: The error page for a non-existent path prints the server version</summary>
     <div class="body">
       <div class="label">Sent</div>
-      <pre>GET /aegisscan-0e0a2eeb7e4c HTTP/1.1
+      <pre>GET /aegisscan-61cad4d95bd0 HTTP/1.1
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*
 Cookie: &lt;redacted&gt;</pre>
       <div class="label">Received</div>
@@ -1185,7 +1185,7 @@ Content-Length: 407
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1220,7 +1220,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1279,7 +1279,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1314,7 +1314,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1349,7 +1349,7 @@ Content-Length: 581</pre>
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-User-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)
+User-Agent: AegisScan/0.1.1 (authorized security testing; non-destructive)
 Accept: */*</pre>
       <div class="label">Received</div>
       <pre>HTTP/1.1 200 OK
@@ -1431,7 +1431,7 @@ not applicable<br><span class="note">target is an IP address or local name; ther
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>219 ms</td>
+      <td>124 ms</td>
     </tr>
     <tr>
       <td><code>recon.subdomains</code><br>Passive subdomain enumeration</td>
@@ -1447,7 +1447,7 @@ not applicable<br><span class="note">target is an IP address or local name; ther
       <td class="status-ran">
 completed      </td>
       <td>6</td>
-      <td>3509 ms</td>
+      <td>3552 ms</td>
     </tr>
     <tr>
       <td><code>config.clickjacking</code><br>Clickjacking exposure</td>
@@ -1455,7 +1455,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>103 ms</td>
+      <td>51 ms</td>
     </tr>
     <tr>
       <td><code>config.cookies</code><br>Cookie flags</td>
@@ -1463,7 +1463,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>2</td>
-      <td>104 ms</td>
+      <td>52 ms</td>
     </tr>
     <tr>
       <td><code>config.cors</code><br>CORS misconfiguration</td>
@@ -1471,7 +1471,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>200 ms</td>
+      <td>311 ms</td>
     </tr>
     <tr>
       <td><code>config.directory_listing</code><br>Directory listing enabled</td>
@@ -1479,7 +1479,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>7995 ms</td>
+      <td>8087 ms</td>
     </tr>
     <tr>
       <td><code>config.exposed_files</code><br>Exposed sensitive files</td>
@@ -1487,7 +1487,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>8</td>
-      <td>10396 ms</td>
+      <td>10501 ms</td>
     </tr>
     <tr>
       <td><code>config.info_disclosure</code><br>Server and version disclosure</td>
@@ -1495,7 +1495,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>2</td>
-      <td>807 ms</td>
+      <td>787 ms</td>
     </tr>
     <tr>
       <td><code>config.security_headers</code><br>Security headers</td>
@@ -1520,7 +1520,7 @@ completed      </td>
 </div>
 
 <footer>
-  Generated by AegisScan 0.1.0 on 2026-11-13 19:11 UTC.
+  Generated by AegisScan 0.1.1 on 2026-11-13 19:25 UTC.
   For authorized security testing only. This report describes weaknesses in the named system: handle it as confidential.
 </footer>
 
