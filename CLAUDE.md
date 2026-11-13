@@ -52,6 +52,12 @@ Every check is a plugin: a class with `id`, `title`, `severity`, `cwe`, `owasp`,
    - Every scan logs which assertion was used, with a timestamp, and the report prints it.
    - If either condition fails, exit non-zero with a message saying exactly what is missing. Do not add any option that skips the in-scope check.
 2. **Non-destructive only.** Checks detect by sending benign probes and analysing responses. No data extraction, no state-changing requests against discovered forms unless the scope file marks them allowed, no payloads meant to damage, persist or deny service.
+
+   **Request methods (v2).** GET, HEAD and OPTIONS are the default. POST is allowed in exactly two cases:
+   - the login request, using credentials the operator supplied, to the login URL the operator named;
+   - forms the operator explicitly allowed in the scope file.
+
+   Every other discovered form is inventoried and probed only through GET parameters; it is never submitted. PUT, PATCH and DELETE are never sent. Tests must prove an un-allowed form is never submitted.
 3. **Evidence.** Every finding stores the request, the relevant response excerpt, and why it was flagged.
 4. **Confirm before reporting (v2).** Injection-class candidates go through `confirm.py`; unconfirmed ones are reported as "tentative", never as confirmed.
 5. **Polite.** Default rate limit, honour `Retry-After`, identifiable User-Agent.

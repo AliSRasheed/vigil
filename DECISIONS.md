@@ -109,3 +109,11 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 - **A check's `owasp` is the category of its primary CWE; a finding's follows its own CWE.** So one check can produce findings in several categories: `recon.tls` is A04 by its primary CWE-326, but its certificate findings (CWE-295/297/298) are A07; `config.cookies` is A02, but a SameSite-only finding (CWE-1275) is A01; `config.info_disclosure` is A01, but a stack trace (CWE-209) is A10.
 - **Guard rails:** registering a check whose `owasp` does not match its CWE in the table raises `TypeError`, and a test asserts every finding from the fixture scan matches the table.
 - The `v0.1.0` tag still points at the 2021 mapping; this change is a later commit.
+
+## Request-method rule for v2 (decided 2026-11-14, by Ali)
+
+- **POST is allowed in exactly two cases:** (1) the login request, using credentials the operator supplied, to the login URL the operator named; (2) forms the operator explicitly allowed in the scope file.
+- **Every other discovered form is inventoried and probed only through GET parameters. It is never submitted.**
+- **PUT, PATCH and DELETE are never sent.**
+- v2 must include tests proving an un-allowed form is never submitted.
+- Status: recorded here and in CLAUDE.md (rule 2). Not yet implemented: as of `v0.1.1` the HTTP client sends only GET, HEAD and OPTIONS, which is stricter than this rule.
