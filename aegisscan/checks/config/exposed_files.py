@@ -240,7 +240,7 @@ class ExposedFiles(Check):
     title = "Exposed sensitive files"
     severity = Severity.HIGH
     cwe = "CWE-538"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "config"
     description = (
         "Version control data, .env, credential files, backups, database dumps and config "

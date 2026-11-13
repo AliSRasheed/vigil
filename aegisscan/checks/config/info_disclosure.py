@@ -73,7 +73,7 @@ class InfoDisclosure(Check):
     title = "Server and version disclosure"
     severity = Severity.MEDIUM
     cwe = "CWE-200"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "config"
     description = (
         "Software versions in response headers and error pages; stack traces and debug "

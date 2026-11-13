@@ -35,7 +35,7 @@ class SubdomainEnumeration(Check):
     title = "Passive subdomain enumeration"
     severity = Severity.INFO
     cwe = "CWE-200"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "recon"
     description = (
         "Subdomains revealed by DNS records, page links, security headers and certificate "

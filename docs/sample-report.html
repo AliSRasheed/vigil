@@ -110,8 +110,8 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
   <h1>localhost</h1>
   <div class="target"><code>https://localhost:8443/</code></div>
   <div class="facts">
-    <span><b>Scanned</b> 13 November 2026, 18:26 UTC</span>
-    <span><b>Duration</b> 10.77 s</span>
+    <span><b>Scanned</b> 13 November 2026, 19:11 UTC</span>
+    <span><b>Duration</b> 10.79 s</span>
     <span><b>Requests sent</b> 48 HTTP</span>
     <span><b>Tool</b> AegisScan 0.1.0</span>
   </div>
@@ -221,7 +221,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
     </tr>
     <tr>
       <td><span class="badge medium">medium</span></td>
-      <td><a href="#config.info_disclosure-81f9631516">Verbose error page exposes internal details</a></td>
+      <td><a href="#config.info_disclosure-2dce36b06e">Verbose error page exposes internal details</a></td>
       <td>5.3</td>
       <td><code>config.info_disclosure</code></td>
     </tr>
@@ -316,7 +316,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
 <div class="card authz">
   <table class="kv">
     <tr><th>Authorization asserted by</th><td>loopback target, no assertion required</td></tr>
-    <tr><th>Recorded at</th><td>2026-11-13 18:26:47 UTC</td></tr>
+    <tr><th>Recorded at</th><td>2026-11-13 19:11:00 UTC</td></tr>
     <tr><th>Hosts in scope</th><td><code>localhost</code> </td></tr>
     <tr><th>Out of scope, not contacted</th><td>
 <code>cdn.thirdparty.example</code> <code>partner.thirdparty.example</code> <code>staging.localhost</code>     </td></tr>
@@ -338,7 +338,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
   <h3><span class="badge high">high</span><span class="t">CORS policy reflects any Origin with credentials</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.cors</code></span>
-<span><b>CVSS 3.1</b> 7.1 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/942.html">CWE-942</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.1 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/942.html">CWE-942</a></span><span><b>OWASP Top 10</b> A02:2025 Security Misconfiguration</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -378,7 +378,7 @@ Content-Length: 581</pre>
   <h3><span class="badge high">high</span><span class="t">Backup archive exposed: /backup.zip</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/backup.zip</code></p>
   <h4>What this means</h4>
@@ -414,7 +414,7 @@ Content-Length: 74
   <h3><span class="badge high">high</span><span class="t">Backup copy of a source file exposed: /config.php.bak</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/config.php.bak</code></p>
   <h4>What this means</h4>
@@ -451,7 +451,7 @@ Content-Length: 74
   <h3><span class="badge high">high</span><span class="t">Database dump exposed: /database.sql</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/530.html">CWE-530</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/database.sql</code></p>
   <h4>What this means</h4>
@@ -488,7 +488,7 @@ Content-Length: 126
   <h3><span class="badge high">high</span><span class="t">Environment file exposed: /.env</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/.env</code></p>
   <h4>What this means</h4>
@@ -527,7 +527,7 @@ SECRET_KEY=&lt;redacted&gt;
   <h3><span class="badge high">high</span><span class="t">Git repository exposed: /.git/HEAD, /.git/config</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/527.html">CWE-527</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 7.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/527.html">CWE-527</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/.git/HEAD</code></p>
   <h4>What this means</h4>
@@ -589,7 +589,7 @@ Content-Length: 112
   <h3><span class="badge medium">medium</span><span class="t">Page can be framed by other sites (clickjacking)</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.clickjacking</code></span>
-<span><b>CVSS 3.1</b> 4.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 4.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span><span><b>OWASP Top 10</b> A06:2025 Insecure Design</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -624,7 +624,7 @@ Content-Length: 581</pre>
   <h3><span class="badge medium">medium</span><span class="t">Session cookie &#39;PHPSESSID&#39; has weak flags: HttpOnly, Secure, SameSite</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.cookies</code></span>
-<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP Top 10</b> A02:2025 Security Misconfiguration</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -659,7 +659,7 @@ Content-Length: 581</pre>
   <h3><span class="badge medium">medium</span><span class="t">Directory listing enabled (3 directories)</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.directory_listing</code></span>
-<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/548.html">CWE-548</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/548.html">CWE-548</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/static/</code></p>
   <h4>What this means</h4>
@@ -746,7 +746,7 @@ Content-Length: 485
   <h3><span class="badge medium">medium</span><span class="t">Apache server-status exposed: /server-status</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/server-status</code></p>
   <h4>What this means</h4>
@@ -783,7 +783,7 @@ Content-Length: 155
   <h3><span class="badge medium">medium</span><span class="t">macOS .DS_Store file exposed: /.DS_Store</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/.DS_Store</code></p>
   <h4>What this means</h4>
@@ -819,7 +819,7 @@ Content-Length: 40
   <h3><span class="badge medium">medium</span><span class="t">phpinfo() page exposed: /phpinfo.php</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.exposed_files</code></span>
-<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/phpinfo.php</code></p>
   <h4>What this means</h4>
@@ -852,13 +852,13 @@ Content-Length: 156
     </div>
   </details>
 </article>
-<article class="card finding medium" id="config.info_disclosure-81f9631516">
+<article class="card finding medium" id="config.info_disclosure-2dce36b06e">
   <h3><span class="badge medium">medium</span><span class="t">Verbose error page exposes internal details</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.info_disclosure</code></span>
-<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/209.html">CWE-209</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 5.3 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/209.html">CWE-209</a></span><span><b>OWASP Top 10</b> A10:2025 Mishandling of Exceptional Conditions</span>  </div>
   <h4>Location</h4>
-  <p><code>https://localhost:8443/aegisscan-b92b3bcc01a1</code></p>
+  <p><code>https://localhost:8443/aegisscan-0e0a2eeb7e4c</code></p>
   <h4>What this means</h4>
   <p>Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.</p>
   <h4>Why it was flagged</h4>
@@ -870,7 +870,7 @@ Content-Length: 156
     <summary>HTTP evidence 1 of 1: Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.</summary>
     <div class="body">
       <div class="label">Sent</div>
-      <pre>GET /aegisscan-b92b3bcc01a1 HTTP/1.1
+      <pre>GET /aegisscan-0e0a2eeb7e4c HTTP/1.1
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
@@ -887,7 +887,7 @@ Content-Length: 407
 &lt;pre&gt;Traceback (most recent call last):
   File &#34;/var/www/shop/app/router.py&#34;, line 42, in dispatch
     handler = self.routes[path]
-KeyError: &#39;/aegisscan-b92b3bcc01a1&#39;
+KeyError: &#39;/aegisscan-0e0a2eeb7e4c&#39;
 &lt;/pre&gt;</pre>
     </div>
   </details>
@@ -896,7 +896,7 @@ KeyError: &#39;/aegisscan-b92b3bcc01a1&#39;
   <h3><span class="badge medium">medium</span><span class="t">Strict-Transport-Security header is missing</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.security_headers</code></span>
-<span><b>CVSS 3.1</b> 4.2 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/319.html">CWE-319</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 4.2 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/319.html">CWE-319</a></span><span><b>OWASP Top 10</b> A04:2025 Cryptographic Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -931,7 +931,7 @@ Content-Length: 581</pre>
   <h3><span class="badge medium">medium</span><span class="t">Deprecated TLS versions accepted: TLS 1.0, TLS 1.1</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP Top 10</b> A04:2025 Cryptographic Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -956,7 +956,7 @@ TLS 1.1: handshake completed (ECDHE-RSA-AES256-SHA)</pre>
   <h3><span class="badge medium">medium</span><span class="t">TLS certificate does not match the host name</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/297.html">CWE-297</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/297.html">CWE-297</a></span><span><b>OWASP Top 10</b> A07:2025 Authentication Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -975,12 +975,12 @@ TLS 1.1: handshake completed (ECDHE-RSA-AES256-SHA)</pre>
       <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 18:26 UTC
-valid to:   2026-10-14 18:26 UTC
+valid from: 2025-10-09 19:10 UTC
+valid to:   2026-10-14 19:10 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
     </div>
   </details>
 </article>
@@ -988,7 +988,7 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
   <h3><span class="badge medium">medium</span><span class="t">TLS certificate has expired</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/298.html">CWE-298</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/298.html">CWE-298</a></span><span><b>OWASP Top 10</b> A07:2025 Authentication Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -1007,12 +1007,12 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
       <pre>negotiated TLSv1.3 TLS_AES_256_GCM_SHA384
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 18:26 UTC
-valid to:   2026-10-14 18:26 UTC
+valid from: 2025-10-09 19:10 UTC
+valid to:   2026-10-14 19:10 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
     </div>
   </details>
 </article>
@@ -1020,7 +1020,7 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
   <h3><span class="badge medium">medium</span><span class="t">TLS certificate is not trusted</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/295.html">CWE-295</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 6.5 <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/295.html">CWE-295</a></span><span><b>OWASP Top 10</b> A07:2025 Authentication Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -1039,12 +1039,12 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
       <pre>verification failed: self-signed certificate
 subject:    CN=legacy.fixture.test,O=AegisScan test fixtures
 issuer:     CN=legacy.fixture.test,O=AegisScan test fixtures
-valid from: 2025-10-09 18:26 UTC
-valid to:   2026-10-14 18:26 UTC
+valid from: 2025-10-09 19:10 UTC
+valid to:   2026-10-14 19:10 UTC
 names:      legacy.fixture.test
 key:        RSA 2048 bits
 signature:  sha256
-sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pre>
+sha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee</pre>
     </div>
   </details>
 </article>
@@ -1052,7 +1052,7 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
   <h3><span class="badge medium">medium</span><span class="t">Weak cipher suites accepted</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/327.html">CWE-327</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 5.9 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/327.html">CWE-327</a></span><span><b>OWASP Top 10</b> A04:2025 Cryptographic Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -1076,7 +1076,7 @@ sha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330</pr
   <h3><span class="badge low">low</span><span class="t">Cookie &#39;prefs&#39; has weak flags: Secure, SameSite</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.cookies</code></span>
-<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/614.html">CWE-614</a></span><span><b>OWASP Top 10</b> A02:2025 Security Misconfiguration</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1111,7 +1111,7 @@ Content-Length: 581</pre>
   <h3><span class="badge low">low</span><span class="t">Software versions disclosed by the server</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.info_disclosure</code></span>
-<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1145,7 +1145,7 @@ Content-Length: 581</pre>
     <summary>HTTP evidence 2 of 2: The error page for a non-existent path prints the server version</summary>
     <div class="body">
       <div class="label">Sent</div>
-      <pre>GET /aegisscan-b92b3bcc01a1 HTTP/1.1
+      <pre>GET /aegisscan-0e0a2eeb7e4c HTTP/1.1
 Host: localhost:8443
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
@@ -1167,7 +1167,7 @@ Content-Length: 407
   <h3><span class="badge low">low</span><span class="t">Content-Security-Policy header is missing</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.security_headers</code></span>
-<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP Top 10</b> A06:2025 Insecure Design</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1202,7 +1202,7 @@ Content-Length: 581</pre>
   <h3><span class="badge low">low</span><span class="t">X-Content-Type-Options: nosniff is missing</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.security_headers</code></span>
-<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>CVSS 3.1</b> 3.1 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP Top 10</b> A06:2025 Insecure Design</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1237,7 +1237,7 @@ Content-Length: 581</pre>
   <h3><span class="badge low">low</span><span class="t">Cipher suites without forward secrecy accepted</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.tls</code></span>
-<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP</b> A02:2021 Cryptographic Failures</span>  </div>
+<span><b>CVSS 3.1</b> 3.7 <code>CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N</code></span><span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/326.html">CWE-326</a></span><span><b>OWASP Top 10</b> A04:2025 Cryptographic Failures</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443</code></p>
   <h4>What this means</h4>
@@ -1261,7 +1261,7 @@ Content-Length: 581</pre>
   <h3><span class="badge info">info</span><span class="t">Permissions-Policy header is missing</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.security_headers</code></span>
-<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP Top 10</b> A06:2025 Insecure Design</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1296,7 +1296,7 @@ Content-Length: 581</pre>
   <h3><span class="badge info">info</span><span class="t">Referrer-Policy header is missing</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>config.security_headers</code></span>
-<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span><span><b>OWASP Top 10</b> A06:2025 Insecure Design</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1331,7 +1331,7 @@ Content-Length: 581</pre>
   <h3><span class="badge info">info</span><span class="t">Technology stack identified (5 components)</span></h3>
   <div class="meta">
     <span><b>Check</b> <code>recon.fingerprint</code></span>
-<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP</b> A05:2021 Security Misconfiguration</span>  </div>
+<span><b>Weakness</b> <a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200</a></span><span><b>OWASP Top 10</b> A01:2025 Broken Access Control</span>  </div>
   <h4>Location</h4>
   <p><code>https://localhost:8443/</code></p>
   <h4>What this means</h4>
@@ -1431,7 +1431,7 @@ not applicable<br><span class="note">target is an IP address or local name; ther
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>145 ms</td>
+      <td>219 ms</td>
     </tr>
     <tr>
       <td><code>recon.subdomains</code><br>Passive subdomain enumeration</td>
@@ -1447,7 +1447,7 @@ not applicable<br><span class="note">target is an IP address or local name; ther
       <td class="status-ran">
 completed      </td>
       <td>6</td>
-      <td>3518 ms</td>
+      <td>3509 ms</td>
     </tr>
     <tr>
       <td><code>config.clickjacking</code><br>Clickjacking exposure</td>
@@ -1455,7 +1455,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>48 ms</td>
+      <td>103 ms</td>
     </tr>
     <tr>
       <td><code>config.cookies</code><br>Cookie flags</td>
@@ -1463,7 +1463,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>2</td>
-      <td>48 ms</td>
+      <td>104 ms</td>
     </tr>
     <tr>
       <td><code>config.cors</code><br>CORS misconfiguration</td>
@@ -1471,7 +1471,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>275 ms</td>
+      <td>200 ms</td>
     </tr>
     <tr>
       <td><code>config.directory_listing</code><br>Directory listing enabled</td>
@@ -1479,7 +1479,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>1</td>
-      <td>8075 ms</td>
+      <td>7995 ms</td>
     </tr>
     <tr>
       <td><code>config.exposed_files</code><br>Exposed sensitive files</td>
@@ -1487,7 +1487,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>8</td>
-      <td>10473 ms</td>
+      <td>10396 ms</td>
     </tr>
     <tr>
       <td><code>config.info_disclosure</code><br>Server and version disclosure</td>
@@ -1495,7 +1495,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>2</td>
-      <td>795 ms</td>
+      <td>807 ms</td>
     </tr>
     <tr>
       <td><code>config.security_headers</code><br>Security headers</td>
@@ -1503,7 +1503,7 @@ completed      </td>
       <td class="status-ran">
 completed      </td>
       <td>5</td>
-      <td>0 ms</td>
+      <td>1 ms</td>
     </tr>
   </table>
 </div>
@@ -1514,12 +1514,13 @@ completed      </td>
     <li><b>Non-destructive.</b> Every check sends benign, read-only requests (GET, HEAD, OPTIONS, TLS handshakes, DNS lookups) and analyses the response. Nothing was modified, and file contents and secrets were not extracted: evidence excerpts are short and secret values are masked.</li>
     <li><b>Scope.</b> Requests were rate limited and sent only to the hosts listed under Scope and authorization.</li>
     <li><b>Coverage.</b> This is an automated assessment of configuration and exposure for a single URL. It does not crawl the application, log in, or test for injection flaws, and it is not a substitute for a manual penetration test. The absence of a finding is not proof of the absence of a weakness.</li>
+    <li><b>Classification.</b> Each finding is mapped to a CWE weakness and, through that CWE, to its OWASP Top 10:2025 category.</li>
     <li><b>Severity.</b> Ratings are CVSS v3.1 base scores for the weakness in general. Adjust them for what this system holds and who can reach it.</li>
   </ul>
 </div>
 
 <footer>
-  Generated by AegisScan 0.1.0 on 2026-11-13 18:26 UTC.
+  Generated by AegisScan 0.1.0 on 2026-11-13 19:11 UTC.
   For authorized security testing only. This report describes weaknesses in the named system: handle it as confidential.
 </footer>
 

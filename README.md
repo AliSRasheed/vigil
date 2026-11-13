@@ -100,25 +100,27 @@ aegisscan scan https://app.example.com --scope scope.yaml
 ## Checks
 
 <!-- checks:start -->
-| ID | Check | Category | Max severity | CWE | OWASP Top 10 |
+| ID | Check | Category | Max severity | CWE | OWASP Top 10:2025 |
 |---|---|---|---|---|---|
-| `recon.dns` | DNS records and zone posture | recon | low | CWE-693 | A05:2021 Security Misconfiguration |
-| `recon.email_auth` | Email authentication (SPF, DMARC, DKIM) | recon | medium | CWE-290 | A05:2021 Security Misconfiguration |
-| `recon.fingerprint` | Technology fingerprinting | recon | info | CWE-200 | A05:2021 Security Misconfiguration |
-| `recon.subdomains` | Passive subdomain enumeration | recon | info | CWE-200 | A05:2021 Security Misconfiguration |
-| `recon.tls` | TLS and certificate analysis | recon | medium | CWE-326 | A02:2021 Cryptographic Failures |
-| `config.clickjacking` | Clickjacking exposure | config | medium | CWE-1021 | A05:2021 Security Misconfiguration |
-| `config.cookies` | Cookie flags | config | medium | CWE-1004 | A05:2021 Security Misconfiguration |
-| `config.cors` | CORS misconfiguration | config | high | CWE-942 | A05:2021 Security Misconfiguration |
-| `config.directory_listing` | Directory listing enabled | config | medium | CWE-548 | A05:2021 Security Misconfiguration |
-| `config.exposed_files` | Exposed sensitive files | config | high | CWE-538 | A05:2021 Security Misconfiguration |
-| `config.info_disclosure` | Server and version disclosure | config | medium | CWE-200 | A05:2021 Security Misconfiguration |
-| `config.security_headers` | Security headers | config | medium | CWE-693 | A05:2021 Security Misconfiguration |
+| `recon.dns` | DNS records and zone posture | recon | low | CWE-693 | A06:2025 Insecure Design |
+| `recon.email_auth` | Email authentication (SPF, DMARC, DKIM) | recon | medium | CWE-290 | A07:2025 Authentication Failures |
+| `recon.fingerprint` | Technology fingerprinting | recon | info | CWE-200 | A01:2025 Broken Access Control |
+| `recon.subdomains` | Passive subdomain enumeration | recon | info | CWE-200 | A01:2025 Broken Access Control |
+| `recon.tls` | TLS and certificate analysis | recon | medium | CWE-326 | A04:2025 Cryptographic Failures |
+| `config.clickjacking` | Clickjacking exposure | config | medium | CWE-1021 | A06:2025 Insecure Design |
+| `config.cookies` | Cookie flags | config | medium | CWE-1004 | A02:2025 Security Misconfiguration |
+| `config.cors` | CORS misconfiguration | config | high | CWE-942 | A02:2025 Security Misconfiguration |
+| `config.directory_listing` | Directory listing enabled | config | medium | CWE-548 | A01:2025 Broken Access Control |
+| `config.exposed_files` | Exposed sensitive files | config | high | CWE-538 | A01:2025 Broken Access Control |
+| `config.info_disclosure` | Server and version disclosure | config | medium | CWE-200 | A01:2025 Broken Access Control |
+| `config.security_headers` | Security headers | config | medium | CWE-693 | A06:2025 Insecure Design |
 <!-- checks:end -->
 
 The table is generated: `aegisscan list-checks --markdown`. A test fails if it drifts from the registry.
 
-Every finding carries a CVSS v3.1 vector and score, a CWE and OWASP mapping, the request that was sent, the relevant part of the response, why it was flagged, and how to fix it. Secret values and cookie values are masked in evidence, and exposed backups are identified from their first bytes rather than downloaded.
+OWASP categories follow each CWE's placement in the official [OWASP Top 10:2025](https://owasp.org/Top10/2025/) mapped-CWE lists. The table shows each check's primary CWE; individual findings can carry a more specific CWE and therefore a different category (an expired certificate is CWE-298, A07 Authentication Failures; a stack trace is CWE-209, A10 Mishandling of Exceptional Conditions).
+
+Every finding carries a CVSS v3.1 vector and score, a CWE and its OWASP Top 10:2025 category, the request that was sent, the relevant part of the response, why it was flagged, and how to fix it. Secret values and cookie values are masked in evidence, and exposed backups are identified from their first bytes rather than downloaded.
 
 ## How it is built
 

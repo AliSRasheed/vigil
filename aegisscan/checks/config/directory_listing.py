@@ -69,7 +69,7 @@ class DirectoryListing(Check):
     title = "Directory listing enabled"
     severity = Severity.MEDIUM
     cwe = "CWE-548"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "config"
     description = "Auto-generated directory indexes on common and page-referenced directories."
 

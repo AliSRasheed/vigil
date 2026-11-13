@@ -24,7 +24,7 @@ class DnsRecords(Check):
     title = "DNS records and zone posture"
     severity = Severity.LOW
     cwe = "CWE-693"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A06:2025 Insecure Design"
     category = "recon"
     description = (
         "A, AAAA, CNAME, NS, MX, TXT, SOA records via the operator's resolver; flags missing "

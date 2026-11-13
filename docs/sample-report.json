@@ -27,13 +27,13 @@
   "authorization": {
     "method": "loopback",
     "detail": "loopback target, no assertion required",
-    "timestamp": "2026-11-13T18:26:47.773683Z",
+    "timestamp": "2026-11-13T19:11:00.361334Z",
     "asserted_by": null,
     "basis": null,
     "date": null
   },
-  "started_at": "2026-11-13T18:26:47.827300Z",
-  "finished_at": "2026-11-13T18:26:58.598242Z",
+  "started_at": "2026-11-13T19:11:00.431657Z",
+  "finished_at": "2026-11-13T19:11:11.226439Z",
   "checks": [
     {
       "check": {
@@ -42,7 +42,7 @@
         "category": "recon",
         "severity": "low",
         "cwe": "CWE-693",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A06:2025 Insecure Design",
         "safe": true,
         "description": "A, AAAA, CNAME, NS, MX, TXT, SOA records via the operator's resolver; flags missing CAA and unsigned (no DNSSEC) zones."
       },
@@ -58,7 +58,7 @@
         "category": "recon",
         "severity": "medium",
         "cwe": "CWE-290",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A07:2025 Authentication Failures",
         "safe": true,
         "description": "SPF and DMARC presence and strictness for the target's zone, and DKIM keys at common selectors."
       },
@@ -74,14 +74,14 @@
         "category": "recon",
         "severity": "info",
         "cwe": "CWE-200",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A01:2025 Broken Access Control",
         "safe": true,
         "description": "Web server, language, framework, CMS and JavaScript libraries, with versions, identified from headers, cookie names and page markup."
       },
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 145
+      "duration_ms": 219
     },
     {
       "check": {
@@ -90,7 +90,7 @@
         "category": "recon",
         "severity": "info",
         "cwe": "CWE-200",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A01:2025 Broken Access Control",
         "safe": true,
         "description": "Subdomains revealed by DNS records, page links, security headers and certificate names. Recorded, never contacted."
       },
@@ -106,14 +106,14 @@
         "category": "recon",
         "severity": "medium",
         "cwe": "CWE-326",
-        "owasp": "A02:2021 Cryptographic Failures",
+        "owasp": "A04:2025 Cryptographic Failures",
         "safe": true,
         "description": "Certificate validity, trust chain, host name, expiry, key and signature strength; deprecated protocol versions; weak and non-forward-secret cipher suites."
       },
       "status": "ran",
       "detail": "",
       "findings": 6,
-      "duration_ms": 3518
+      "duration_ms": 3509
     },
     {
       "check": {
@@ -122,14 +122,14 @@
         "category": "config",
         "severity": "medium",
         "cwe": "CWE-1021",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A06:2025 Insecure Design",
         "safe": true,
         "description": "Missing or ineffective X-Frame-Options / CSP frame-ancestors on HTML pages."
       },
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 48
+      "duration_ms": 103
     },
     {
       "check": {
@@ -138,14 +138,14 @@
         "category": "config",
         "severity": "medium",
         "cwe": "CWE-1004",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A02:2025 Security Misconfiguration",
         "safe": true,
         "description": "HttpOnly, Secure and SameSite on the cookies the target sets."
       },
       "status": "ran",
       "detail": "",
       "findings": 2,
-      "duration_ms": 48
+      "duration_ms": 104
     },
     {
       "check": {
@@ -154,14 +154,14 @@
         "category": "config",
         "severity": "high",
         "cwe": "CWE-942",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A02:2025 Security Misconfiguration",
         "safe": true,
         "description": "Arbitrary-origin reflection, the null origin and weak origin validation, with or without credentials."
       },
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 275
+      "duration_ms": 200
     },
     {
       "check": {
@@ -170,14 +170,14 @@
         "category": "config",
         "severity": "medium",
         "cwe": "CWE-548",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A01:2025 Broken Access Control",
         "safe": true,
         "description": "Auto-generated directory indexes on common and page-referenced directories."
       },
       "status": "ran",
       "detail": "",
       "findings": 1,
-      "duration_ms": 8075
+      "duration_ms": 7995
     },
     {
       "check": {
@@ -186,14 +186,14 @@
         "category": "config",
         "severity": "high",
         "cwe": "CWE-538",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A01:2025 Broken Access Control",
         "safe": true,
         "description": "Version control data, .env, credential files, backups, database dumps and config files, each confirmed by content."
       },
       "status": "ran",
       "detail": "",
       "findings": 8,
-      "duration_ms": 10473
+      "duration_ms": 10396
     },
     {
       "check": {
@@ -202,14 +202,14 @@
         "category": "config",
         "severity": "medium",
         "cwe": "CWE-200",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A01:2025 Broken Access Control",
         "safe": true,
         "description": "Software versions in response headers and error pages; stack traces and debug output on errors."
       },
       "status": "ran",
       "detail": "",
       "findings": 2,
-      "duration_ms": 795
+      "duration_ms": 807
     },
     {
       "check": {
@@ -218,14 +218,14 @@
         "category": "config",
         "severity": "medium",
         "cwe": "CWE-693",
-        "owasp": "A05:2021 Security Misconfiguration",
+        "owasp": "A06:2025 Insecure Design",
         "safe": true,
         "description": "Presence and quality of CSP, HSTS, X-Content-Type-Options, Referrer-Policy and Permissions-Policy, with an overall grade."
       },
       "status": "ran",
       "detail": "",
       "findings": 5,
-      "duration_ms": 0
+      "duration_ms": 1
     }
   ],
   "findings": [
@@ -248,7 +248,7 @@
       ],
       "remediation": "Compare the Origin header against an exact allow-list of trusted origins and return Access-Control-Allow-Origin only for those. Never reflect the request Origin, never allow 'null', and send Access-Control-Allow-Credentials only where it is needed. Add Vary: Origin.",
       "cwe": "CWE-942",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A02:2025 Security Misconfiguration",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
       "cvss_score": 7.1,
       "references": []
@@ -272,7 +272,7 @@
       ],
       "remediation": "Remove backups from the web root and store them outside any served directory.",
       "cwe": "CWE-530",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 7.5,
       "references": []
@@ -296,7 +296,7 @@
       ],
       "remediation": "Delete backup and editor files (.bak, ~, .swp, .old) from the web root and deny those extensions in the web server.",
       "cwe": "CWE-530",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 7.5,
       "references": []
@@ -320,7 +320,7 @@
       ],
       "remediation": "Remove the dump from the web root. Treat the data and any stored credentials as exposed.",
       "cwe": "CWE-530",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 7.5,
       "references": []
@@ -344,7 +344,7 @@
       ],
       "remediation": "Block access to it in the web server configuration and remove it from the web root. Rotate every secret in the file: it must be assumed compromised.",
       "cwe": "CWE-538",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 7.5,
       "references": []
@@ -374,7 +374,7 @@
       ],
       "remediation": "Remove .git from the web root or deny access to it (for example, a rule returning 404 for /.git). Rotate any secret that was ever committed.",
       "cwe": "CWE-527",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 7.5,
       "references": []
@@ -398,7 +398,7 @@
       ],
       "remediation": "Send Content-Security-Policy: frame-ancestors 'none' (or 'self'), and X-Frame-Options: DENY (or SAMEORIGIN) for older browsers.",
       "cwe": "CWE-1021",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A06:2025 Insecure Design",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
       "cvss_score": 4.3,
       "references": []
@@ -422,7 +422,7 @@
       ],
       "remediation": "Set the cookie as: PHPSESSID=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).",
       "cwe": "CWE-614",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A02:2025 Security Misconfiguration",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 5.9,
       "references": []
@@ -458,7 +458,7 @@
       ],
       "remediation": "Turn off automatic indexes (Apache: Options -Indexes; nginx: autoindex off; IIS: disable Directory Browsing) and remove files that should not be public.",
       "cwe": "CWE-548",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 5.3,
       "references": []
@@ -482,7 +482,7 @@
       ],
       "remediation": "Restrict /server-status to localhost (Require local) or disable mod_status.",
       "cwe": "CWE-200",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 5.3,
       "references": []
@@ -506,7 +506,7 @@
       ],
       "remediation": "Block access to it in the web server configuration and remove it from the web root.",
       "cwe": "CWE-538",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 5.3,
       "references": []
@@ -530,31 +530,31 @@
       ],
       "remediation": "Delete the page.",
       "cwe": "CWE-200",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 5.3,
       "references": []
     },
     {
-      "id": "config.info_disclosure-81f9631516",
+      "id": "config.info_disclosure-2dce36b06e",
       "check_id": "config.info_disclosure",
       "title": "Verbose error page exposes internal details",
       "severity": "medium",
       "category": "config",
-      "url": "https://localhost:8443/aegisscan-b92b3bcc01a1",
+      "url": "https://localhost:8443/aegisscan-0e0a2eeb7e4c",
       "description": "Detailed error output is meant for developers. Shown to visitors it reveals file paths, library names and logic that help target an attack.",
       "why": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure.",
       "evidence": [
         {
           "kind": "http",
-          "request": "GET /aegisscan-b92b3bcc01a1 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
-          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<pre>Traceback (most recent call last):\n  File \"/var/www/shop/app/router.py\", line 42, in dispatch\n    handler = self.routes[path]\nKeyError: '/aegisscan-b92b3bcc01a1'\n</pre>",
+          "request": "GET /aegisscan-0e0a2eeb7e4c HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<pre>Traceback (most recent call last):\n  File \"/var/www/shop/app/router.py\", line 42, in dispatch\n    handler = self.routes[path]\nKeyError: '/aegisscan-0e0a2eeb7e4c'\n</pre>",
           "note": "Requesting a path that does not exist returned a Python traceback, exposing internal file paths and code structure."
         }
       ],
       "remediation": "Disable debug mode in production and return a generic error page; log the details server-side instead.",
       "cwe": "CWE-209",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A10:2025 Mishandling of Exceptional Conditions",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 5.3,
       "references": []
@@ -578,7 +578,7 @@
       ],
       "remediation": "Send Strict-Transport-Security: max-age=31536000; includeSubDomains",
       "cwe": "CWE-319",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A04:2025 Cryptographic Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
       "cvss_score": 4.2,
       "references": []
@@ -602,7 +602,7 @@
       ],
       "remediation": "Disable TLS 1.0 and 1.1; allow TLS 1.2 and 1.3 only.",
       "cwe": "CWE-326",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A04:2025 Cryptographic Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 5.9,
       "references": []
@@ -620,13 +620,13 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443 (SNI localhost)",
-          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:10 UTC\nvalid to:   2026-10-14 19:10 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee",
           "note": "The certificate is issued for legacy.fixture.test, not for localhost. Clients cannot tell this server from an impostor."
         }
       ],
       "remediation": "Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.",
       "cwe": "CWE-297",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A07:2025 Authentication Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
       "cvss_score": 6.5,
       "references": []
@@ -644,13 +644,13 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443 (SNI localhost)",
-          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "response": "negotiated TLSv1.3 TLS_AES_256_GCM_SHA384\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:10 UTC\nvalid to:   2026-10-14 19:10 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee",
           "note": "The certificate expired on 2026-10-14 (30 days ago). Browsers show a full-page warning and API clients refuse to connect."
         }
       ],
       "remediation": "Install a certificate that is valid, issued for this host name by a publicly trusted CA, with an RSA 2048+ or EC P-256+ key, and automate its renewal.",
       "cwe": "CWE-298",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A07:2025 Authentication Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
       "cvss_score": 6.5,
       "references": []
@@ -668,13 +668,13 @@
         {
           "kind": "tls",
           "request": "TLS handshake with localhost:8443, verifying the certificate chain against the trusted CA store",
-          "response": "verification failed: self-signed certificate\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 18:26 UTC\nvalid to:   2026-10-14 18:26 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     66c405a697981770b85e4f225cdf064bb1bb0e0edfaf91d04c46b6add0854330",
+          "response": "verification failed: self-signed certificate\nsubject:    CN=legacy.fixture.test,O=AegisScan test fixtures\nissuer:     CN=legacy.fixture.test,O=AegisScan test fixtures\nvalid from: 2025-10-09 19:10 UTC\nvalid to:   2026-10-14 19:10 UTC\nnames:      legacy.fixture.test\nkey:        RSA 2048 bits\nsignature:  sha256\nsha256:     caeff63b6957a7d886228f1746870d65bb01363c283904d5363588eef51edeee",
           "note": "Certificate verification failed: self-signed certificate. The certificate does not chain to a trusted certificate authority (it is self-signed)."
         }
       ],
       "remediation": "Use a certificate issued by a publicly trusted CA and serve the full intermediate chain.",
       "cwe": "CWE-295",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A07:2025 Authentication Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
       "cvss_score": 6.5,
       "references": []
@@ -698,7 +698,7 @@
       ],
       "remediation": "Remove 3DES, RC4, DES, NULL, EXPORT, anonymous and MD5 suites from the server configuration.",
       "cwe": "CWE-327",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A04:2025 Cryptographic Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
       "cvss_score": 5.9,
       "references": []
@@ -722,7 +722,7 @@
       ],
       "remediation": "Set the cookie as: prefs=...; Path=/; Secure; HttpOnly; SameSite=Lax (use SameSite=Strict where cross-site navigation with the cookie is not needed).",
       "cwe": "CWE-614",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A02:2025 Security Misconfiguration",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
       "cvss_score": 3.1,
       "references": []
@@ -745,14 +745,14 @@
         },
         {
           "kind": "http",
-          "request": "GET /aegisscan-b92b3bcc01a1 HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
+          "request": "GET /aegisscan-0e0a2eeb7e4c HTTP/1.1\nHost: localhost:8443\nAccept-Encoding: gzip, deflate\nConnection: keep-alive\nUser-Agent: AegisScan/0.1.0 (authorized security testing; non-destructive)\nAccept: */*\nCookie: <redacted>",
           "response": "HTTP/1.1 404 Not Found\nServer: Apache/2.4.49 (Unix) OpenSSL/1.1.1k PHP/7.4.3\nX-Powered-By: PHP/7.4.3\nContent-Type: text/html; charset=utf-8\nContent-Length: 407\n\n<address>Apache/2.4.49 (Unix) Server at localhost Port 80</address>",
           "note": "The error page for a non-existent path prints the server version"
         }
       ],
       "remediation": "Remove or genericise these banners (Apache: ServerTokens Prod and ServerSignature Off; nginx: server_tokens off; PHP: expose_php = Off; ASP.NET: enableVersionHeader=\"false\"; Express: app.disable('x-powered-by')).",
       "cwe": "CWE-200",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 3.7,
       "references": []
@@ -776,7 +776,7 @@
       ],
       "remediation": "Send a policy that restricts script sources, for example: Content-Security-Policy: default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
       "cwe": "CWE-693",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A06:2025 Insecure Design",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
       "cvss_score": 3.1,
       "references": []
@@ -800,7 +800,7 @@
       ],
       "remediation": "Send X-Content-Type-Options: nosniff on every response.",
       "cwe": "CWE-693",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A06:2025 Insecure Design",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
       "cvss_score": 3.1,
       "references": []
@@ -824,7 +824,7 @@
       ],
       "remediation": "Allow only ECDHE (or DHE) key exchange, for example the Mozilla 'intermediate' configuration.",
       "cwe": "CWE-326",
-      "owasp": "A02:2021 Cryptographic Failures",
+      "owasp": "A04:2025 Cryptographic Failures",
       "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
       "cvss_score": 3.7,
       "references": []
@@ -848,7 +848,7 @@
       ],
       "remediation": "Send Permissions-Policy: geolocation=(), camera=(), microphone=()",
       "cwe": "CWE-693",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A06:2025 Insecure Design",
       "cvss_vector": null,
       "cvss_score": null,
       "references": []
@@ -872,7 +872,7 @@
       ],
       "remediation": "Send Referrer-Policy: strict-origin-when-cross-origin (or stricter).",
       "cwe": "CWE-693",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A06:2025 Insecure Design",
       "cvss_vector": null,
       "cvss_score": null,
       "references": []
@@ -896,7 +896,7 @@
       ],
       "remediation": "Keep every listed component on a supported, patched version, and remove version banners where the platform allows it.",
       "cwe": "CWE-200",
-      "owasp": "A05:2021 Security Misconfiguration",
+      "owasp": "A01:2025 Broken Access Control",
       "cvss_vector": null,
       "cvss_score": null,
       "references": []

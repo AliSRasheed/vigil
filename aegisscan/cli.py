@@ -180,7 +180,7 @@ def scan(
 def checks_markdown() -> str:
     """The check table, as kept in the README."""
     lines = [
-        "| ID | Check | Category | Max severity | CWE | OWASP Top 10 |",
+        "| ID | Check | Category | Max severity | CWE | OWASP Top 10:2025 |",
         "|---|---|---|---|---|---|",
     ]
     for check in discover_checks():

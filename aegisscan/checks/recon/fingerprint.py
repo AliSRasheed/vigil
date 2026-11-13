@@ -138,7 +138,7 @@ class TechnologyFingerprint(Check):
     title = "Technology fingerprinting"
     severity = Severity.INFO
     cwe = "CWE-200"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "recon"
     description = (
         "Web server, language, framework, CMS and JavaScript libraries, with versions, "

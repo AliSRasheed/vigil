@@ -46,7 +46,7 @@ class EmailAuthentication(Check):
     title = "Email authentication (SPF, DMARC, DKIM)"
     severity = Severity.MEDIUM
     cwe = "CWE-290"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A07:2025 Authentication Failures"
     category = "recon"
     description = (
         "SPF and DMARC presence and strictness for the target's zone, and DKIM keys at "

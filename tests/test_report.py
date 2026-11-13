@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from aegisscan import cvss, report
+from aegisscan import cvss, owasp, report
 from aegisscan.checks.base import discover_checks
 from aegisscan.cli import app as cli_app
 from aegisscan.cli import checks_markdown
@@ -71,6 +71,21 @@ def test_every_finding_is_consistent_and_carries_evidence(vulnerable_scan: ScanR
             assert finding.severity.value == cvss.rating(finding.cvss_score)
         else:
             assert finding.severity.value == "info"
+
+
+def test_every_finding_and_check_maps_to_the_owasp_top_10_2025(
+    vulnerable_scan: ScanResult,
+) -> None:
+    for check in discover_checks():
+        assert check.owasp == owasp.category_for(check.cwe), check.id
+    seen = set()
+    for finding in vulnerable_scan.findings:
+        assert finding.owasp == owasp.category_for(finding.cwe), finding.title
+        assert re.fullmatch(r"A(0[1-9]|10):2025 .+", finding.owasp)
+        seen.add(finding.owasp[:3])
+    assert seen == {"A01", "A02", "A04", "A06", "A07", "A10"}
+    html = report.render_html(vulnerable_scan)
+    assert ":2021" not in html and "A10:2025 Mishandling of Exceptional Conditions" in html
 
 
 def test_out_of_scope_references_are_recorded(vulnerable_scan: ScanResult) -> None:

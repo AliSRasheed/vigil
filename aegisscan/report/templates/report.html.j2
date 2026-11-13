@@ -223,7 +223,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
     <span><b>Check</b> <code>{{ finding.check_id }}</code></span>
     {% if finding.cvss_vector %}<span><b>CVSS 3.1</b> {{ "%.1f"|format(finding.cvss_score) }} <code>{{ finding.cvss_vector }}</code></span>{% endif %}
     {% if finding.cwe %}<span><b>Weakness</b> {% if finding.cwe|cwe_url %}<a href="{{ finding.cwe|cwe_url }}">{{ finding.cwe }}</a>{% else %}{{ finding.cwe }}{% endif %}</span>{% endif %}
-    {% if finding.owasp %}<span><b>OWASP</b> {{ finding.owasp }}</span>{% endif %}
+    {% if finding.owasp %}<span><b>OWASP Top 10</b> {{ finding.owasp }}</span>{% endif %}
   </div>
   <h4>Location</h4>
   <p><code>{{ finding.url }}</code></p>
@@ -285,6 +285,7 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
     <li><b>Non-destructive.</b> Every check sends benign, read-only requests (GET, HEAD, OPTIONS, TLS handshakes, DNS lookups) and analyses the response. Nothing was modified, and file contents and secrets were not extracted: evidence excerpts are short and secret values are masked.</li>
     <li><b>Scope.</b> Requests were rate limited and sent only to the hosts listed under Scope and authorization.</li>
     <li><b>Coverage.</b> This is an automated assessment of configuration and exposure for a single URL. It does not crawl the application, log in, or test for injection flaws, and it is not a substitute for a manual penetration test. The absence of a finding is not proof of the absence of a weakness.</li>
+    <li><b>Classification.</b> Each finding is mapped to a CWE weakness and, through that CWE, to its OWASP Top 10:2025 category.</li>
     <li><b>Severity.</b> Ratings are CVSS v3.1 base scores for the weakness in general. Adjust them for what this system holds and who can reach it.</li>
   </ul>
 </div>

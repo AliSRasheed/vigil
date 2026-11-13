@@ -88,7 +88,7 @@ class TlsAnalysis(Check):
     title = "TLS and certificate analysis"
     severity = Severity.MEDIUM
     cwe = "CWE-326"
-    owasp = "A02:2021 Cryptographic Failures"
+    owasp = "A04:2025 Cryptographic Failures"
     category = "recon"
     description = (
         "Certificate validity, trust chain, host name, expiry, key and signature strength; "

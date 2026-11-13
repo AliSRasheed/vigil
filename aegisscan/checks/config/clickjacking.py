@@ -43,7 +43,7 @@ class Clickjacking(Check):
     title = "Clickjacking exposure"
     severity = Severity.MEDIUM
     cwe = "CWE-1021"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A06:2025 Insecure Design"
     category = "config"
     description = "Missing or ineffective X-Frame-Options / CSP frame-ancestors on HTML pages."
 

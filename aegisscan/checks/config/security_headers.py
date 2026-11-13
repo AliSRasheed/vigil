@@ -224,7 +224,7 @@ class SecurityHeaders(Check):
     title = "Security headers"
     severity = Severity.MEDIUM
     cwe = "CWE-693"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A06:2025 Insecure Design"
     category = "config"
     description = (
         "Presence and quality of CSP, HSTS, X-Content-Type-Options, Referrer-Policy and "

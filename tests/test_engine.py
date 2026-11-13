@@ -20,7 +20,7 @@ HIGH = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
 class _Base(Check, register=False):
     severity = Severity.HIGH
     cwe = "CWE-200"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A01:2025 Broken Access Control"
     category = "config"
 
 
@@ -85,7 +85,7 @@ def test_subclassing_registers_a_check(empty_registry: dict) -> None:
             return []
 
     assert empty_registry == {"config.sample": Sample}
-    assert Sample.info().owasp == "A05:2021 Security Misconfiguration"
+    assert Sample.info().owasp == "A01:2025 Broken Access Control"
 
 
 def test_incomplete_or_duplicate_checks_are_rejected(empty_registry: dict) -> None:
@@ -107,6 +107,16 @@ def test_incomplete_or_duplicate_checks_are_rejected(empty_registry: dict) -> No
         class Second(_Base):
             id = "config.dup"
             title = "Second"
+
+            async def run(self, target: Target, ctx: ScanContext) -> list[Finding]:
+                return []
+
+    with pytest.raises(TypeError, match="CWE-693 maps to 'A06:2025 Insecure Design'"):
+
+        class WrongOwasp(_Base):
+            id = "config.wrong_owasp"
+            title = "Wrong"
+            cwe = "CWE-693"
 
             async def run(self, target: Target, ctx: ScanContext) -> list[Finding]:
                 return []
@@ -180,10 +190,34 @@ def test_findings_derive_score_and_severity_from_the_vector() -> None:
     }
     finding = check.finding(title="t", cvss_vector=HIGH, **common)
     assert (finding.severity, finding.cvss_score) == (Severity.HIGH, 7.5)
-    assert finding.cwe == "CWE-200" and finding.owasp.startswith("A05")
+    assert finding.cwe == "CWE-200" and finding.owasp == "A01:2025 Broken Access Control"
     assert finding.id == check.finding(title="t", cvss_vector=HIGH, **common).id
     info = check.finding(title="t2", **common)
     assert (info.severity, info.cvss_score) == (Severity.INFO, None)
+
+
+def test_finding_owasp_category_follows_its_cwe() -> None:
+    common = {
+        "url": "http://x/",
+        "description": "d",
+        "why": "w",
+        "evidence": [{"request": "GET /", "response": "200"}],
+        "remediation": "r",
+    }
+    check = Reporter()
+    assert check.finding(title="a", **common).owasp == "A01:2025 Broken Access Control"
+    assert check.finding(title="b", cwe="CWE-319", **common).owasp == (
+        "A04:2025 Cryptographic Failures"
+    )
+    assert check.finding(title="c", cwe="CWE-209", **common).owasp == (
+        "A10:2025 Mishandling of Exceptional Conditions"
+    )
+    # not listed by any 2025 category: mapped through the parent CWE-552
+    assert check.finding(title="d", cwe="CWE-527", **common).owasp == (
+        "A01:2025 Broken Access Control"
+    )
+    explicit = check.finding(title="e", owasp="A05:2025 Injection", **common)
+    assert explicit.owasp == "A05:2025 Injection"
 
 
 def test_a_finding_without_evidence_is_invalid() -> None:

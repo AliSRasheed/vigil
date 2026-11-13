@@ -116,7 +116,7 @@ class CookieFlags(Check):
     title = "Cookie flags"
     severity = Severity.MEDIUM
     cwe = "CWE-1004"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A02:2025 Security Misconfiguration"
     category = "config"
     description = "HttpOnly, Secure and SameSite on the cookies the target sets."
 

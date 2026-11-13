@@ -32,7 +32,7 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 
 - **Severity is derived from the CVSS v3.1 vector.** A finding with a vector gets its score and severity band computed from it, so the three cannot disagree. Findings without a vector are `info`.
 - **A check's `severity` attribute is the highest severity it can report**; each finding carries its own.
-- **OWASP mapping uses the Top 10 2021 edition.** Remapping to the 2025 edition is a follow-up; 2021 was chosen because its category names are certain.
+- **OWASP mapping:** originally the Top 10 2021 edition; replaced by the 2025 edition after v0.1.0 (see "OWASP Top 10:2025 mapping" below).
 - **Recon data that is not a weakness goes to `observations`** (DNS records, technologies, certificate details), shown in the report's reconnaissance section. Findings are reserved for things worth acting on, which is what lets every check stay silent on a clean target.
 - **`register=False`** on a `Check` subclass keeps test doubles out of the registry.
 
@@ -92,3 +92,20 @@ Design choices made where the spec was silent or ambiguous. Simpler option chose
 - Juice Shop / DVWA were not run as part of this build (no Docker run was performed); the README documents the command. The roadmap's "each check fires on vulnerable, silent on clean" is met by the fixture app instead, as CLAUDE.md specifies.
 - No `--fail-on` severity threshold, proxy support or SARIF: those are v3 or later.
 - `PROGRESS.md` (mentioned in PROJECT-INSTRUCTIONS.md for the planning project) was not created.
+
+## OWASP Top 10:2025 mapping (after v0.1.0)
+
+- **The mapping moved from the 2021 edition to the 2025 edition**, and is now driven by CWE. `aegisscan/owasp.py` holds one table, CWE to category, and a finding's category is looked up from its CWE. Under 2021 nearly everything was labelled A05 Security Misconfiguration by judgement; under 2025 each label is the category whose official "List of Mapped CWEs" contains the CWE.
+- **Source:** the category pages at https://owasp.org/Top10/2025/ (which redirects to top10.owasp.org/2025), read on 2026-11-14. Each CWE AegisScan reports was looked up in those lists, not recalled from memory. The pages themselves do not state a release status or date.
+- **Result, by CWE:**
+  - A01 Broken Access Control: CWE-200, 538, 548, 552, 1275
+  - A02 Security Misconfiguration: CWE-614, 942, 1004
+  - A04 Cryptographic Failures: CWE-319, 326, 327, 328
+  - A06 Insecure Design: CWE-693, 1021
+  - A07 Authentication Failures: CWE-290, 295, 297, 298, 350
+  - A10 Mishandling of Exceptional Conditions: CWE-209
+- **Some placements look odd and are kept as OWASP publishes them.** Missing security headers and missing CAA (CWE-693) and clickjacking (CWE-1021) fall under A06 Insecure Design, not Security Misconfiguration; information disclosure, exposed files and directory listing (CWE-200, 538, 548) fall under A01 Broken Access Control. Following the published lists was preferred over a judgement call that would differ from other tools.
+- **CWE-527 (exposed version-control repository) and CWE-530 (exposed backup file) are in no 2025 category.** They keep their precise CWE and are mapped through their parent, CWE-552 (Files or Directories Accessible to External Parties), which is listed under A01.
+- **A check's `owasp` is the category of its primary CWE; a finding's follows its own CWE.** So one check can produce findings in several categories: `recon.tls` is A04 by its primary CWE-326, but its certificate findings (CWE-295/297/298) are A07; `config.cookies` is A02, but a SameSite-only finding (CWE-1275) is A01; `config.info_disclosure` is A01, but a stack trace (CWE-209) is A10.
+- **Guard rails:** registering a check whose `owasp` does not match its CWE in the table raises `TypeError`, and a test asserts every finding from the fixture scan matches the table.
+- The `v0.1.0` tag still points at the 2021 mapping; this change is a later commit.

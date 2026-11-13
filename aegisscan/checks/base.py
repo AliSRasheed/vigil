@@ -14,7 +14,9 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, ClassVar
 
 from aegisscan import cvss
+from aegisscan import owasp as owasp_map
 from aegisscan.models import CheckInfo, Evidence, Finding, Severity, Target
+from aegisscan.owasp import category_for as owasp_category_for
 
 if TYPE_CHECKING:
     from aegisscan.engine import ScanContext
@@ -47,6 +49,12 @@ class Check(ABC):
             raise TypeError(f"check {cls.__name__} is missing metadata: {', '.join(missing)}")
         if cls.category not in CATEGORIES:
             raise TypeError(f"check {cls.id}: unknown category {cls.category!r}")
+        expected = owasp_map.category_for(cls.cwe)
+        if cls.owasp != expected:
+            raise TypeError(
+                f"check {cls.id}: owasp is {cls.owasp!r} but {cls.cwe} maps to {expected!r} "
+                "in the OWASP Top 10:2025 (see aegisscan/owasp.py)"
+            )
         existing = _REGISTRY.get(cls.id)
         if existing is not None and existing.__qualname__ != cls.__qualname__:
             raise TypeError(f"duplicate check id {cls.id!r}")
@@ -84,7 +92,11 @@ class Check(ABC):
         owasp: str | None = None,
         references: list[str] | None = None,
     ) -> Finding:
-        """Build a finding. With a CVSS vector, score and severity are derived from it."""
+        """Build a finding.
+
+        With a CVSS vector, score and severity are derived from it. The OWASP category is
+        derived from the finding's CWE unless given explicitly.
+        """
         score: float | None = None
         if cvss_vector is not None:
             score = cvss.base_score(cvss_vector)
@@ -103,7 +115,7 @@ class Check(ABC):
             evidence=evidence,
             remediation=remediation,
             cwe=cwe or self.cwe,
-            owasp=owasp or self.owasp,
+            owasp=owasp or owasp_category_for(cwe or self.cwe) or self.owasp,
             cvss_vector=cvss_vector,
             cvss_score=score,
             references=references or [],

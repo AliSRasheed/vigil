@@ -29,7 +29,7 @@ class CorsMisconfiguration(Check):
     title = "CORS misconfiguration"
     severity = Severity.HIGH
     cwe = "CWE-942"
-    owasp = "A05:2021 Security Misconfiguration"
+    owasp = "A02:2025 Security Misconfiguration"
     category = "config"
     description = (
         "Arbitrary-origin reflection, the null origin and weak origin validation, with or "
